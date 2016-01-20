@@ -85,4 +85,13 @@ public class StrCode {
 		}
 		return true;
 	}
+	
+	public static boolean isRotation(String str1, String str2) {
+		String str3 = str1 + str1;
+		if (str3.indexOf(str2) == -1) {
+			return false;
+		}
+		return true;
+	}
+	
 }
