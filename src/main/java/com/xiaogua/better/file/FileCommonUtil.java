@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
+import java.text.DecimalFormat;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -172,6 +173,19 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 	 */
 	public static String removeExtension(String filePath) {
 		return FilenameUtils.removeExtension(filePath);
+	}
+
+	/**
+	 * 文件显示
+	 * @param size
+	 * @return
+	 */
+	public static String getReadableSize(long size) {
+		final String[] units = new String[] { "B", "KB", "MB", "GB", "TB" };
+		final int unitIndex = (int) (Math.log10(size) / 3);
+		final double unitValue = 1 << (unitIndex * 10);
+		final String readableSize = new DecimalFormat("#,##0.#").format(size / unitValue) + " " + units[unitIndex];
+		return readableSize;
 	}
 
 }
