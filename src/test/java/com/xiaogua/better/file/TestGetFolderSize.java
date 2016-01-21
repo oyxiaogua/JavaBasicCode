@@ -56,4 +56,24 @@ public class TestGetFolderSize {
 		System.out.println(String.format("method=%s,result=%s,time=%s", "testGetFolderSizeWithRecursive", size,
 				stopWatch.getTotalTimeMillis()));
 	}
+
+	@Test
+	public void testGetFileFolderSizeWithQuene() throws Exception {
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start("testGetFileFolderSizeWithQuene");
+		long size = t.getFileFolderSizeWithQuene(folderStr);
+		stopWatch.stop();
+		System.out.println(String.format("method=%s,result=%s,time=%s", "testGetFileFolderSizeWithQuene", size,
+				stopWatch.getTotalTimeMillis()));
+	}
+
+	@Test
+	public void testGetFileFolderSizeWithStack() throws Exception {
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start("testGetFileFolderSizeWithStack");
+		long size = t.getFileFolderSizeWithQuene(folderStr);
+		stopWatch.stop();
+		System.out.println(String.format("method=%s,result=%s,time=%s", "testGetFileFolderSizeWithStack", size,
+				stopWatch.getTotalTimeMillis()));
+	}
 }

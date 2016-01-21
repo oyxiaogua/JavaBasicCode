@@ -8,6 +8,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.StreamSupport;
 
@@ -84,6 +87,49 @@ public class GetFolderSize {
 		final File folder = new File(folderStr);
 		final long size = getFolderSize(folder);
 		return size;
+	}
+
+	/**
+	 * 获取文件夹大小(队列)
+	 * 
+	 * @param folderStr
+	 */
+	public long getFileFolderSizeWithQuene(String folderStr) {
+		Queue<File> dirs = new LinkedList<File>();
+		dirs.add(new File(folderStr));
+		long fileTotalSize = 0;
+		while (!dirs.isEmpty()) {
+			for (File f : dirs.poll().listFiles()) {
+				if (f.isDirectory()) {
+					dirs.add(f);
+				} else if (f.isFile()) {
+					fileTotalSize += f.length();
+				}
+			}
+		}
+		return fileTotalSize;
+	}
+
+	/**
+	 * 获取文件夹大小(栈)
+	 * 
+	 * @param folderStr
+	 */
+	public long getFileFolderSizeWithStack(String folderStr) {
+		Stack<File> stack = new Stack<File>();
+		stack.push(new File(folderStr));
+		long fileTotalSize = 0;
+		while (!stack.isEmpty()) {
+			File child = stack.pop();
+			if (child.isDirectory()) {
+				for (File f : child.listFiles()) {
+					stack.push(f);
+				}
+			} else if (child.isFile()) {
+				fileTotalSize += child.length();
+			}
+		}
+		return fileTotalSize;
 	}
 
 	private long getFolderSize(final File folder) {
