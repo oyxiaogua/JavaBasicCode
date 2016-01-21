@@ -1,8 +1,13 @@
 package com.xiaogua.better.basic;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -60,6 +65,25 @@ public class TestInteger {
 		for (int i = 0; i < 10; i++) {
 			System.out.println((Integer) i); // 这个时候1不是1 ，2也不是2
 		}
+	}
+	
+	@Test
+	public void testConvertObjectToPrimitive() {
+		List<Integer> integerList = new ArrayList<Integer>();
+		integerList.add(1);
+		//不能有null对象
+		//integerList.add(null);
+		Integer[] integers = integerList.toArray(new Integer[integerList.size()]);
+		int[] ints = ArrayUtils.toPrimitive(integers);
+		System.out.println(Arrays.toString(ints));
+	}
+	@Test
+	public void testConvertPrimitiveToObject() {
+		int[] ints = { 2 };
+		Integer[] integersArr = ArrayUtils.toObject(ints);
+		List<Integer> integerList = new ArrayList<Integer>();
+		Collections.addAll(integerList, integersArr);
+		System.out.println(integerList);
 	}
 
 }

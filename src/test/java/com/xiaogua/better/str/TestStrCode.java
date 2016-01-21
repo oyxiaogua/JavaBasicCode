@@ -1,10 +1,38 @@
 package com.xiaogua.better.str;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class TestStrCode {
+	@Test
+	public void testForEachMap() {
+		Map<String, String[]> map = new HashMap<String, String[]>();
+		map.put("key_1", new String[] { "value_1" });
+		for (String str : map.keySet()) {
+			String[] values = map.get(str);
+			for (int i = 0, len = values.length; i < len; i++) {
+				values[i] = values[i] + "_update";
+			}
+		}
+		Assert.assertEquals("value_1_update", map.get("key_1")[0]);
+
+		map.put("key_1", new String[] { "value_1" });
+		for (Entry<String, String[]> entry : map.entrySet()) {
+			String[] values = entry.getValue();
+			for (String str : values) {
+				// 修改未起作用
+				str = str + "_update";
+			}
+		}
+		Assert.assertEquals("value_1", map.get("key_1")[0]);
+
+	}
+
 	@Test
 	public void testConvertNumToExcelStr() {
 		String rtnStr = StrCode.convertNumToExcelStr(731);
