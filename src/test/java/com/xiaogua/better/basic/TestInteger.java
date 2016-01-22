@@ -51,7 +51,7 @@ public class TestInteger {
 		int b = a + a;
 		System.out.printf("%d + %d = %d", a, a, b);
 	}
-	
+
 	@Test
 	public void testChangeIntegerCache2() throws Exception {
 		Class<?> clazz = Class.forName("java.lang.Integer$IntegerCache");
@@ -66,17 +66,18 @@ public class TestInteger {
 			System.out.println((Integer) i); // 这个时候1不是1 ，2也不是2
 		}
 	}
-	
+
 	@Test
 	public void testConvertObjectToPrimitive() {
 		List<Integer> integerList = new ArrayList<Integer>();
 		integerList.add(1);
-		//不能有null对象
-		//integerList.add(null);
+		// 不能有null对象
+		// integerList.add(null);
 		Integer[] integers = integerList.toArray(new Integer[integerList.size()]);
 		int[] ints = ArrayUtils.toPrimitive(integers);
 		System.out.println(Arrays.toString(ints));
 	}
+
 	@Test
 	public void testConvertPrimitiveToObject() {
 		int[] ints = { 2 };
@@ -86,4 +87,16 @@ public class TestInteger {
 		System.out.println(integerList);
 	}
 
+	@Test
+	public void testGeIntLength() {
+		Assert.assertEquals(3, geIntLength(999));
+	}
+
+	public int geIntLength(int x) {
+		final int[] sizeTable = { 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999, 999999999, Integer.MAX_VALUE };
+		for (int i = 0;; i++) {
+			if (x <= sizeTable[i])
+				return i + 1;
+		}
+	}
 }

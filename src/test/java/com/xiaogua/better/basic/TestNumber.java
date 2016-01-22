@@ -17,4 +17,16 @@ public class TestNumber {
 		String plainStr = bg.toPlainString();
 		Assert.assertEquals("12345678901.2346", plainStr);
 	}
+
+	@Test
+	public void testGetMiddleValue() {
+		int low = Integer.MAX_VALUE;
+		int high = Integer.MAX_VALUE;
+		Assert.assertEquals(Integer.MAX_VALUE, getMiddleValue(low, high));
+	}
+
+	public int getMiddleValue(int low, int high) {
+		int mid = low + ((high - low) / 2);
+		return mid;
+	}
 }

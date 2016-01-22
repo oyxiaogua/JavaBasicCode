@@ -34,6 +34,15 @@ public class TestStrCode {
 	}
 
 	@Test
+	public void testStrErrorCode() {
+		String str = "1";
+		// 字符串比较常见错误
+		if (str.equals(1)) {
+			System.out.println("never print out");
+		}
+	}
+
+	@Test
 	public void testConvertNumToExcelStr() {
 		String rtnStr = StrCode.convertNumToExcelStr(731);
 		Assert.assertEquals("ABC", rtnStr);
@@ -162,5 +171,16 @@ public class TestStrCode {
 		System.out.println(StringEscapeUtils.escapeHtml3(html));
 		System.out.println(StringEscapeUtils.escapeHtml4(html));
 		System.out.println(org.springframework.web.util.HtmlUtils.htmlEscape(html));
+	}
+
+	@Test
+	public void testCharacter() {
+		char c = 'c';
+		// convert char to String type
+		String str = Character.toString(c);
+		Assert.assertEquals("c", str);
+		// convert char primitive to Character type
+		Character c2 = Character.valueOf(c);
+		Assert.assertNotNull(c2);
 	}
 }
