@@ -12,13 +12,25 @@ import org.junit.Test;
 
 public class TestList {
 	@Test
+	public void tesCollectionstUnmodifiableList() {
+		final List<String> list = new ArrayList<String>(Arrays.asList("1", "2", "3"));
+		final List<String> unmodifiableList = Collections.unmodifiableList(list);
+		Assert.assertTrue(unmodifiableList.size() == 3);
+		list.remove(0);
+		// 原始数据改变,unmodifiableList跟着改变
+		Assert.assertTrue(unmodifiableList.size() == 2);
+	}
+	
+	@Test
 	public void tesCollectionstSynchronizedList() {
 		final List<String> list = new ArrayList<String>(Arrays.asList("1", "2", "3"));
 		final List<String> synchronizedList = Collections.synchronizedList(list);
 		Assert.assertTrue(synchronizedList.size() == 3);
 		list.remove(0);
-		// 原始数据改变,synchronizedList跟着改变
+		// 原始数据改变,synchronizedList跟着改变 线程安全(原子方法)
 		Assert.assertTrue(synchronizedList.size() == 2);
+		synchronizedList.add("4");
+		Assert.assertEquals("4", list.get(2));
 	}
 
 	@Test
