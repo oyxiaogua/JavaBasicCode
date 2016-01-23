@@ -75,6 +75,19 @@ public class TestStrCode {
 	}
 
 	@Test
+	public void testCleanWhitespace() {
+		String str = " 　\u00a0\u00a0\u3000\u3000   ";
+		Assert.assertEquals(0, StringCommonUtils.trimWhitespace(str).length());
+	}
+
+	@Test
+	public void testContainsIgnoreCase(){
+		String str="";
+		String[] strArr=new String[]{"Tes","TEST"};
+		Assert.assertTrue(StringCommonUtils.containsIgnoreCase(strArr, str));
+	}
+	
+	@Test
 	public void testStrIndex() {
 		String str = "1,3,5,4,6";
 		int index = str.indexOf(3);

@@ -3,6 +3,8 @@ package com.xiaogua.better.basic;
 import java.util.Random;
 
 public class RandomCode {
+	protected static final String baseChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+
 	public static int[] shuffle(int[] array) {
 		int index;
 		Random random = new Random();
@@ -16,5 +18,13 @@ public class RandomCode {
 		}
 
 		return array;
+	}
+
+	public static String randomString(int len) {
+		Random rnd = new Random();
+		StringBuilder sb = new StringBuilder(len);
+		for (int i = 0; i < len; i++)
+			sb.append(baseChars.charAt(rnd.nextInt(baseChars.length())));
+		return sb.toString();
 	}
 }

@@ -5,6 +5,27 @@ import java.util.Map;
 
 public class StringCommonUtils extends org.apache.commons.lang3.StringUtils {
 	/**
+	 * 删除首尾空白字符
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static String trimWhitespace(String str) {
+		if (str == null) {
+			return null;
+		}
+		str = str.trim();
+		StringBuilder sb = new StringBuilder(str);
+		while ((sb.length() > 0) && (Character.isWhitespace(str.charAt(0)))) {
+			sb.deleteCharAt(0);
+		}
+		while ((sb.length() > 0) && (Character.isWhitespace(sb.charAt(sb.length() - 1)))) {
+			sb.deleteCharAt(sb.length() - 1);
+		}
+		return sb.toString();
+	}
+
+	/**
 	 * 判断字符串是否为空或""或者null字符串(未考虑undefined字符串)
 	 * 
 	 * @param str
@@ -213,4 +234,32 @@ public class StringCommonUtils extends org.apache.commons.lang3.StringUtils {
 		return hexStrSb.toString();
 	}
 
+	/**
+	 * 是否包含,不区分大小写
+	 * 
+	 * @param strArr
+	 * @param checkStr
+	 * @return
+	 */
+	public static boolean containsIgnoreCase(String[] strArr, String checkStr) {
+		if (checkStr != null && (strArr != null && strArr.length > 0)) {
+			checkStr = checkStr.toLowerCase();
+			for (String str : strArr) {
+				if (str != null && str.toLowerCase().contains(checkStr)) {
+					return true;
+				}
+			}
+		}
+		if (checkStr == null) {
+			if (strArr == null || strArr.length == 0) {
+				return true;
+			}
+			for (String str : strArr) {
+				if (str == null) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 }

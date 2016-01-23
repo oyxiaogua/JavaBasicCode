@@ -61,6 +61,11 @@ public class TestRandom {
 		System.out.println(Arrays.toString(intArr));
 	}
 
+	@Test
+	public void testRandomString() {
+		System.out.println(RandomCode.randomString(10));
+	}
+
 	private int getRandRate(double rateA[]) {
 		double random = new Random().nextDouble();
 		for (int i = 0; i < rateA.length; i++) {
