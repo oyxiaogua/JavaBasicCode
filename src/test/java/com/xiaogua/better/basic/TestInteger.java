@@ -13,6 +13,18 @@ import org.junit.Test;
 
 public class TestInteger {
 	@Test
+	public void testIntIncrement() {
+		int n = 1;
+		for (int i = 0; i < 100; i++) {
+			n = n++;
+			// 第一： n_copy =n；
+			// 第二n++
+			// 第三n= n_copy
+		}
+		Assert.assertEquals(1, n);
+	}
+
+	@Test
 	public void testIntegerOverFlow() {
 		// 溢出
 		long x = Integer.MAX_VALUE + 1;

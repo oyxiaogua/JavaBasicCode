@@ -5,13 +5,13 @@ import java.util.Map;
 
 public class StringCommonUtils extends org.apache.commons.lang3.StringUtils {
 	/**
-	 * 判断字符串是否为空或""或者null字符串
+	 * 判断字符串是否为空或""或者null字符串(未考虑undefined字符串)
 	 * 
 	 * @param str
 	 * @return boolean
 	 */
 	public static boolean isNull(String str) {
-		if (isBlank(str) || str.toLowerCase().equals("null")) {
+		if (isBlank(str) || str.trim().equals("null")) {
 			return true;
 		} else {
 			return false;
