@@ -27,4 +27,14 @@ public class RandomCode {
 			sb.append(baseChars.charAt(rnd.nextInt(baseChars.length())));
 		return sb.toString();
 	}
+	
+	public static String getRandomBinaryStr(int len){
+		Random rnd = new Random();
+		StringBuilder sb = new StringBuilder(len);
+		sb.append('1');
+		for (int i = 1; i < len; i++){
+			sb.append(rnd.nextInt(2));
+		}
+		return sb.toString();
+	}
 }

@@ -104,6 +104,32 @@ public class TestInteger {
 		Assert.assertEquals(3, geIntLength(999));
 	}
 
+	@Test
+	public void testAddNum() {
+		Assert.assertEquals(27, addNum(13, 14));
+	}
+
+	@Test
+	public void testGetAvg(){
+		int[] arr=new int[]{1,2,3,4,5,6,7,8};
+		double avg=arr[0];
+		for(int i=1,len=arr.length;i<len;i++){
+			avg=(avg*i+arr[i])/(i+1);
+			System.out.println((i+1)+","+avg);
+		}
+	}
+	public int addNum(int m, int n) {
+		int sum = 0;
+		int carry = 0;
+		do {
+			sum = m ^ n;
+			carry = (m & n) << 1;
+			m = sum;
+			n = carry;
+		} while (n != 0);
+		return m;
+	}
+
 	public int geIntLength(int x) {
 		final int[] sizeTable = { 9, 99, 999, 9999, 99999, 999999, 9999999, 99999999, 999999999, Integer.MAX_VALUE };
 		for (int i = 0;; i++) {

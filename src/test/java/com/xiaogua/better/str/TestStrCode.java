@@ -153,7 +153,7 @@ public class TestStrCode {
 		System.out.println("梅花 :\u2663 ");
 		System.out.println("黑桃 : \u2660 ");
 	}
-
+	
 	@Test
 	public void testStrReplace() {
 		String str = "iiiiiaaaammmxiaogua";

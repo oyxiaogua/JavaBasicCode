@@ -1,7 +1,9 @@
 package com.xiaogua.better.basic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -41,5 +43,13 @@ public class CollectionCode {
 			list.add(iterator.next());
 		}
 		return list;
+	}
+
+	public static void sortCnList(List<String> list) {
+		Collections.sort(list, new ChineseCompator());
+	}
+
+	public static void sortCnArray(String[] arrs) {
+		Arrays.sort(arrs, new ChineseCompator());
 	}
 }
