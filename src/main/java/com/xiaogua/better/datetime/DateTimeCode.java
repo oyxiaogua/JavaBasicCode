@@ -4,7 +4,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
+
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
 
 public class DateTimeCode {
 	private static final String[] WEEKDAYS = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
@@ -103,9 +107,10 @@ public class DateTimeCode {
 			w = 0;
 		return WEEKDAYS[w];
 	}
-	
+
 	/**
-	 * @param mjd 修正的儒略日期
+	 * @param mjd
+	 *            修正的儒略日期
 	 * @return
 	 */
 	public static Date mjdToDate(double mjd) {
@@ -114,5 +119,22 @@ public class DateTimeCode {
 
 	public static double dateToMJD(Date date) {
 		return date.getTime() / MILLIS_PER_DAY - EPOCH_MJD;
+	}
+
+	public static Date xmlGregorianCalendarToDate(XMLGregorianCalendar webserviceDate) {
+		GregorianCalendar ca = webserviceDate.toGregorianCalendar();
+		return ca.getTime();
+	}
+
+	public static XMLGregorianCalendar dateToXmlGregorianCalendar(Date date) {
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		XMLGregorianCalendar gc = null;
+		try {
+			gc = DatatypeFactory.newInstance().newXMLGregorianCalendar(cal);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return gc;
 	}
 }

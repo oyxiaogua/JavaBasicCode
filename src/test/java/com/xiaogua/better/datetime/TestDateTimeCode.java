@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -63,6 +65,15 @@ public class TestDateTimeCode {
 		double mjdRtn=DateTimeCode.dateToMJD(new Date());
 		System.out.println(mjdRtn);
 		Date date=DateTimeCode.mjdToDate(mjdRtn);
+		String rtnStr = fullDateFormat.format(date);
+		System.out.println(rtnStr);
+	}
+	
+	@Test
+	public void testXMLGregorianCalendar() {
+		XMLGregorianCalendar xmlCalendar = DateTimeCode.dateToXmlGregorianCalendar(new Date());
+		System.out.println(xmlCalendar.toXMLFormat());
+		Date date = DateTimeCode.xmlGregorianCalendarToDate(xmlCalendar);
 		String rtnStr = fullDateFormat.format(date);
 		System.out.println(rtnStr);
 	}
