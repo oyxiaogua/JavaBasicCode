@@ -1,5 +1,10 @@
 package com.xiaogua.better.str;
 
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+
 public class StrCode {
 	/**
 	 * 数字转Excel编码
@@ -85,7 +90,7 @@ public class StrCode {
 		}
 		return true;
 	}
-	
+
 	public static boolean isRotation(String str1, String str2) {
 		String str3 = str1 + str1;
 		if (str3.indexOf(str2) == -1) {
@@ -93,5 +98,37 @@ public class StrCode {
 		}
 		return true;
 	}
+
+	public static ByteBuffer convertStrToByteBuffer(String str) {
+		return ByteBuffer.wrap(str.getBytes());
+	}
+
+	public static String convertByteBufferToStr(ByteBuffer buffer) {
+		CharBuffer charBuffer = null;
+		try {
+			Charset charset = Charset.forName("UTF-8");
+			CharsetDecoder decoder = charset.newDecoder();
+			charBuffer = decoder.decode(buffer);
+			buffer.flip();
+			return charBuffer.toString();
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
+	}
+
+	public static String convertByteBufferToStr(ByteBuffer buffer, Charset charset) throws Exception {
+		return charset.newDecoder().decode(buffer.duplicate()).toString();
+	}
 	
+	public static byte[] convertByteBufferToByteArr(ByteBuffer buffer) {
+		byte[] byteArr = new byte[buffer.remaining()];
+		buffer.get(byteArr,0, byteArr.length);
+		buffer.flip();  
+		return byteArr;
+	}
+
+	public static ByteBuffer convertByteArrToByteBuffer(byte[] byteArr) {
+		return ByteBuffer.wrap(byteArr);
+	}
 }

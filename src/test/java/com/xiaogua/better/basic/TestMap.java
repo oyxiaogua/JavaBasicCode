@@ -1,6 +1,7 @@
 package com.xiaogua.better.basic;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Assert;
@@ -17,4 +18,17 @@ public class TestMap {
 		Assert.assertTrue(map.containsKey(null));
 		Assert.assertFalse(map.containsKey("key_4"));
 	}
+	
+	@Test
+	public void testTreeMap() {
+		TreeMap<String, Object> treeMap = new TreeMap<>();
+		treeMap.put("1", "a");
+		treeMap.put("2", "b");
+		treeMap.put("3", "c");
+		treeMap.put("4", "d");
+		// 返回大于或等于给定的键，或null，如果不存在这样的键
+		Assert.assertEquals("2", treeMap.ceilingKey("1.5"));
+		Assert.assertNull(treeMap.ceilingKey("4.0"));
+	}
+	
 }

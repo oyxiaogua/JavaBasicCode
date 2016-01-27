@@ -3,6 +3,7 @@ package com.xiaogua.better.basic;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -103,4 +104,19 @@ public class TestList {
 		}
 		Assert.assertTrue(list.size() == 0);
 	}
+	
+	@Test(expected=ConcurrentModificationException.class)
+	public void testAddElementException() {
+		List<String> list = new ArrayList<String>();
+		list.add("1");
+		list.add("2");
+		list.add("3");
+		for (String s : list) {
+			if (s.equals("2")) {
+				list.add("4");
+			}
+		}
+		System.out.println(list.size());
+	}
+	
 }

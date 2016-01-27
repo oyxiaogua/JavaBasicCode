@@ -2,6 +2,7 @@ package com.xiaogua.better.basic;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -32,5 +33,15 @@ public class TestCollectionCode {
 		String[] strArr = list.toArray(new String[0]);
 		CollectionCode.sortCnArray(strArr);
 		System.out.println(Arrays.toString(strArr));
+	}
+	
+	@Test
+	public void testCollectionsFrequency() {
+		String strs = "hello world what a small world";
+		System.out.println(strs);
+		List<String> tempList = Arrays.asList(strs.split(" "));
+		for (String stemp : tempList) {
+			System.out.println(stemp + " ->times:" + Collections.frequency(tempList, stemp));
+		}
 	}
 }

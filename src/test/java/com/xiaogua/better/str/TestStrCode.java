@@ -1,5 +1,9 @@
 package com.xiaogua.better.str;
 
+import java.nio.ByteBuffer;
+import java.nio.CharBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -81,12 +85,12 @@ public class TestStrCode {
 	}
 
 	@Test
-	public void testContainsIgnoreCase(){
-		String str="";
-		String[] strArr=new String[]{"Tes","TEST"};
+	public void testContainsIgnoreCase() {
+		String str = "";
+		String[] strArr = new String[] { "Tes", "TEST" };
 		Assert.assertTrue(StringCommonUtils.containsIgnoreCase(strArr, str));
 	}
-	
+
 	@Test
 	public void testStrIndex() {
 		String str = "1,3,5,4,6";
@@ -153,7 +157,7 @@ public class TestStrCode {
 		System.out.println("梅花 :\u2663 ");
 		System.out.println("黑桃 : \u2660 ");
 	}
-	
+
 	@Test
 	public void testStrReplace() {
 		String str = "iiiiiaaaammmxiaogua";
@@ -195,5 +199,44 @@ public class TestStrCode {
 		// convert char primitive to Character type
 		Character c2 = Character.valueOf(c);
 		Assert.assertNotNull(c2);
+	}
+
+	@Test
+	public void testStrByteBufferConvert() throws Exception {
+		String str = "字符串转换hello";
+		ByteBuffer buffer = StrCode.convertStrToByteBuffer(str);
+		String rtnStr = new String(buffer.array(), buffer.position(), buffer.limit());
+		System.out.println(rtnStr);
+		System.out.println(StrCode.convertByteBufferToStr(buffer));
+		System.out.println(String.format("position=%s,limit=%s,capacity=%s", buffer.position(), buffer.limit(),
+				buffer.capacity()));
+		System.out.println(StrCode.convertByteBufferToStr(buffer));
+		System.out.println(String.format("position=%s,limit=%s,capacity=%s", buffer.position(), buffer.limit(),
+				buffer.capacity()));
+
+		Charset charset = Charset.forName("UTF-8");
+		System.out.println(StrCode.convertByteBufferToStr(buffer, charset));
+		System.out.println(String.format("position=%s,limit=%s,capacity=%s", buffer.position(), buffer.limit(),
+				buffer.capacity()));
+
+		System.out.println(StrCode.convertByteBufferToStr(buffer, charset));
+		System.out.println(String.format("position=%s,limit=%s,capacity=%s", buffer.position(), buffer.limit(),
+				buffer.capacity()));
+	}
+
+	@Test
+	public void testByteArrByteBufferConvert() throws Exception {
+		String str = "字符串转换hello";
+		ByteBuffer buffer = StrCode.convertStrToByteBuffer(str);
+		System.out.println(String.format("position=%s,limit=%s,capacity=%s", buffer.position(), buffer.limit(),
+				buffer.capacity()));
+
+		byte[] byteArr = StrCode.convertByteBufferToByteArr(buffer);
+		System.out.println(byteArr.length);
+		
+		ByteBuffer buffer2 = StrCode.convertByteArrToByteBuffer(byteArr);
+		System.out.println(String.format("position=%s,limit=%s,capacity=%s", buffer2.position(), buffer2.limit(),
+				buffer2.capacity()));
+
 	}
 }
