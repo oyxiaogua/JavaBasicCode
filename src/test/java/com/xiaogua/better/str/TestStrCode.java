@@ -1,9 +1,7 @@
 package com.xiaogua.better.str;
 
 import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
 import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;

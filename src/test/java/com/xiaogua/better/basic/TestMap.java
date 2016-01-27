@@ -18,10 +18,10 @@ public class TestMap {
 		Assert.assertTrue(map.containsKey(null));
 		Assert.assertFalse(map.containsKey("key_4"));
 	}
-	
+
 	@Test
 	public void testTreeMap() {
-		TreeMap<String, Object> treeMap = new TreeMap<>();
+		TreeMap<String, Object> treeMap = new TreeMap<String, Object>();
 		treeMap.put("1", "a");
 		treeMap.put("2", "b");
 		treeMap.put("3", "c");
@@ -30,5 +30,19 @@ public class TestMap {
 		Assert.assertEquals("2", treeMap.ceilingKey("1.5"));
 		Assert.assertNull(treeMap.ceilingKey("4.0"));
 	}
-	
+
+	@Test(expected = NullPointerException.class)
+	public void testTreeMapError() {
+		TreeMap<String, Object> treeMap = new TreeMap<String, Object>();
+		treeMap.put(null, "test_1");
+	}
+
+	@Test
+	public void testTreeMapNormal() {
+		//提供一个能容忍null值的排序方法
+		TreeMap<String, Object> treeMap = new TreeMap<String, Object>(MyCaseInsensitiveComparator.INSTANCE);
+		treeMap.put(null, "test_1");
+		Assert.assertEquals("test_1", treeMap.get(null));
+	}
+
 }
