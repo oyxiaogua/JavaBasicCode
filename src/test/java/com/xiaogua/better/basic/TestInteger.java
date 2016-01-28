@@ -110,14 +110,20 @@ public class TestInteger {
 	}
 
 	@Test
-	public void testGetAvg(){
-		int[] arr=new int[]{1,2,3,4,5,6,7,8};
-		double avg=arr[0];
-		for(int i=1,len=arr.length;i<len;i++){
-			avg=(avg*i+arr[i])/(i+1);
-			System.out.println((i+1)+","+avg);
+	public void testGetAvg() {
+		int[] arr = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+		double avg = arr[0];
+		for (int i = 1, len = arr.length; i < len; i++) {
+			avg = (avg * i + arr[i]) / (i + 1);
+			System.out.println((i + 1) + "," + avg);
 		}
 	}
+
+	@Test
+	public void testSwapInt() {
+		swapInt(Integer.MAX_VALUE, Integer.MIN_VALUE);
+	}
+
 	public int addNum(int m, int n) {
 		int sum = 0;
 		int carry = 0;
@@ -136,5 +142,14 @@ public class TestInteger {
 			if (x <= sizeTable[i])
 				return i + 1;
 		}
+	}
+
+	public void swapInt(int i, int j) {
+		if (i == j)
+			return;
+		i ^= j;
+		j ^= i;
+		i ^= j;
+		System.out.println(i + "," + j);
 	}
 }

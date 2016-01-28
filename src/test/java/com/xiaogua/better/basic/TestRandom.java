@@ -65,6 +65,27 @@ public class TestRandom {
 	public void testRandomString() {
 		System.out.println(RandomCode.randomString(10));
 	}
+	
+	@Test
+	public void testRandomStringWithCommonLang3() {
+		System.out.println(RandomCode.randomStringWithCommonLang3(10));
+	}
+
+	@Test
+	public void testGenerateRandomArray() {
+		int[] rtnArr = RandomCode.generateRandomArray(1, 20, 10);
+		System.out.println(Arrays.toString(rtnArr));
+		rtnArr = RandomCode.generateRandomArrayWithJava7(1, 20, 10);
+		System.out.println(Arrays.toString(rtnArr));
+		rtnArr = RandomCode.generateRandomArrayWithJava8(1, 20, 10);
+		System.out.println(Arrays.toString(rtnArr));
+	}
+
+	@Test
+	public void testGenerateRandomArrSumOfN() {
+		int[] rtnArr = RandomCode.generateRandomArrSumOfN(20, 9, true);
+		System.out.println(Arrays.toString(rtnArr));
+	}
 
 	private int getRandRate(double rateA[]) {
 		double random = new Random().nextDouble();

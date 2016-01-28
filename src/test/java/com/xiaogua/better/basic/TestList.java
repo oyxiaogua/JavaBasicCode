@@ -11,6 +11,9 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
+
 public class TestList {
 	@Test
 	public void tesCollectionstUnmodifiableList() {
@@ -117,6 +120,31 @@ public class TestList {
 			}
 		}
 		System.out.println(list.size());
+	}
+	
+	@Test
+	public void testIsListSortedWithGuava() {
+		List<String> secConferenceEast = Lists.newArrayList("Florida", "Georgia", "Missouri", "South Carolina",
+				"Tennessee", "Vanderbilt", null);
+		boolean isSorted = Ordering.natural().nullsLast().isOrdered(secConferenceEast);
+		System.out.println(isSorted);
+	}
+	
+	@Test
+	public void testRemovingNullsWithJava() {
+		final List<Integer> list = Lists.newArrayList(null, 1, null);
+		while (list.remove(null))
+			;
+		Assert.assertTrue(list.size()==1);
+		Assert.assertEquals(1, list.get(0).intValue());
+	}
+	
+	@Test
+	public void testRemovingNullsWithJava2() {
+		final List<Integer> list = Lists.newArrayList(null, 1, null);
+		list.removeAll(Collections.singleton(null));
+		Assert.assertTrue(list.size()==1);
+		Assert.assertEquals(1, list.get(0).intValue());
 	}
 	
 }

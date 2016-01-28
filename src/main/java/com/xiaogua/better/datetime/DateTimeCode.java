@@ -15,7 +15,11 @@ public class DateTimeCode {
 	private static final int[] DAYS_OF_MONTH = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 	public static final double EPOCH_MJD = -40587.0;
 	public static final double MILLIS_PER_DAY = 86400000.0;
-
+	/** HTTP头中日期时间格式 */
+	public final static String HTTP_DATETIME_PATTERN = "EEE, dd MMM yyyy HH:mm:ss z";
+	/** 标准日期时间格式，精确到毫秒 */
+	public final static String NORM_DATETIME_MS_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
+	
 	/**
 	 * 获取GMT时间
 	 * 

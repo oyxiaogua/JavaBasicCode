@@ -3,8 +3,10 @@ package com.xiaogua.better.basic;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class TestCollectionCode {
@@ -43,5 +45,10 @@ public class TestCollectionCode {
 		for (String stemp : tempList) {
 			System.out.println(stemp + " ->times:" + Collections.frequency(tempList, stemp));
 		}
+	}
+	@Test
+	public void testEmptyListIterator() {
+		Iterator<String> strItor = Collections.emptyIterator();
+		Assert.assertFalse(strItor.hasNext());
 	}
 }
