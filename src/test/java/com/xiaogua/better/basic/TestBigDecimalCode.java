@@ -13,5 +13,9 @@ public class TestBigDecimalCode {
 		System.out.println(decimal.toString());
 		BigDecimal rtnDecimal = BigDecimalCode.getWithoutTrailingZeroes(decimal);
 		Assert.assertEquals("1233.3", rtnDecimal.toString());
+		
+		decimal = new BigDecimal("6e2");
+		rtnDecimal = BigDecimalCode.getWithoutTrailingZeroes(decimal);
+		Assert.assertEquals("600", rtnDecimal.toString());
 	}
 }
