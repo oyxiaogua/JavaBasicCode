@@ -1,12 +1,13 @@
 package com.xiaogua.better.basic;
 
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -42,6 +43,13 @@ public class TestMap {
 	public void testTreeMapError() {
 		TreeMap<String, Object> treeMap = new TreeMap<String, Object>();
 		treeMap.put(null, "test_1");
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testSingletonMap() {
+		// 不可修改
+		Map<String, String> map = Collections.singletonMap("key_1", "value_1");
+		map.put("key_2", "value_2");
 	}
 
 	@Test
@@ -88,7 +96,7 @@ public class TestMap {
 		Assert.assertTrue(map.size() == 4);
 		Assert.assertEquals("test", map.get("database.username"));
 	}
-	
+
 	@Test
 	public void testConvertPropertiesToMapWithJava8() {
 		Properties properties = new Properties();

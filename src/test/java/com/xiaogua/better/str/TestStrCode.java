@@ -162,6 +162,10 @@ public class TestStrCode {
 		String regex = "(.)\\1+";
 		str = str.replaceAll(regex, "$1");
 		Assert.assertEquals("iamxiaogua", str);
+		
+		str="a    b    c   d  e  ";
+		System.out.println(str.replace(" ", "")+"---="+str.replace(" ", "").length());
+		System.out.println(str.replaceAll(" ", "")+"----="+str.replaceAll(" ", "").length());
 	}
 
 	@Test
@@ -237,4 +241,5 @@ public class TestStrCode {
 				buffer2.capacity()));
 
 	}
+	
 }

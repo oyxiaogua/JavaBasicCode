@@ -2,6 +2,7 @@ package com.xiaogua.better.xml.jdom;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,4 +56,36 @@ public class JDom2Code {
 			write(out, fstack.getLineSeparator());
 		}
 	};
+
+	public static org.jdom2.Document createDocumentWithJdom2() {
+		org.jdom2.Document document = new org.jdom2.Document();
+		return document;
+	}
+
+	/**
+	 * 输出元素内容
+	 * 
+	 * @param element
+	 */
+	public static void printElementWithJdom2(org.jdom2.Element element) {
+		printElementContentWithJdom2(element);
+		List<org.jdom2.Element> childElementList = element.getChildren();
+		if (childElementList.size() > 0) {
+			for (org.jdom2.Element childElement : childElementList) {
+				printElementWithJdom2(childElement);
+			}
+		}
+	}
+
+	public static void printElementContentWithJdom2(org.jdom2.Element element) {
+		List<org.jdom2.Attribute> attrList = element.getAttributes();
+		if (attrList.size() > 0) {
+			for (org.jdom2.Attribute attribute : attrList) {
+				System.out.println(String.format("name=%s,value=%s", attribute.getName(), attribute.getValue()));
+			}
+		}
+		System.out.println(String.format("name=%s,value=%s,type=%s", element.getName(), element.getTextTrim(),
+				element.getCType()));
+	}
+
 }

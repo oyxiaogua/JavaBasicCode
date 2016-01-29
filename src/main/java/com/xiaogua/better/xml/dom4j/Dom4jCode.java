@@ -1,5 +1,8 @@
 package com.xiaogua.better.xml.dom4j;
 
+import java.util.Iterator;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,4 +58,36 @@ public class Dom4jCode {
 		return dom4jDoc;
 	}
 
+	public static org.dom4j.Document createDocumentWithDom4j() throws Exception {
+		return org.dom4j.DocumentHelper.createDocument();
+	}
+
+	/**
+	 * 输出元素内容
+	 * @param element
+	 */
+	public static void printElementWithDom4j(org.dom4j.Element element) {
+		printElementContentWithDom4j(element);
+		List<org.dom4j.Element> elementsList = element.elements();
+		if (elementsList.size() > 0) {
+			for (Iterator<org.dom4j.Element> it = elementsList.iterator(); it.hasNext();) {
+				org.dom4j.Element elem = (org.dom4j.Element) it.next();
+				// 递归遍历
+				printElementWithDom4j(elem);
+			}
+		}
+	}
+
+	public static void printElementContentWithDom4j(org.dom4j.Element element) {
+		List<org.dom4j.Attribute> attrList = element.attributes();
+		if (attrList.size() > 0) {
+			for (org.dom4j.Attribute attr : attrList) {
+				System.out.println(String.format("attr name=%s,path=%s,value=%s,type=%s,type name=%s", attr.getName(),
+						attr.getPath(), attr.getValue(), attr.getNodeType(), attr.getNodeTypeName()));
+			}
+		}
+		System.out.println(String.format("element name=%s,path=%s,value=%s,type=%s,type name=%s", element.getName(),
+				element.getPath(), element.getTextTrim(), element.getNodeType(), element.getNodeTypeName()));
+
+	}
 }
