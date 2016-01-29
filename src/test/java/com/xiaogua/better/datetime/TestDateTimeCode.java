@@ -59,16 +59,16 @@ public class TestDateTimeCode {
 		boolean isWeekend = DateTimeCode.isWeekend(new Date());
 		System.out.println(isWeekend);
 	}
-	
+
 	@Test
-	public void testMJD(){
-		double mjdRtn=DateTimeCode.dateToMJD(new Date());
+	public void testMJD() {
+		double mjdRtn = DateTimeCode.dateToMJD(new Date());
 		System.out.println(mjdRtn);
-		Date date=DateTimeCode.mjdToDate(mjdRtn);
+		Date date = DateTimeCode.mjdToDate(mjdRtn);
 		String rtnStr = fullDateFormat.format(date);
 		System.out.println(rtnStr);
 	}
-	
+
 	@Test
 	public void testXMLGregorianCalendar() {
 		XMLGregorianCalendar xmlCalendar = DateTimeCode.dateToXmlGregorianCalendar(new Date());
@@ -77,4 +77,19 @@ public class TestDateTimeCode {
 		String rtnStr = fullDateFormat.format(date);
 		System.out.println(rtnStr);
 	}
+
+	@Test
+	public void testParseDateTime() {
+		Date date = DateTimeCode.parseDateTime("2015-11-12");
+		String rtnStr = fullDateFormat.format(date);
+		System.out.println(rtnStr);
+	}
+
+	@Test
+	public void testTruncateDate() {
+		Date date = DateTimeCode.truncateDate(new Date());
+		String rtnStr = fullDateFormat.format(date);
+		System.out.println(rtnStr);
+	}
+
 }

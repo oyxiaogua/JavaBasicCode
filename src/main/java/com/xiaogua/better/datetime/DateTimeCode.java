@@ -141,4 +141,17 @@ public class DateTimeCode {
 		}
 		return gc;
 	}
+	
+	public static Date parseDateTime(String timeString) {
+		try {
+			return org.apache.commons.lang3.time.DateUtils.parseDate(timeString,
+					new String[] { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd" ,"yyyyMMdd"});
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public static Date truncateDate(Date date) {
+		return org.apache.commons.lang3.time.DateUtils.truncate(date, Calendar.DATE);
+	}
 }
