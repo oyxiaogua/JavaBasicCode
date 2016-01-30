@@ -9,6 +9,8 @@ import java.util.Map;
 import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.Node;
+import org.dom4j.XPath;
+import org.jaxen.SimpleNamespaceContext;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -94,6 +96,22 @@ public class TestDom4jCode {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	@Test
+	public void testXpathNamespaceWithDom4j_2() throws Exception {
+		String str="<ns:root  xmlns:ns=\"http://www.abcd.com\">  <ns:books>    <ns:book>        <ns:author>test_1</ns:author>     </ns:book><ns:book>        <ns:author>test_2</ns:author>     </ns:book>  </ns:books></ns:root>";
+		org.dom4j.Document dom4jDoc = Dom4jCode.fragment2DocumentWithDom4j(str);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("ns", "http://www.abcd.com");
+
+		XPath xpath =dom4jDoc.createXPath("//ns:book/ns:author");
+		xpath.setNamespaceContext(new SimpleNamespaceContext(map));
+		List<Node> nodesList = (ArrayList<org.dom4j.Node>)xpath.selectNodes(dom4jDoc);
+		for (Node node : nodesList) {
+			System.out.println(node.getName()+"---="+node.getText());
+		}
+	}
+	
 	@Test
 	public void testDom4jDocmentCount() throws Exception {
 		String str = "<books><book>1</book><book>2</book><book>3</book></books>";

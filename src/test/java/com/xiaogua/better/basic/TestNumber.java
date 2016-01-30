@@ -3,9 +3,10 @@ package com.xiaogua.better.basic;
 import java.math.BigDecimal;
 import java.math.MathContext;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import org.junit.Assert;
+import com.xiaogua.better.str.StringCommonUtils;
 
 public class TestNumber {
 
@@ -31,8 +32,8 @@ public class TestNumber {
 		String str = RandomCode.getRandomBinaryStr(63);
 		char[] charArr = str.toCharArray();
 		int charLen = charArr.length;
-		long total = 1;//位数太多total会溢出
-		int remain = 1;//余数
+		long total = 1;// 位数太多total会溢出
+		int remain = 1;// 余数
 		for (int i = 1; i < charLen; i++) {
 			if (charArr[i] == '1') {
 				total = total * 2 + 1;
@@ -44,7 +45,26 @@ public class TestNumber {
 			remain = remain % 3;
 		}
 		System.out.println(str + "," + total);
-		System.out.println(total%3+","+remain+","+(remain == 0));
+		System.out.println(total % 3 + "," + remain + "," + (remain == 0));
+	}
+
+	@Test
+	public void testIsNumber() {
+		System.out.println(isNumberWithCommonsLang3("-11"));
+		System.out.println(isNumberWithCommonsLang3("1e6"));
+		System.out.println(isNumberWithCommonsLang3("0011"));
+		System.out.println(isNumberWithCommonsLang3("+11"));
+	}
+
+	public final static boolean isNumberWithCommonsLang3(String str) {
+		if (StringCommonUtils.isBlank(str)) {
+			return false;
+		}
+		str = str.trim();
+		if (str.startsWith("+")) {
+			str = str.substring(1);
+		}
+		return org.apache.commons.lang3.math.NumberUtils.isNumber(str);
 	}
 
 	public int getMiddleValue(int low, int high) {

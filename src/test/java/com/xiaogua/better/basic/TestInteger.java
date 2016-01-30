@@ -152,4 +152,37 @@ public class TestInteger {
 		i ^= j;
 		System.out.println(i + "," + j);
 	}
+
+	@Test
+	public void testGetCapacity() {
+		System.out.println(getCapacity(126));
+	}
+	
+	/**
+	 * 根据需要存储的元素个数确定HashMap等Map接口实现类的初始容量(使用默认的负载因子：0.75)
+	 * 
+	 * @param capacity
+	 *            需要存储的元素个数
+	 * @return
+	 */
+	public static final int getCapacity(int capacity) {
+		return getCapacity(capacity, 0.75f);
+	}
+
+	/**
+	 * 根据需要存储的元素个数确定HashMap等Map接口实现类的初始容量
+	 * 
+	 * @param capacity
+	 *            需要存储的元素个数
+	 * @param loadFactor
+	 *            负载因子，必须介于0-1之间，如果不在此范围，内部也不检测，后果自负
+	 * @return
+	 */
+	public static final int getCapacity(int capacity, float loadFactor) {
+		int initCapacity = 16;
+		while (capacity > initCapacity * loadFactor) {
+			initCapacity <<= 1;// 如果默认容量小于指定的期望，则扩大一倍
+		}
+		return initCapacity;
+	}
 }
