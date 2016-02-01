@@ -100,4 +100,21 @@ public class ArrayCode {
 		}
 		return temp;
 	}
+	
+	public static String[] removeEmptyStrings(String[] original, boolean trim) {
+		if (original==null||original.length == 0) {
+			return original;
+		}
+		String[] strings = new String[original.length];
+		int length = 0;
+		for (String s : original) {
+			if (s != null) {
+				String trimmed = trim ? s.trim() : s;
+				if (!trimmed.isEmpty()) {
+					strings[length++] = s;
+				}
+			}
+		}
+		return Arrays.copyOfRange(strings, 0, length);
+	}
 }

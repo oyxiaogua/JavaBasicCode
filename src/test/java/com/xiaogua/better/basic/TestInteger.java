@@ -124,6 +124,15 @@ public class TestInteger {
 		swapInt(Integer.MAX_VALUE, Integer.MIN_VALUE);
 	}
 
+	public int countNumOf1(int x) {
+		int num = 0;
+		while (x != 0) {
+			x &= (x - 1);
+			num++;
+		}
+		return num;
+	}
+
 	public int addNum(int m, int n) {
 		int sum = 0;
 		int carry = 0;
@@ -144,6 +153,9 @@ public class TestInteger {
 		}
 	}
 
+	/*
+	 * 交换2个数
+	 */
 	public void swapInt(int i, int j) {
 		if (i == j)
 			return;
@@ -155,9 +167,65 @@ public class TestInteger {
 
 	@Test
 	public void testGetCapacity() {
-		System.out.println(getCapacity(126));
+		int num = new Random().nextInt(Integer.MAX_VALUE);
+		System.out.println(num + "," + getCapacity(num, 1));
+		System.out.println(num + "," + closestPowerOf2Number(num));
 	}
-	
+
+	@Test
+	public void testIntegerNumberOfZeros() {
+		int num = 12345678;
+		String binStr = Integer.toBinaryString(num);
+		System.out.println(binStr);
+		// 从最左边算起连续的0的总数量(填充0)
+		int result = Integer.numberOfLeadingZeros(num);
+		System.out.println(result);
+		// 从最右边算起连续的0的总数量
+		result = Integer.numberOfTrailingZeros(num);
+		System.out.println(result);
+	}
+
+	@Test
+	public void testIntegerToBinaryString() {
+		int num = 1234567;
+		// 返回二进制字符串
+		String str = Integer.toBinaryString(num);
+		System.out.println(str);
+		// 二进制串中1的总数量
+		int numOf1 = Integer.bitCount(num);
+		System.out.println(numOf1 + "," + countNumOf1(num));
+
+		// 二进制转10进制
+		int rtnNum = Integer.valueOf(str, 2);
+		Assert.assertEquals(num, rtnNum);
+
+		// 负数二进制转为10进制
+		num = -1 * num;
+		str = Integer.toBinaryString(num);
+		long longRtn = Long.parseLong(str, 2);
+		rtnNum = (int) longRtn;
+		System.out.println(str + "," + rtnNum);
+	}
+
+	@Test
+	public void testIntegerHex() {
+		int intNum = 12345678;
+		// 十进制转16进制
+		String hexStr = Integer.toHexString(intNum);
+		System.out.println(hexStr);
+
+		// 十进制转成8进制
+		String octStr = Integer.toOctalString(intNum);
+		System.out.println(octStr);
+
+		// 16进制转为10进制
+		int rtnNum = Integer.valueOf(hexStr, 16);
+		System.out.println(rtnNum);
+		// 8进制转为10进制
+		rtnNum = Integer.valueOf(octStr, 8);
+		System.out.println(rtnNum);
+	}
+
 	/**
 	 * 根据需要存储的元素个数确定HashMap等Map接口实现类的初始容量(使用默认的负载因子：0.75)
 	 * 
@@ -184,5 +252,9 @@ public class TestInteger {
 			initCapacity <<= 1;// 如果默认容量小于指定的期望，则扩大一倍
 		}
 		return initCapacity;
+	}
+	
+	public static int closestPowerOf2Number(final int number) {
+		return number == 0 ? 0 : 1 << (32 - Integer.numberOfLeadingZeros(number - 1));
 	}
 }

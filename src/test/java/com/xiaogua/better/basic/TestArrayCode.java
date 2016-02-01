@@ -99,4 +99,11 @@ public class TestArrayCode {
 		Assert.assertEquals("hello", s);
 	}
 	
+	@Test
+	public void testRemoveEmptyStrings() {
+		String[] strArr = new String[] { " ", null, "    ", "", "a" };
+		String[] rtnArr = ArrayCode.removeEmptyStrings(strArr, true);
+		System.out.println(Arrays.toString(rtnArr));
+	}
+	
 }

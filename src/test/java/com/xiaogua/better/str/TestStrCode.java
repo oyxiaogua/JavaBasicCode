@@ -2,6 +2,7 @@ package com.xiaogua.better.str;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.text.StringCharacterIterator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -240,6 +241,29 @@ public class TestStrCode {
 		System.out.println(String.format("position=%s,limit=%s,capacity=%s", buffer2.position(), buffer2.limit(),
 				buffer2.capacity()));
 
+	}
+	
+	@Test
+	public void testStringCharacterIterator() {
+		String str = "\"测试\"";
+		StringBuffer sb = new StringBuffer();
+		StringCharacterIterator iterator = new StringCharacterIterator(str);
+		char myChar = iterator.current();
+		while (myChar != StringCharacterIterator.DONE) {
+			if (myChar == '\"') {
+				sb.append("\\\"");
+			} else if (myChar == '\n') {
+				sb.append("\\n");
+			} else if (myChar == '\r') {
+				sb.append("\\r");
+			} else if (myChar == '\\') {
+				sb.append("\\\\");
+			} else {
+				sb.append(myChar);
+			}
+			myChar = iterator.next();
+		}
+		System.out.println(str+","+sb.toString());
 	}
 	
 }
