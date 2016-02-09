@@ -3,10 +3,12 @@ package com.xiaogua.better.basic;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,6 +18,15 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class TestMap {
+	@Test
+	public void testMapCompute(){
+		Map<String,String> map=new HashMap<String,String>();
+		map.put("key_1", "value_1");
+		String key="key_1";
+		map.compute(key, (existingKey ,existingValue) ->{return  existingKey+","+existingValue;});
+		System.out.println(map);
+	}
+	
 	@Test
 	public void testConvertStringArrayToMap() {
 		String[][] strArr = { { "key_1", "value_2" }, { null, "null_1" }, { "key_2", null }, { "key_3", "" },
@@ -109,5 +120,54 @@ public class TestMap {
 				.collect(Collectors.toMap(e -> String.valueOf(e.getKey()), e -> String.valueOf(e.getValue())));
 		Assert.assertTrue(map.size() == 4);
 		Assert.assertEquals("test", map.get("database.username"));
+	}
+	
+	@Test
+	public void testMapEquals() {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("key_1", "value_1");
+		map.put(null, "");
+		
+		Map<String, String> map2 = new HashMap<String, String>();
+		map2.put("key_1", "value_1");
+		map2.put(null, null);
+		boolean isEqual = mapEquals(map, map2);
+		Assert.assertFalse(isEqual);
+	}
+	
+	@Test
+	public void testJava8MapMerge() {
+		Set<String> set = new HashSet<String>();
+		set.add("test_1");
+		set.add("test_2");
+		set.add("test_3");
+
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		map.put("test_1", 1);
+		map.put("test_4", 0);
+
+		//set key merge to map
+		set.stream().forEach(match -> map.merge(match, 0, Integer::sum));
+		System.out.println(map);
+	}
+	
+	public static boolean mapEquals(Map<?, ?> m1, Map<?, ?> m2) {
+		if (m1.size() != m2.size()) {
+			return false;
+		}
+
+		for (Map.Entry<?, ?> e : m1.entrySet()) {
+			Object o = m2.get(e.getKey());
+			if (e.getValue() == null && o != null) {
+				return false;
+			}
+			if (o == null && e.getValue() != null) {
+				return false;
+			}
+			if (o != null && !e.getValue().equals(o)) {
+				return false;
+			}
+		}
+		return true;
 	}
 }

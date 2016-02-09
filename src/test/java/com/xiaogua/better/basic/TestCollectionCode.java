@@ -51,4 +51,22 @@ public class TestCollectionCode {
 		Iterator<String> strItor = Collections.emptyIterator();
 		Assert.assertFalse(strItor.hasNext());
 	}
+	
+	@Test
+	public void testCollectionsCheckedList(){
+		List<String> list = new ArrayList<String>();
+		list.add("test");
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		//TODO 未知api
+		List<String> rtn = Collections.checkedList(list, String.class);
+		System.out.println(rtn);
+	}
+	
+	@Test
+	public void testCollectionsNCopies(){
+		List<Integer> rtnList = Collections.nCopies(3, 1);
+		System.out.println(rtnList);
+	}
 }

@@ -13,6 +13,18 @@ public class TestArrayCode {
 		a = (int[]) ArrayCode.resizeArray(a, 5);
 		Assert.assertEquals(5, a.length);
 	}
+	
+	@Test
+	public void testPrintArr() {
+		int[] intArr = new int[] { 1, 2, 3, 4, 5 };
+		System.out.println(Arrays.toString(intArr));
+
+		int[][] mutilArr = new int[3][];
+		mutilArr[0] = new int[] { 1, 2, 3 };
+		mutilArr[1] = new int[] { 4, 5, 6, 7, 8 };
+		mutilArr[2] = new int[] { 9, 10, 11, 12, 13 };
+		System.out.println(Arrays.deepToString(mutilArr));
+	}
 
 	@Test
 	public void testGetArrayDimension() {
@@ -104,6 +116,13 @@ public class TestArrayCode {
 		String[] strArr = new String[] { " ", null, "    ", "", "a" };
 		String[] rtnArr = ArrayCode.removeEmptyStrings(strArr, true);
 		System.out.println(Arrays.toString(rtnArr));
+	}
+	
+	@Test
+	public void testCreateMutilDimensionArray2(){
+		int[] initArr=new int[]{1,2,3,4,5};
+		int[][] intArr=new int[][]{initArr};//int[1][initArr.length]
+		System.out.println(intArr.length+","+intArr[0].length);
 	}
 	
 }
