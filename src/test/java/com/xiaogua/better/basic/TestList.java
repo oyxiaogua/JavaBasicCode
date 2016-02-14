@@ -24,7 +24,7 @@ public class TestList {
 		// 原始数据改变,unmodifiableList跟着改变
 		Assert.assertTrue(unmodifiableList.size() == 2);
 	}
-	
+
 	@Test
 	public void tesCollectionstSynchronizedList() {
 		final List<String> list = new ArrayList<String>(Arrays.asList("1", "2", "3"));
@@ -107,8 +107,8 @@ public class TestList {
 		}
 		Assert.assertTrue(list.size() == 0);
 	}
-	
-	@Test(expected=ConcurrentModificationException.class)
+
+	@Test(expected = ConcurrentModificationException.class)
 	public void testAddElementException() {
 		List<String> list = new ArrayList<String>();
 		list.add("1");
@@ -121,7 +121,7 @@ public class TestList {
 		}
 		System.out.println(list.size());
 	}
-	
+
 	@Test
 	public void testIsListSortedWithGuava() {
 		List<String> secConferenceEast = Lists.newArrayList("Florida", "Georgia", "Missouri", "South Carolina",
@@ -129,22 +129,36 @@ public class TestList {
 		boolean isSorted = Ordering.natural().nullsLast().isOrdered(secConferenceEast);
 		System.out.println(isSorted);
 	}
-	
+
 	@Test
 	public void testRemovingNullsWithJava() {
 		final List<Integer> list = Lists.newArrayList(null, 1, null);
 		while (list.remove(null))
 			;
-		Assert.assertTrue(list.size()==1);
+		Assert.assertTrue(list.size() == 1);
 		Assert.assertEquals(1, list.get(0).intValue());
 	}
-	
+
 	@Test
 	public void testRemovingNullsWithJava2() {
 		final List<Integer> list = Lists.newArrayList(null, 1, null);
 		list.removeAll(Collections.singleton(null));
-		Assert.assertTrue(list.size()==1);
+		Assert.assertTrue(list.size() == 1);
 		Assert.assertEquals(1, list.get(0).intValue());
 	}
-	
+
+	@Test
+	public void testConvertListValue() {
+		List<List<String>> list = new ArrayList<List<String>>();
+		list.add(Arrays.<String>asList(null, "a"));
+		list.add(Arrays.<String>asList(null, "b"));
+		list.add(Arrays.<String>asList(null, null));
+		list.add(Arrays.<String>asList());
+		List<String> rtnList = ListCode.convertListListWithFlatMap(list);
+		System.out.println(rtnList);
+
+		List<String> rtnList2 = ListCode.convertListValueWithReduce(list);
+		System.out.println(rtnList2);
+	}
+
 }

@@ -2,6 +2,8 @@ package com.xiaogua.better.basic;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.Spliterator.OfInt;
+import java.util.function.IntConsumer;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -123,6 +125,28 @@ public class TestArrayCode {
 		int[] initArr=new int[]{1,2,3,4,5};
 		int[][] intArr=new int[][]{initArr};//int[1][initArr.length]
 		System.out.println(intArr.length+","+intArr[0].length);
+		System.out.println(Arrays.deepToString(intArr));
+	}
+	
+	@Test
+	public void testArraySpliterator() {
+		int len = 10;
+		int[] intArr = new int[len];
+		Arrays.setAll(intArr, i -> i);
+		OfInt rtnInt = Arrays.spliterator(intArr);
+		System.out.println(rtnInt.getExactSizeIfKnown());
+		OfInt trySplitInt = rtnInt.trySplit();
+		System.out.println(trySplitInt.getClass());
+		System.out.println(trySplitInt.getExactSizeIfKnown() + "," + rtnInt.getExactSizeIfKnown());
+		OfInt split2 = trySplitInt.trySplit();
+		System.out.println(split2.getExactSizeIfKnown() + "," + trySplitInt.getExactSizeIfKnown() + ","
+				+ rtnInt.getExactSizeIfKnown());
+		IntConsumer consumer = (i2) -> System.out.println(i2);
+		split2.forEachRemaining(consumer);
+		System.out.println("-----------------");
+		trySplitInt.forEachRemaining(consumer);
+		System.out.println("-----------------");
+		rtnInt.forEachRemaining(consumer);
 	}
 	
 }

@@ -3,6 +3,7 @@ package com.xiaogua.better.basic;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
@@ -68,5 +69,17 @@ public class TestCollectionCode {
 	public void testCollectionsNCopies(){
 		List<Integer> rtnList = Collections.nCopies(3, 1);
 		System.out.println(rtnList);
+	}
+	
+	@Test
+	public void testGetCollectionEnumeration() {
+		List<String> list = new ArrayList<String>();
+		list.add("a");
+		list.add("b");
+		list.add("c");
+		Enumeration<String> enumration = CollectionCode.getCollectionEnumeration(list);
+		while (enumration.hasMoreElements()) {
+			System.out.println(enumration.nextElement());
+		}
 	}
 }

@@ -13,4 +13,10 @@ public class TestMath {
 		double rtnVal2 = Math.toDegrees(rtnVal);
 		System.out.println(rtnVal2);
 	}
+	
+	@Test
+	public void testMathNextDown() {
+		System.out.println(Math.nextDown(100));
+		System.out.println(Math.nextDown(100.365));
+	}
 }

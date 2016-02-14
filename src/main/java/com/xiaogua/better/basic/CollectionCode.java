@@ -52,4 +52,21 @@ public class CollectionCode {
 	public static void sortCnArray(String[] arrs) {
 		Arrays.sort(arrs, new ChineseCompator());
 	}
+
+	public static <E> Enumeration<E> getCollectionEnumeration(Collection<E> coll) {
+		return Collections.enumeration(coll);
+	}
+
+	public static <T> ArrayList<T> newArrayList(Iterable<T> items) {
+		ArrayList<T> list = new ArrayList<>();
+		items.forEach(list::add);
+		return list;
+	}
+
+	public static <T> ArrayList<T> newArrayList(Iterator<T> iterator) {
+		ArrayList<T> list = new ArrayList<>();
+		iterator.forEachRemaining(list::add);
+		return list;
+	}
+
 }

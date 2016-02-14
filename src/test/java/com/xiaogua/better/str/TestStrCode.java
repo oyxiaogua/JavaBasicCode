@@ -266,4 +266,11 @@ public class TestStrCode {
 		System.out.println(str+","+sb.toString());
 	}
 	
+	@Test
+	public void testStrHashCode() {
+		String str = "192.168.1.0:1111";
+		//hashcode为负数
+		System.out.println(str.hashCode());
+	}
+	
 }
