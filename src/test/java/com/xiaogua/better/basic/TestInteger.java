@@ -226,6 +226,16 @@ public class TestInteger {
 		System.out.println(rtnNum);
 	}
 
+	@Test
+	public void testGetPowerOf2() {
+		System.out.println(getPower2(123456));
+	}
+
+	// 得到2的n次方
+	public int getPower2(int num) {
+		return (int) (Math.log10(num) / Math.log10(2));
+	}
+
 	/**
 	 * 根据需要存储的元素个数确定HashMap等Map接口实现类的初始容量(使用默认的负载因子：0.75)
 	 * 
@@ -253,7 +263,7 @@ public class TestInteger {
 		}
 		return initCapacity;
 	}
-	
+
 	public static int closestPowerOf2Number(final int number) {
 		return number == 0 ? 0 : 1 << (32 - Integer.numberOfLeadingZeros(number - 1));
 	}

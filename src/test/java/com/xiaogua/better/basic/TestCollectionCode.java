@@ -60,7 +60,7 @@ public class TestCollectionCode {
 		list.add("a");
 		list.add("b");
 		list.add("c");
-		//TODO 未知api
+		//返回列表的动态安全视图
 		List<String> rtn = Collections.checkedList(list, String.class);
 		System.out.println(rtn);
 	}
