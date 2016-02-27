@@ -2,6 +2,7 @@ package com.xiaogua.better.datetime;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -90,6 +91,13 @@ public class TestDateTimeCode {
 		Date date = DateTimeCode.truncateDate(new Date());
 		String rtnStr = fullDateFormat.format(date);
 		System.out.println(rtnStr);
+	}
+
+	@Test
+	public void testAddDateToStr() throws Exception {
+		String dateStr = "2015-1-1 2:3:4";
+		String rtnDateStr = DateTimeCode.addDateToStr(dateStr, "yyyy-MM-dd HH:mm:ss", Calendar.DAY_OF_MONTH, 3);
+		Assert.assertEquals("2015-01-04 02:03:04", rtnDateStr);
 	}
 
 }

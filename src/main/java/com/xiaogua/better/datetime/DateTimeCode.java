@@ -19,7 +19,7 @@ public class DateTimeCode {
 	public final static String HTTP_DATETIME_PATTERN = "EEE, dd MMM yyyy HH:mm:ss z";
 	/** 标准日期时间格式，精确到毫秒 */
 	public final static String NORM_DATETIME_MS_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
-	
+
 	/**
 	 * 获取GMT时间
 	 * 
@@ -141,17 +141,40 @@ public class DateTimeCode {
 		}
 		return gc;
 	}
-	
+
+	/**
+	 * 字符串转为时间
+	 * 
+	 * @param timeString
+	 * @return
+	 */
 	public static Date parseDateTime(String timeString) {
 		try {
 			return org.apache.commons.lang3.time.DateUtils.parseDate(timeString,
-					new String[] { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd" ,"yyyyMMdd"});
+					new String[] { "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "yyyyMMdd" });
 		} catch (Exception e) {
 			return null;
 		}
 	}
-	
+
+	/**
+	 * 时分秒置为0
+	 */
 	public static Date truncateDate(Date date) {
 		return org.apache.commons.lang3.time.DateUtils.truncate(date, Calendar.DATE);
+	}
+
+	public static String addDateToStr(String dateStr, String formatStr, int type, int addValue) throws Exception {
+		DateFormat dateFormatter = new SimpleDateFormat(formatStr);
+		Date date = dateFormatter.parse(dateStr);
+		date = getDateAfterAddSpecifiedTime(date, type, addValue);
+		return dateFormatter.format(date);
+	}
+	
+	public static  Date getDateAfterAddSpecifiedTime(Date date, int type, int afterDay) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(type, afterDay);
+		return calendar.getTime();
 	}
 }
