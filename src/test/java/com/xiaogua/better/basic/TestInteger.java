@@ -231,6 +231,20 @@ public class TestInteger {
 		System.out.println(getPower2(123456));
 	}
 
+	@SuppressWarnings("unused")
+	@Test
+	public void testIntCharValueConvert() {
+		char x = 'X';
+		int i = 0;
+		System.out.println(true ? x : i);// 88
+		System.out.println(true ? x : 0);// X
+		System.out.println(true ? i : x);//0
+		System.out.println(false ? i : x);// 88
+		Assert.assertEquals('\0', (false ? x : 0));
+		Assert.assertEquals(0, (true ? i : x));
+
+	}
+
 	// 得到2的n次方
 	public int getPower2(int num) {
 		return (int) (Math.log10(num) / Math.log10(2));

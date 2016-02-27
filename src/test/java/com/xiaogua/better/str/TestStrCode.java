@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.text.StringCharacterIterator;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -163,10 +164,10 @@ public class TestStrCode {
 		String regex = "(.)\\1+";
 		str = str.replaceAll(regex, "$1");
 		Assert.assertEquals("iamxiaogua", str);
-		
-		str="a    b    c   d  e  ";
-		System.out.println(str.replace(" ", "")+"---="+str.replace(" ", "").length());
-		System.out.println(str.replaceAll(" ", "")+"----="+str.replaceAll(" ", "").length());
+
+		str = "a    b    c   d  e  ";
+		System.out.println(str.replace(" ", "") + "---=" + str.replace(" ", "").length());
+		System.out.println(str.replaceAll(" ", "") + "----=" + str.replaceAll(" ", "").length());
 	}
 
 	@Test
@@ -236,13 +237,13 @@ public class TestStrCode {
 
 		byte[] byteArr = StrCode.convertByteBufferToByteArr(buffer);
 		System.out.println(byteArr.length);
-		
+
 		ByteBuffer buffer2 = StrCode.convertByteArrToByteBuffer(byteArr);
 		System.out.println(String.format("position=%s,limit=%s,capacity=%s", buffer2.position(), buffer2.limit(),
 				buffer2.capacity()));
 
 	}
-	
+
 	@Test
 	public void testStringCharacterIterator() {
 		String str = "\"测试\"";
@@ -263,14 +264,26 @@ public class TestStrCode {
 			}
 			myChar = iterator.next();
 		}
-		System.out.println(str+","+sb.toString());
+		System.out.println(str + "," + sb.toString());
 	}
-	
+
 	@Test
 	public void testStrHashCode() {
 		String str = "192.168.1.0:1111";
-		//hashcode为负数
+		// hashcode为负数
 		System.out.println(str.hashCode());
 	}
-	
+
+	@Test
+	public void testStrToUpperCase() {
+		String str = "i";
+		String a = str.toUpperCase();
+		String b = str.toUpperCase(new Locale("tr"));
+		String c=str.toUpperCase(Locale.US);
+		System.out.println(a);// I
+		System.out.println(b);
+		System.out.println(c);
+		Assert.assertFalse(a.equals(b));
+	}
+
 }

@@ -56,6 +56,45 @@ public class TestNumber {
 		System.out.println(isNumberWithCommonsLang3("+11"));
 	}
 
+	@Test
+	public void testNumberDiv() {
+		System.out.println(1.0d / 0); // Infinity
+		System.out.println(0.0d / 0);// NaN
+		// System.out.println(1 / 0); 报错
+		// System.out.println(0 / 0); 报错
+	}
+
+	@Test
+	public void testNumberInfinity() {
+		double i = Double.POSITIVE_INFINITY;
+		Assert.assertTrue(i == i + 1);
+		Assert.assertTrue(Double.isInfinite(i));
+		i = Double.NEGATIVE_INFINITY;
+		Assert.assertTrue(i == i + 1);
+		Assert.assertTrue(Double.isInfinite(i));
+	}
+
+	@Test
+	public void testNumberNaN() {
+		double i = Double.NaN;
+		Assert.assertTrue(i != i);
+		Assert.assertTrue(i != i + 1);
+		Assert.assertFalse(Double.NaN == Double.NaN);
+		Double a = new Double(Double.NaN);
+		Double b = new Double(Double.NaN);
+		Assert.assertTrue(a.equals(b));
+		Assert.assertTrue(Double.isNaN(a));
+	}
+
+	@Test
+	public void testFloatCompare() {
+		float negZero = -0.0f;
+		float zero = 0.0f;
+		Assert.assertTrue(zero == negZero);
+		Assert.assertEquals(1, Float.compare(zero, negZero));
+		Assert.assertEquals(-1, Float.compare(negZero, zero));
+	}
+
 	public final static boolean isNumberWithCommonsLang3(String str) {
 		if (StringCommonUtils.isBlank(str)) {
 			return false;
