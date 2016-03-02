@@ -279,11 +279,17 @@ public class TestStrCode {
 		String str = "i";
 		String a = str.toUpperCase();
 		String b = str.toUpperCase(new Locale("tr"));
-		String c=str.toUpperCase(Locale.US);
+		String c = str.toUpperCase(Locale.US);
 		System.out.println(a);// I
 		System.out.println(b);
 		System.out.println(c);
 		Assert.assertFalse(a.equals(b));
 	}
 
+	@Test
+	public void testStrAdd() {
+		System.out.println("String + String: " + ("A" + "K"));//AK
+		System.out.println("String + Char: " + ("A" + 'K'));//AK
+		System.out.println("Char + Char: " + ('A' + 'K'));//140  A = 65 and B = 75
+	}
 }

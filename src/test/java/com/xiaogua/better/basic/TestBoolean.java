@@ -13,4 +13,16 @@ public class TestBoolean {
 		System.setProperty("true", "true");
 		Assert.assertTrue(Boolean.getBoolean("true"));
 	}
+
+	@Test
+	public  void booleanInitialize() {
+		System.out.println("String 0 : " + new Boolean("0"));//false
+		System.out.println("String 1 : " + new Boolean("1"));//false
+		System.out.println("Null : " + new Boolean(null));//false
+		System.out.println("String true : " + new Boolean("true"));//true
+		System.out.println("String false : " + new Boolean("false"));//false
+		System.out.println("true : " + new Boolean(true));//true
+		System.out.println("false : " + new Boolean(false));//false
+	}
+	
 }
