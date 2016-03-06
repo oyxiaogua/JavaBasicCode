@@ -288,8 +288,33 @@ public class TestStrCode {
 
 	@Test
 	public void testStrAdd() {
-		System.out.println("String + String: " + ("A" + "K"));//AK
-		System.out.println("String + Char: " + ("A" + 'K'));//AK
-		System.out.println("Char + Char: " + ('A' + 'K'));//140  A = 65 and B = 75
+		System.out.println("String + String: " + ("A" + "K"));// AK
+		System.out.println("String + Char: " + ("A" + 'K'));// AK
+		System.out.println("Char + Char: " + ('A' + 'K'));// 140 A = 65 and B =
+															// 75
+	}
+
+	@Test
+	public void testStringBuffer() {
+		StringBuffer sb = new StringBuffer(10);
+		sb.setLength(10);
+		sb.setCharAt(9, 'a');
+		System.out.println(sb.toString());
+	}
+
+	@Test
+	public void testStringBufferEqual() {
+		String s1 = "abc";
+		// String equals方法里有个instance of，必需是同一类型的才进行比较
+		StringBuffer s2 = new StringBuffer(s1);
+		Assert.assertFalse(s1.equals(s2));
+	}
+
+	@Test
+	public void testStringIntern() {
+		String s1 = "abc";
+		String s2 = new String("abc");
+		s2 = s2.intern();
+		Assert.assertTrue(s1 == s2);
 	}
 }
