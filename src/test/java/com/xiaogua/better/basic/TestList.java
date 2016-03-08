@@ -160,5 +160,13 @@ public class TestList {
 		List<String> rtnList2 = ListCode.convertListValueWithReduce(list);
 		System.out.println(rtnList2);
 	}
+	
+	@Test
+	public void testListSize(){
+		List<String> list=new ArrayList<String>(256);
+		list.add("test_1");
+		list.add("test_2");
+		Assert.assertEquals(2, list.size());
+	}
 
 }
