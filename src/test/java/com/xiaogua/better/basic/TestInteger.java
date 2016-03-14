@@ -244,6 +244,13 @@ public class TestInteger {
 		Assert.assertEquals(0, (true ? i : x));
 
 	}
+	
+	@Test
+	public void testIntegerSignum(){
+		Assert.assertEquals(0, Integer.signum(0));
+		Assert.assertEquals(-1, Integer.signum(Integer.MIN_VALUE));
+		Assert.assertEquals(1, Integer.signum(Integer.MAX_VALUE));
+	}
 
 	// 得到2的n次方
 	public int getPower2(int num) {
