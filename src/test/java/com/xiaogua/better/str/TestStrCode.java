@@ -317,4 +317,29 @@ public class TestStrCode {
 		s2 = s2.intern();
 		Assert.assertTrue(s1 == s2);
 	}
+	
+	@Test(expected=NullPointerException.class)
+	public void testStringValueNull(){
+		//String.valueOf(char[])
+		String nullStr=String.valueOf(null);
+		System.out.println("never print:"+nullStr);
+	}
+	
+	@Test
+	public void testStringValueNull_2(){
+		String nullStr=null;
+		//String valueOf(Object obj)
+		String nullStr_2=String.valueOf(nullStr);
+		Assert.assertNotNull(nullStr_2);
+		Assert.assertEquals("null", nullStr_2);
+	}
+	
+	@Test
+	public void testStringValueNull_3(){
+		//String valueOf(Object obj)
+		String nullStr=String.valueOf((Object)null);
+		Assert.assertNotNull(nullStr);
+		Assert.assertEquals("null", nullStr);
+	}
+	
 }
