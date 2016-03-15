@@ -94,6 +94,16 @@ public class TestNumber {
 		Assert.assertEquals(1, Float.compare(zero, negZero));
 		Assert.assertEquals(-1, Float.compare(negZero, zero));
 	}
+	
+	@Test
+	public void testDoubleFloat(){
+		Float a=1.1f;
+		Float b=1.1f;
+		Assert.assertFalse(a==b);
+		Double a2=1.1d;
+		Double b2=1.1d;
+		Assert.assertFalse(a2==b2);
+	}
 
 	public final static boolean isNumberWithCommonsLang3(String str) {
 		if (StringCommonUtils.isBlank(str)) {
