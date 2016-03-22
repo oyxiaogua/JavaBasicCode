@@ -78,4 +78,12 @@ public class TestHamcrestAssertions {
 		Assert.assertThat(Arrays.asList(0, 1), IsIterableWithSize.iterableWithSize(2));
 	}
 
+	@Test(expected = AssertionError.class)
+	public void testAssertTrue() {
+		String str = "test2";
+		String expectStr = "test";
+		String errorMsg = String.format("expect %s,but %s", expectStr, str);
+		Assert.assertTrue(errorMsg, str.equals(expectStr));
+	}
+
 }
