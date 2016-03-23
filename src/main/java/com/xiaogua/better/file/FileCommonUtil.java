@@ -38,10 +38,17 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 获取BufferedWriter
+	 * 获取BufferedWriter 
 	 */
 	public BufferedWriter getBufferedWriter(String filePath, String encoding) throws Exception {
-		OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filePath), encoding);
+		return getBufferedWriter(filePath, encoding, false);
+	}
+	
+	/**
+	 * 获取BufferedWriter 支持追加写
+	 */
+	public BufferedWriter getBufferedWriter(String filePath, String encoding,boolean append) throws Exception {
+		OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filePath,append), encoding);
 		BufferedWriter bw = new BufferedWriter(osw);
 		return bw;
 	}
