@@ -72,6 +72,16 @@ public class TestNumber {
 		i = Double.NEGATIVE_INFINITY;
 		Assert.assertTrue(i == i + 1);
 		Assert.assertTrue(Double.isInfinite(i));
+		
+		float floatA=Float.POSITIVE_INFINITY;
+		Assert.assertTrue(floatA== Double.POSITIVE_INFINITY);
+		Assert.assertTrue(Float.isNaN(floatA*0));
+		Assert.assertTrue(Float.isInfinite(floatA*1));
+		Assert.assertFalse(Float.isFinite(floatA*1));
+		Assert.assertFalse(Float.isFinite(floatA*0));
+
+
+
 	}
 
 	@Test
