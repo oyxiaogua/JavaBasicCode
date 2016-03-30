@@ -79,6 +79,15 @@ public class TestRandom {
 		System.out.println(Arrays.toString(rtnArr));
 		rtnArr = RandomCode.generateRandomArrayWithJava8(1, 20, 10);
 		System.out.println(Arrays.toString(rtnArr));
+
+		rtnArr = RandomCode.generateRandomArray(-10, 20, 10);
+		System.out.println(Arrays.toString(rtnArr));
+
+		rtnArr = RandomCode.generateRandomArrayWithJava7(-10, 20, 10);
+		System.out.println(Arrays.toString(rtnArr));
+
+		rtnArr = RandomCode.generateRandomArrayWithJava8(-10, 20, 10);
+		System.out.println(Arrays.toString(rtnArr));
 	}
 
 	@Test

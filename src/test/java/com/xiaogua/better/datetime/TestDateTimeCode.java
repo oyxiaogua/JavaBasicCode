@@ -1,6 +1,7 @@
 package com.xiaogua.better.datetime;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -108,4 +109,21 @@ public class TestDateTimeCode {
 		System.out.println(strDate);
 	}
 
+	@Test
+	public void testDateFormatUnExpectValue() throws Exception {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		String dateStr = "2016-01-2019 23:49:25";
+		Date date = df.parse(dateStr);
+		String formatStr = fullDateFormat.format(date);
+		System.out.println(formatStr);
+		Assert.assertEquals("2021-07-11 00:00:00", formatStr);
+	}
+
+	@Test(expected = ParseException.class)
+	public void testDateFormatLenient() throws Exception {
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		df.setLenient(false);//严格匹配
+		String dateStr = "2016-01-2019 23:49:25";
+		df.parse(dateStr);
+	}
 }

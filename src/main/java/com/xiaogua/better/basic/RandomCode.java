@@ -8,6 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.util.Assert;
 
 public class RandomCode {
 	protected static final String baseChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
@@ -73,6 +74,7 @@ public class RandomCode {
 	 * @return
 	 */
 	public static int randomInt(int min, int max) {
+		Assert.state(max - min>0, "must not negative");
 		Random random = new Random();
 		return random.nextInt(max - min) + min;
 	}

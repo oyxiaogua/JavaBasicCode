@@ -32,6 +32,16 @@ public class TestInteger {
 		long y = Integer.MAX_VALUE + (long) 1;
 		Assert.assertTrue(y > 0);
 	}
+	
+	@Test
+	public void testIntegerOverFlow2() {
+		int minValue=Integer.MIN_VALUE;
+		int maxValue=Integer.MAX_VALUE;
+		Assert.assertTrue(maxValue>maxValue+1);
+		Assert.assertEquals(-1, maxValue-minValue);
+		Assert.assertEquals(1, minValue-maxValue);
+		Assert.assertEquals(maxValue+minValue, maxValue-minValue);
+	}
 
 	@Test
 	public void testMathAbs() {
