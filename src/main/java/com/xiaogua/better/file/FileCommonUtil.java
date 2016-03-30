@@ -3,6 +3,7 @@ package com.xiaogua.better.file;
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -21,8 +22,12 @@ import java.util.Stack;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FileCommonUtil extends org.apache.commons.io.FileUtils {
+	private static final Logger log = LoggerFactory.getLogger(FileCommonUtil.class);
+
 	/**
 	 * 获取当前系统换行符
 	 */
@@ -324,5 +329,72 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 		}
 		return fileList;
 	}
-
+	
+	
+	/**
+	 * 按段读取文件内容(默认过滤掉空行)
+	 * @param includeLowerBound 开始行(从1开始)
+	 * @param includeUpperBound 结束行(从1开始)
+	 * @param skipFirstLine 是否跳过第一行
+	 * @param encoding 编码
+	 */
+	public List<String> getRangeDataList(File file, int includeLowerBound, int includeUpperBound, boolean skipFirstLine,
+			String encoding) throws Exception {
+		List<String> dataLineList = new ArrayList<String>(includeUpperBound - includeLowerBound + 1);
+		BufferedInputStream bis = null;
+		BufferedReader br = null;
+		int i = 0;
+		String tmpStr = null;
+		boolean isFirst = true;
+		boolean isAdd = false;
+		try {
+			bis = new BufferedInputStream(new FileInputStream(file));
+			br = new BufferedReader(new InputStreamReader(bis));
+			while ((tmpStr = br.readLine()) != null) {
+				if (tmpStr.trim().length() == 0) {
+					continue;
+				}
+				if (isFirst) {
+					isFirst = false;
+					if (skipFirstLine) {
+						continue;
+					}
+					tmpStr = tmpStr.replace("\uFEFF", "");
+				}
+				i++;
+				if (i < includeLowerBound) {
+					continue;
+				}
+				if (i > includeUpperBound) {
+					break;
+				}
+				dataLineList.add(tmpStr);
+				isAdd = true;
+			}
+			if (!isAdd) {
+				return new ArrayList<String>();
+			} else {
+				return dataLineList;
+			}
+		} catch (Exception e) {
+			log.info("read file error" + e);
+		} finally {
+			closeBufferedStream(br, bis);
+		}
+		return new ArrayList<String>();
+	}
+	
+	private void closeBufferedStream(BufferedReader br, BufferedInputStream bis) {
+		try {
+			IOUtils.closeQuietly(br);
+		} catch (Exception e) {
+			log.error("close  bufferedreader error:", e);
+		}
+		try {
+			IOUtils.closeQuietly(bis);
+		} catch (Exception e) {
+			log.error("close bufferedinputstream error:", e);
+		}
+	}
+	
 }
