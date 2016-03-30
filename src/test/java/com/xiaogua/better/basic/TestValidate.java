@@ -8,9 +8,8 @@ import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
-import org.junit.Test;
-
 import org.junit.Assert;
+import org.junit.Test;
 
 public class TestValidate {
 

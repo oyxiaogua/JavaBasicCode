@@ -3,8 +3,8 @@ package com.xiaogua.better.basic;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import org.junit.Test;
 

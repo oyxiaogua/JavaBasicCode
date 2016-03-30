@@ -3,9 +3,8 @@ package com.xiaogua.better.basic;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-
 import org.junit.Assert;
+import org.junit.Test;
 
 public class TestNullPointException {
 	private static Integer count;
