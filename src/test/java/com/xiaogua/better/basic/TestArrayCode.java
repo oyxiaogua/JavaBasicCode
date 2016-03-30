@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Spliterator.OfInt;
 import java.util.function.IntConsumer;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -149,4 +150,11 @@ public class TestArrayCode {
 		rtnInt.forEachRemaining(consumer);
 	}
 	
+	@Test
+	public void testApacheCommonArrayUtilsContain() {
+		//better way to check array contain value
+		int[] intArr = new int[] { 1, 3, 90, 11, -8, 0, 34 };
+		boolean isContain = ArrayUtils.contains(intArr, 11);
+		Assert.assertTrue(isContain);
+	}
 }
