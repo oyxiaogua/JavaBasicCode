@@ -131,4 +131,8 @@ public class StrCode {
 	public static ByteBuffer convertByteArrToByteBuffer(byte[] byteArr) {
 		return ByteBuffer.wrap(byteArr);
 	}
+	
+	public static String trimBlankSpace(String text) {
+		return text.replaceAll("[\\s\\u00A0]+$", "");
+	}
 }

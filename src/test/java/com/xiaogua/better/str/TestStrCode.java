@@ -82,6 +82,12 @@ public class TestStrCode {
 	public void testCleanWhitespace() {
 		String str = " 　\u00a0\u00a0\u3000\u3000   ";
 		Assert.assertEquals(0, StringCommonUtils.trimWhitespace(str).length());
+
+		String htmlSpaceStr = StringEscapeUtils.unescapeHtml4("&nbsp;");
+		Assert.assertFalse(htmlSpaceStr.equals(" "));
+		Assert.assertEquals(160, (int) StringEscapeUtils.unescapeHtml4("&nbsp;").charAt(0));
+		Assert.assertEquals(0, StrCode.trimBlankSpace(htmlSpaceStr).length());
+		Assert.assertEquals(1, htmlSpaceStr.trim().length());
 	}
 
 	@Test
