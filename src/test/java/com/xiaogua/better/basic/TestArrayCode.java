@@ -153,7 +153,7 @@ public class TestArrayCode {
 	@Test
 	public void testApacheCommonArrayUtilsContain() {
 		//better way to check array contain value
-		int[] intArr = new int[] { 1, 3, 90, 11, -8, 0, 34 };
+		int[] intArr = new int[] { 1, 3, 90, 11, -8, 0, 34,55 };
 		boolean isContain = ArrayUtils.contains(intArr, 11);
 		Assert.assertTrue(isContain);
 	}
