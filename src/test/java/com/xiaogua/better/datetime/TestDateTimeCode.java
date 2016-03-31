@@ -126,4 +126,12 @@ public class TestDateTimeCode {
 		String dateStr = "2016-01-2019 23:49:25";
 		df.parse(dateStr);
 	}
+	
+	@Test
+	public void testJavaUtilSqlDateDiff() {
+		java.util.Date utilDate = new java.util.Date();//有时间日期
+		java.sql.Date sqlDate = new java.sql.Date(System.currentTimeMillis());//只有是日期
+		System.out.println(utilDate);
+		System.out.println(sqlDate);
+	}
 }
