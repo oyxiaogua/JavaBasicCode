@@ -21,6 +21,10 @@ public class Normal_Out_Class {
 		return innerPrivateClas.getPrivateMethodValue();
 	}
 
+	public Inner_Class getInnerClass() {
+		return new Inner_Class();
+	}
+
 	public class Inner_Class {
 		private String name = "test_inner";
 
@@ -35,7 +39,7 @@ public class Normal_Out_Class {
 		public String printName() {
 			return Normal_Out_Class.this.printName() + ",[" + name + "]";
 		}
-		
+
 		@SuppressWarnings("unused")
 		private String getPrivateMthValue() {
 			return "test_normal_private_rtn";
@@ -50,7 +54,7 @@ public class Normal_Out_Class {
 		public String getPrivateMethodValue() {
 			return "inner_private_value";
 		}
-		
+
 		@SuppressWarnings("unused")
 		private String getPrivateMthValue() {
 			return "test_private_inner_rtn";

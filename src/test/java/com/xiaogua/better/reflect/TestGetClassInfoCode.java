@@ -7,6 +7,8 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.xiaogua.better.bean.InterfaceGetName;
+import com.xiaogua.better.bean.Normal_Methd_Inner_Class;
 import com.xiaogua.better.bean.Normal_Out_Class;
 import com.xiaogua.better.bean.Normal_Out_Static_Inner_Class;
 
@@ -51,6 +53,11 @@ public class TestGetClassInfoCode {
 		valurStr = innerClass.getInnerValue();
 		Assert.assertEquals("test_inner", valurStr);
 		valurStr = innerClass.printName();
+		Assert.assertEquals("[test_out],[test_inner]", valurStr);
+
+		// or
+		Normal_Out_Class.Inner_Class innerClass2 = normalOutClass.getInnerClass();
+		valurStr = innerClass2.printName();
 		Assert.assertEquals("[test_out],[test_inner]", valurStr);
 	}
 
@@ -101,5 +108,13 @@ public class TestGetClassInfoCode {
 		method.setAccessible(true);
 		String rtnStr = (String) method.invoke(o, new Object[] {});
 		Assert.assertEquals("test_private_static_inner_rtn", rtnStr);
+	}
+
+	@Test
+	public void testNormalMethdInnerClass() {
+		Normal_Methd_Inner_Class clas = new Normal_Methd_Inner_Class();
+		InterfaceGetName mth = clas.getMthInnerClass();
+		String str = mth.getName();
+		Assert.assertEquals("method_inner_class", str);
 	}
 }
