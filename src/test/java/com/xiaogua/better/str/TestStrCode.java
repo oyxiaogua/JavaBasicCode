@@ -348,4 +348,16 @@ public class TestStrCode {
 		Assert.assertEquals("null", nullStr);
 	}
 	
+	@Test
+	public void testStrArr() {
+		printStr("a", "b");
+	}
+
+	public void printStr(String... strs) {
+		for (int i = 0, len = strs.length; i < len; i++) {
+			System.out.println(strs[i]);
+		}
+	}
+
+	
 }
