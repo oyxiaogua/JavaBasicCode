@@ -179,6 +179,15 @@ public class TestStrCode {
 		str = "a    b    c   d  e  ";
 		System.out.println(str.replace(" ", "") + "---=" + str.replace(" ", "").length());
 		System.out.println(str.replaceAll(" ", "") + "----=" + str.replaceAll(" ", "").length());
+
+		str = "**a**b***c***d*****e*";
+		//删除中间的*
+		String str_1 = str.replaceAll("(^\\*)|(\\*$)|\\*", "$1$2");
+		System.out.println(str_1);
+		
+		String str_2 = str.replaceAll("(?<!^)\\*+(?!$)", "");
+		System.out.println(str_2);
+		Assert.assertEquals(str_1, str_2);
 	}
 
 	@Test
