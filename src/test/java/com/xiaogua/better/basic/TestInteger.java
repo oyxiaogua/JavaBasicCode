@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Assert;
@@ -262,6 +263,41 @@ public class TestInteger {
 		Assert.assertEquals(1, Integer.signum(Integer.MAX_VALUE));
 	}
 
+	@Test
+	public void testIntegerParseInt() {
+		final String hindiNumber = "१२३४५६७८९०";// 印地语
+		int resultNum = Integer.parseInt(hindiNumber);
+		Assert.assertEquals(1234567890, resultNum);
+	}
+	
+	@Test
+	public void testPatternMatchInteger() {
+		final Pattern digit = Pattern.compile("[0-9]*");
+		final Pattern unicode_digit = Pattern.compile("\\p{Nd}*");
+		final String hindiNumber = "१२३४५६७८९०";
+		System.out.println(String.format("digit match = %s", digit.matcher(hindiNumber).matches()));
+		System.out.println(String.format("Unicode digit match = %s", unicode_digit.matcher(hindiNumber).matches()));
+	}
+	
+	@Test
+	public void testConvertedToInt() {
+		final short sh1 = -20;
+		final int int1 = (int) sh1;
+
+		final char ch1 = (char) sh1;
+		final int int2 = (int) ch1;
+
+		System.out.println(String.format("short: %s converted to int: %d", String.valueOf(sh1), int1));
+		System.out.println(String.format("char: %s converted to int: %d", String.valueOf(ch1), int2));
+		Assert.assertEquals(-20, int1);
+		Assert.assertNotEquals(-20, int2);
+	}
+	
+	public int getUnsignedByte(short data) {
+		// 将data字节型数据转换为0~65535
+		return data & 0x0FFFF;
+	}
+	
 	// 得到2的n次方
 	public int getPower2(int num) {
 		return (int) (Math.log10(num) / Math.log10(2));

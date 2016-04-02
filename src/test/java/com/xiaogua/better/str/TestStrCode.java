@@ -2,7 +2,9 @@ package com.xiaogua.better.str;
 
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.text.StringCharacterIterator;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -162,6 +164,9 @@ public class TestStrCode {
 		System.out.println("方片 :\u2666 ");
 		System.out.println("梅花 :\u2663 ");
 		System.out.println("黑桃 : \u2660 ");
+		
+		String original1 = "a\u00ea\u00f1\u00fcc";
+	    System.out.println(original1);
 	}
 
 	@Test
@@ -290,14 +295,18 @@ public class TestStrCode {
 		System.out.println(b);
 		System.out.println(c);
 		Assert.assertFalse(a.equals(b));
-	}
 
+		final String word1 = "Straße";
+		final String word2 = word1.toUpperCase();
+		System.out.println(String.format("\"%s\" - length %d", word1, word1.length()));
+		System.out.println(String.format("\"%s\" - length %d", word2, word2.length()));
+	}
+	
 	@Test
 	public void testStrAdd() {
 		System.out.println("String + String: " + ("A" + "K"));// AK
 		System.out.println("String + Char: " + ("A" + 'K'));// AK
 		System.out.println("Char + Char: " + ('A' + 'K'));// 140 A = 65 and B =
-															// 75
 	}
 
 	@Test
@@ -351,6 +360,21 @@ public class TestStrCode {
 	@Test
 	public void testStrArr() {
 		printStr("a", "b");
+	}
+	
+	@Test
+	public void testStrGetBytes() {
+		final Charset UTF8 = StandardCharsets.UTF_8;
+		final Charset UTF16 = StandardCharsets.UTF_16BE;
+
+		final String string1 = "Str१२३";
+		System.out.println("Original string: \"" + string1 + "\"");
+
+		final byte[] utf8bytes = string1.getBytes(UTF8);
+		final byte[] utf16bytes = string1.getBytes(UTF16);
+
+		System.out.println("String encoded as UTF-8:  " + Arrays.toString(utf8bytes));
+		System.out.println("String encoded as UTF-16: " + Arrays.toString(utf16bytes));
 	}
 
 	public void printStr(String... strs) {

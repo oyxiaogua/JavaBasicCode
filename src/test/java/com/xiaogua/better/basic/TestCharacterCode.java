@@ -11,5 +11,11 @@ public class TestCharacterCode {
 		Assert.assertEquals('9', charR);
 		int intR = Character.digit(charR, radix);
 		Assert.assertEquals(9, intR);
+
+		char oneChar = '१';
+		intR = Character.digit(oneChar, radix);
+		Assert.assertEquals(1, intR);
 	}
+	
+	
 }
