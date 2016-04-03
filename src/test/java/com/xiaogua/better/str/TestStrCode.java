@@ -292,6 +292,11 @@ public class TestStrCode {
 		String str = "192.168.1.0:1111";
 		// hashcode为负数
 		System.out.println(str.hashCode());
+
+		String str_1 = "vFrKiaNHfF7t[9::E[XsX?L7xPp3DZSteIZvdRT8CX:w6d;v<_KZnhsM_^dqoppe";
+		String str_2 = "hI4pFxGOfS@suhVUd:mTo_begImJPB@Fl[6WJ?ai=RXfIx^=Aix@9M;;?Vdj_Zsi";
+		// hashcode相同
+		Assert.assertEquals(str_1.hashCode(), str_2.hashCode());
 	}
 
 	@Test
