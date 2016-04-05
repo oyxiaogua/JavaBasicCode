@@ -391,6 +391,16 @@ public class TestStrCode {
 		System.out.println("String encoded as UTF-16: " + Arrays.toString(utf16bytes));
 	}
 
+	
+	@Test
+	public void testStringBufferAppendCodePoint() {
+		final int cp = 0x5B57;
+		//unicode代码点
+		System.out.println(String.format("character: %s - code point: %d - %s in %s; character count: %d",
+				new StringBuffer().appendCodePoint(cp), cp, Character.getName(cp), Character.UnicodeBlock.of(cp),
+				Character.charCount(cp)));
+	}
+	
 	public void printStr(String... strs) {
 		for (int i = 0, len = strs.length; i < len; i++) {
 			System.out.println(strs[i]);
