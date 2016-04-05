@@ -164,9 +164,9 @@ public class TestStrCode {
 		System.out.println("方片 :\u2666 ");
 		System.out.println("梅花 :\u2663 ");
 		System.out.println("黑桃 : \u2660 ");
-		
+
 		String original1 = "a\u00ea\u00f1\u00fcc";
-	    System.out.println(original1);
+		System.out.println(original1);
 	}
 
 	@Test
@@ -181,10 +181,10 @@ public class TestStrCode {
 		System.out.println(str.replaceAll(" ", "") + "----=" + str.replaceAll(" ", "").length());
 
 		str = "**a**b***c***d*****e*";
-		//删除中间的*
+		// 删除中间的*
 		String str_1 = str.replaceAll("(^\\*)|(\\*$)|\\*", "$1$2");
 		System.out.println(str_1);
-		
+
 		String str_2 = str.replaceAll("(?<!^)\\*+(?!$)", "");
 		System.out.println(str_2);
 		Assert.assertEquals(str_1, str_2);
@@ -315,7 +315,7 @@ public class TestStrCode {
 		System.out.println(String.format("\"%s\" - length %d", word1, word1.length()));
 		System.out.println(String.format("\"%s\" - length %d", word2, word2.length()));
 	}
-	
+
 	@Test
 	public void testStrAdd() {
 		System.out.println("String + String: " + ("A" + "K"));// AK
@@ -346,36 +346,36 @@ public class TestStrCode {
 		s2 = s2.intern();
 		Assert.assertTrue(s1 == s2);
 	}
-	
-	@Test(expected=NullPointerException.class)
-	public void testStringValueNull(){
-		//String.valueOf(char[])
-		String nullStr=String.valueOf(null);
-		System.out.println("never print:"+nullStr);
+
+	@Test(expected = NullPointerException.class)
+	public void testStringValueNull() {
+		// String.valueOf(char[])
+		String nullStr = String.valueOf(null);
+		System.out.println("never print:" + nullStr);
 	}
-	
+
 	@Test
-	public void testStringValueNull_2(){
-		String nullStr=null;
-		//String valueOf(Object obj)
-		String nullStr_2=String.valueOf(nullStr);
+	public void testStringValueNull_2() {
+		String nullStr = null;
+		// String valueOf(Object obj)
+		String nullStr_2 = String.valueOf(nullStr);
 		Assert.assertNotNull(nullStr_2);
 		Assert.assertEquals("null", nullStr_2);
 	}
-	
+
 	@Test
-	public void testStringValueNull_3(){
-		//String valueOf(Object obj)
-		String nullStr=String.valueOf((Object)null);
+	public void testStringValueNull_3() {
+		// String valueOf(Object obj)
+		String nullStr = String.valueOf((Object) null);
 		Assert.assertNotNull(nullStr);
 		Assert.assertEquals("null", nullStr);
 	}
-	
+
 	@Test
 	public void testStrArr() {
 		printStr("a", "b");
 	}
-	
+
 	@Test
 	public void testStrGetBytes() {
 		final Charset UTF8 = StandardCharsets.UTF_8;
@@ -391,21 +391,47 @@ public class TestStrCode {
 		System.out.println("String encoded as UTF-16: " + Arrays.toString(utf16bytes));
 	}
 
-	
 	@Test
 	public void testStringBufferAppendCodePoint() {
 		final int cp = 0x5B57;
-		//unicode代码点
+		// unicode代码点
 		System.out.println(String.format("character: %s - code point: %d - %s in %s; character count: %d",
 				new StringBuffer().appendCodePoint(cp), cp, Character.getName(cp), Character.UnicodeBlock.of(cp),
 				Character.charCount(cp)));
 	}
-	
+
+	@Test
+	public void testStrCodePoint() {
+		String str = "测试1234ABcd中文";
+		int codePoint = str.codePointAt(0);
+		System.out.println(codePoint);
+		codePoint = str.codePointBefore(3);
+		System.out.println(codePoint);
+		codePoint = str.codePointCount(0, 2);
+		System.out.println(codePoint);
+
+		 // http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint=5357
+		byte[] b1 = { (byte) 0xE5, (byte) 0x8D, (byte) 0x97 };
+		// http://www.unicode.org/cgi-bin/GetUnihanData.pl?codepoint=20015
+		byte[] b2 = { (byte) 0xF0, (byte) 0xA0, (byte) 0x80, (byte) 0x95 };//增补字符
+
+		try {
+			String s1 = new String(b1, "UTF-8");
+			String s2 = new String(b2, "UTF-8");
+			System.out.println("中文字符：" + s1 + ":" + s2);
+			System.out.println("UTF8字节长度" + s1.getBytes("UTF-8").length + ":" + s2.getBytes("UTF-8").length);
+			System.out.println("串长度*.length()" + s1.length() + ":" + s2.length());
+			System.out.println(
+					"字符串CodePointCount" + s1.codePointCount(0, s1.length()) + ":" + s2.codePointCount(0, s2.length()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void printStr(String... strs) {
 		for (int i = 0, len = strs.length; i < len; i++) {
 			System.out.println(strs[i]);
 		}
 	}
 
-	
 }
