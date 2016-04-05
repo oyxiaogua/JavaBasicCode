@@ -5,15 +5,19 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.lang3.ClassUtils;
 import org.junit.Test;
 
 import com.xiaogua.better.bean.Enum_Type_Class;
 import com.xiaogua.better.bean.Interface_Enum_Bean;
 import com.xiaogua.better.bean.Public_Enum_Gender;
+import com.xiaogua.better.bean.Simple_Class;
+import com.xiaogua.better.bean.Simple_Color_Enum;
 
 public class TestEnumCode {
 	@Test
@@ -94,16 +98,37 @@ public class TestEnumCode {
 
 	@Test
 	public void testGetEnumDefInterface() throws Exception {
-		Class<?> clz = Enum.class.getClass();
+		Class<?> clz = Enum.class;
 		Class<?>[] interfaceArr = clz.getInterfaces();
 		for (Class<?> interfaceClz : interfaceArr) {
 			System.out.println(interfaceClz);
 		}
+
+		System.out.println("-----apache classutil-----");
+		List<Class<?>> interfaceList = ClassUtils.getAllInterfaces(clz);
+		System.out.println(interfaceList);
+
+		System.out.println("------class-----");
+		clz = Simple_Class.class;
+		interfaceArr = clz.getInterfaces();
+		for (Class<?> interfaceClz : interfaceArr) {
+			System.out.println(interfaceClz);
+		}
+
+		clz = Enum.class;
+		System.out.println(clz);// Enum
+
+		clz = Enum.class.getClass();
+		System.out.println(clz);// Class
+
+		clz = Simple_Color_Enum.RED.getClass();
+		System.out.println(clz);// Simple_Color_Enum
+		// getClass()只能实例使用
 	}
 
 	@Test
 	public void testGetEnumDefPubicMethod() throws Exception {
-		Class<?> clz = Enum.class.getClass();
+		Class<?> clz = Enum.class;
 		Method[] methodArr = clz.getDeclaredMethods();
 		for (Method method : methodArr) {
 			if (Modifier.isPublic(method.getModifiers())) {
