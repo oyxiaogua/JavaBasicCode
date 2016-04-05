@@ -16,6 +16,5 @@ public class TestCharacterCode {
 		intR = Character.digit(oneChar, radix);
 		Assert.assertEquals(1, intR);
 	}
-	
-	
+
 }

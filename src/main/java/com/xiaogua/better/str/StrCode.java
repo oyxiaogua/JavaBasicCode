@@ -135,4 +135,6 @@ public class StrCode {
 	public static String trimBlankSpace(String text) {
 		return text.replaceAll("[\\s\\u00A0]+$", "");
 	}
+	
+	
 }
