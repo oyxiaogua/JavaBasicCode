@@ -2,6 +2,7 @@ package com.xiaogua.better.basic;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class EnumCode {
 	/**
@@ -23,9 +24,6 @@ public class EnumCode {
 
 	/**
 	 * 获取字符串的Enum
-	 * @param clazz
-	 * @param name
-	 * @return
 	 */
 	public static <T> T getEnum(Class<T> clazz, String name) {
 		T[] enumConstants = clazz.getEnumConstants();
@@ -36,4 +34,14 @@ public class EnumCode {
 		}
 		return null;
 	}
+
+	public static <T extends Enum<T>> T getRandomEnum(Class<T> ec) {
+		return getRandomEnum(ec.getEnumConstants());
+	}
+
+	public static <T> T getRandomEnum(T[] values) {
+		Random rand = new Random();
+		return values[rand.nextInt(values.length)];
+	}
+	
 }

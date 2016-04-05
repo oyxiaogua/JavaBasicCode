@@ -1,5 +1,8 @@
 package com.xiaogua.better.basic;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
@@ -9,6 +12,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.Test;
 
 import com.xiaogua.better.bean.Enum_Type_Class;
+import com.xiaogua.better.bean.Interface_Enum_Bean;
 import com.xiaogua.better.bean.Public_Enum_Gender;
 
 public class TestEnumCode {
@@ -59,4 +63,64 @@ public class TestEnumCode {
 					value.getDesc(), value.getGenderInfo()));
 		}
 	}
+
+	@Test
+	public void testGetRandomEnum() {
+		Public_Enum_Gender enumValue = EnumCode.getRandomEnum(Public_Enum_Gender.class);
+		System.out.println(enumValue.getGenderInfo());
+	}
+
+	@Test
+	public void testInterfaceEnum() {
+		Interface_Enum_Bean enumBean = Interface_Enum_Bean.Coffee.BLACK_COFFEE;
+		System.out.println(enumBean);
+
+		String str = enumBean.toString();
+		enumBean = Interface_Enum_Bean.Coffee.getEnum(str);
+		System.out.println(enumBean);
+
+		enumBean = Interface_Enum_Bean.Coffee.valueOf("DECAF_COFFEE");
+		System.out.println(enumBean);
+	}
+
+	@Test
+	public void testGetEnumDefFields() throws Exception {
+		Class<?> clz = Enum.class.getClass();
+		Field[] fieldArr = clz.getDeclaredFields();
+		for (Field field : fieldArr) {
+			System.out.println(field);
+		}
+	}
+
+	@Test
+	public void testGetEnumDefInterface() throws Exception {
+		Class<?> clz = Enum.class.getClass();
+		Class<?>[] interfaceArr = clz.getInterfaces();
+		for (Class<?> interfaceClz : interfaceArr) {
+			System.out.println(interfaceClz);
+		}
+	}
+
+	@Test
+	public void testGetEnumDefPubicMethod() throws Exception {
+		Class<?> clz = Enum.class.getClass();
+		Method[] methodArr = clz.getDeclaredMethods();
+		for (Method method : methodArr) {
+			if (Modifier.isPublic(method.getModifiers())) {
+				System.out.println(method);
+			}
+		}
+	}
+
+	@Test
+	public void testGetInstanceEnumDefPubicMethod() throws Exception {
+		Class<?> clz = Class.forName("com.xiaogua.better.bean.Simple_Color_Enum");
+		Method[] methodArr = clz.getMethods();
+		for (Method method : methodArr) {
+			if (Modifier.isPublic(method.getModifiers())) {
+				System.out.println(method);
+			}
+		}
+	}
+
 }
