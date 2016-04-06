@@ -137,4 +137,83 @@ public class TestBinarySearchCode {
 		index = BinarySearchCode.getFirstIndexWithBinarySearch(intArr, searchValue);
 		Assert.assertEquals(-1, index);
 	}
+
+	@Test
+	public void testGetInsertIndexWithBinarySearch() {
+		int[] intArr = new int[] { 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 };
+		int index = -1, binaryIndex = -1;
+		int insertNum = -1;
+		index = BinarySearchCode.getInsertIndexWithBinarySearch(intArr, insertNum);
+		binaryIndex = Arrays.binarySearch(intArr, insertNum);
+		System.out.println(String.format("value=%s,insert index=%s,binary index=%s,insert index=%s", insertNum, index,
+				binaryIndex, Math.abs(binaryIndex) - 1));
+
+		insertNum = 0;
+		index = BinarySearchCode.getInsertIndexWithBinarySearch(intArr, insertNum);
+		Assert.assertEquals(0, index);
+
+		insertNum = 1;
+		index = BinarySearchCode.getInsertIndexWithBinarySearch(intArr, insertNum);
+		Assert.assertEquals(1, index);
+
+		insertNum = 2;
+		index = BinarySearchCode.getInsertIndexWithBinarySearch(intArr, insertNum);
+		System.out.println(String.format("value=%s,insert index=%s", insertNum, index));
+
+		insertNum = 3;
+		index = BinarySearchCode.getInsertIndexWithBinarySearch(intArr, insertNum);
+		System.out.println(String.format("value=%s,insert index=%s", insertNum, index));
+
+		insertNum = 4;
+		index = BinarySearchCode.getInsertIndexWithBinarySearch(intArr, insertNum);
+		System.out.println(String.format("value=%s,insert index=%s", insertNum, index));
+
+		insertNum = 5;
+		index = BinarySearchCode.getInsertIndexWithBinarySearch(intArr, insertNum);
+		System.out.println(String.format("value=%s,insert index=%s", insertNum, index));
+
+		insertNum = 6;
+		index = BinarySearchCode.getInsertIndexWithBinarySearch(intArr, insertNum);
+		binaryIndex = Arrays.binarySearch(intArr, insertNum);
+		System.out.println(String.format("value=%s,insert index=%s,binary index=%s,insert index=%s", insertNum, index,
+				binaryIndex, Math.abs(binaryIndex) - 1));
+
+	}
+
+	@Test
+	public void testGetAllIndexWithBinarySearch() {
+		int[] intArr = new int[] { 0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 5 };
+		int[] indexArr = null;
+		int searchValue = -1;
+		indexArr = BinarySearchCode.getAllIndexWithBinarySearch(intArr, searchValue);
+		Assert.assertArrayEquals(new int[0], indexArr);
+
+		searchValue = 0;
+		indexArr = BinarySearchCode.getAllIndexWithBinarySearch(intArr, searchValue);
+		Assert.assertArrayEquals(new int[] { 0 }, indexArr);
+
+		searchValue = 1;
+		indexArr = BinarySearchCode.getAllIndexWithBinarySearch(intArr, searchValue);
+		Assert.assertArrayEquals(new int[] { 1 }, indexArr);
+
+		searchValue = 2;
+		indexArr = BinarySearchCode.getAllIndexWithBinarySearch(intArr, searchValue);
+		Assert.assertArrayEquals(new int[] { 2, 3 }, indexArr);
+
+		searchValue = 3;
+		indexArr = BinarySearchCode.getAllIndexWithBinarySearch(intArr, searchValue);
+		Assert.assertArrayEquals(new int[] { 4, 5, 6 }, indexArr);
+
+		searchValue = 4;
+		indexArr = BinarySearchCode.getAllIndexWithBinarySearch(intArr, searchValue);
+		Assert.assertArrayEquals(new int[] { 7, 8, 9, 10 }, indexArr);
+
+		searchValue = 5;
+		indexArr = BinarySearchCode.getAllIndexWithBinarySearch(intArr, searchValue);
+		Assert.assertArrayEquals(new int[] { 11, 12, 13, 14, 15 }, indexArr);
+
+		searchValue = 6;
+		indexArr = BinarySearchCode.getAllIndexWithBinarySearch(intArr, searchValue);
+		Assert.assertArrayEquals(new int[0], indexArr);
+	}
 }

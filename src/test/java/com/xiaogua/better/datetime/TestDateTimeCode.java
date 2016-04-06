@@ -13,7 +13,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class TestDateTimeCode {
-	private static DateFormat fullDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static String fullDateFormatStr = "yyyy-MM-dd HH:mm:ss";
+	private static DateFormat fullDateFormat = new SimpleDateFormat(fullDateFormatStr);
 
 	@Test
 	public void testgetUTCTimeStr() {
@@ -98,7 +99,7 @@ public class TestDateTimeCode {
 	@Test
 	public void testAddDateToStr() throws Exception {
 		String dateStr = "2015-1-1 2:3:4";
-		String rtnDateStr = DateTimeCode.addDateToStr(dateStr, "yyyy-MM-dd HH:mm:ss", Calendar.DAY_OF_MONTH, 3);
+		String rtnDateStr = DateTimeCode.addDateToStr(dateStr, fullDateFormatStr, Calendar.DAY_OF_MONTH, 3);
 		Assert.assertEquals("2015-01-04 02:03:04", rtnDateStr);
 	}
 
@@ -122,16 +123,40 @@ public class TestDateTimeCode {
 	@Test(expected = ParseException.class)
 	public void testDateFormatLenient() throws Exception {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		df.setLenient(false);//严格匹配
+		df.setLenient(false);// 严格匹配
 		String dateStr = "2016-01-2019 23:49:25";
 		df.parse(dateStr);
 	}
-	
+
 	@Test
 	public void testJavaUtilSqlDateDiff() {
-		java.util.Date utilDate = new java.util.Date();//有时间日期
-		java.sql.Date sqlDate = new java.sql.Date(System.currentTimeMillis());//只有是日期
+		java.util.Date utilDate = new java.util.Date();// 有时间日期
+		java.sql.Date sqlDate = new java.sql.Date(System.currentTimeMillis());// 只有是日期
 		System.out.println(utilDate);
 		System.out.println(sqlDate);
+	}
+
+	@Test
+	public void testGetFormatDateTimeStr() throws Exception {
+		String dateStr = "2016年1_2";
+		String formatDateStr = null;
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, "yyyy_MM_dd");
+		Assert.assertEquals("2016_01_02", formatDateStr);
+
+		dateStr = "20161_2";
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, "yyyy_MM_dd");
+		Assert.assertEquals("2016_01_02", formatDateStr);
+
+		dateStr = "2016年1_2日3时2:3";
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, fullDateFormatStr);
+		Assert.assertEquals("2016-01-02 03:02:03", formatDateStr);
+
+		dateStr = "2016年1_2  3时2:3";
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, fullDateFormatStr);
+		Assert.assertEquals("2016-01-02 03:02:03", formatDateStr);
+
+		dateStr = "  2016年1月2日    3时2:3秒 ";
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, fullDateFormatStr);
+		Assert.assertEquals("2016-01-02 03:02:03", formatDateStr);
 	}
 }
