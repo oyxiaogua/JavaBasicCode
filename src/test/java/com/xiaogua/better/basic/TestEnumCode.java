@@ -124,6 +124,9 @@ public class TestEnumCode {
 		clz = Simple_Color_Enum.RED.getClass();
 		System.out.println(clz);// Simple_Color_Enum
 		// getClass()只能实例使用
+		
+		clz=this.getClass();
+		System.out.println(clz);//TestEnumCode
 	}
 
 	@Test
