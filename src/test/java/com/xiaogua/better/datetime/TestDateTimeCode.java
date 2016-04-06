@@ -143,9 +143,25 @@ public class TestDateTimeCode {
 		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, "yyyy_MM_dd");
 		Assert.assertEquals("2016_01_02", formatDateStr);
 
-		dateStr = "20161_2";
+		dateStr = "2016_12";
 		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, "yyyy_MM_dd");
 		Assert.assertEquals("2016_01_02", formatDateStr);
+
+		dateStr = "2016_1112";
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, "yyyy_MM_dd");
+		Assert.assertEquals("2016_11_12", formatDateStr);
+
+		dateStr = "2016_012";
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, "yyyy_MM_dd");
+		Assert.assertEquals("2016_01_02", formatDateStr);
+
+		dateStr = "2016_130";
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, "yyyy_MM_dd");
+		Assert.assertEquals("2016_01_30", formatDateStr);
+
+		dateStr = "2016131";
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, "yyyy_MM_dd");
+		Assert.assertEquals("2016_01_31", formatDateStr);
 
 		dateStr = "2016年1_2日3时2:3";
 		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, fullDateFormatStr);
@@ -156,6 +172,10 @@ public class TestDateTimeCode {
 		Assert.assertEquals("2016-01-02 03:02:03", formatDateStr);
 
 		dateStr = "  2016年1月2日    3时2:3秒 ";
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, fullDateFormatStr);
+		Assert.assertEquals("2016-01-02 03:02:03", formatDateStr);
+
+		dateStr = "  2016-1-2 3:2:3 ";
 		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, fullDateFormatStr);
 		Assert.assertEquals("2016-01-02 03:02:03", formatDateStr);
 	}

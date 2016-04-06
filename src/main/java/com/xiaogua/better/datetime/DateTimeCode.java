@@ -191,25 +191,51 @@ public class DateTimeCode {
 		if (StringUtils.isBlank(destFmtStr)) {
 			destFmtStr = "yyyy-MM-dd";
 		}
+		dateStr = dateStr.trim();
+		if (dateStr.length() < 6) {
+			throw new Exception("暂不支持此种格式");
+		}
 		String[] dateStrArr = null;
 		if (dateStr.indexOf("日") > 0) {
 			dateStrArr = dateStr.split("日");
 		} else {
 			dateStrArr = dateStr.split("\\s+");
 		}
-		String srcFmtStr = "yyyyMMdd";
+		String srcFmtStr = "yyyy-MM-dd";
 		if (dateStrArr.length == 1 && dateStr.length() > 9) {
 			throw new Exception("暂不支持此种格式");
 		}
 		StringBuffer sb = new StringBuffer();
 		// 时间部分
-		String datePartStr = getFormatDateStr(dateStrArr[0]);
-		if (datePartStr.length() == 6) {
-			// 201612
-			sb.append(datePartStr.substring(0, 4)).append('0').append(datePartStr.substring(4, 5)).append('0')
-					.append(datePartStr.substring(5, 6));
-			datePartStr = sb.toString();
-			sb.setLength(0);
+		String numPartStr = getFormatDateStr(dateStrArr[0], "");
+		if (StringUtils.isBlank(numPartStr) || numPartStr.length() < 6) {
+			throw new IllegalArgumentException("dateStr错误");
+		}
+		String datePartStr = getFormatDateStr(dateStrArr[0], "-");
+		if (numPartStr.contentEquals(datePartStr)) {
+			if (datePartStr.length() == 6) {
+				// 201612
+				sb.append(datePartStr.substring(0, 4)).append("-0").append(datePartStr.substring(4, 5)).append("-0")
+						.append(datePartStr.substring(5, 6));
+				datePartStr = sb.toString();
+				sb.setLength(0);
+			} else if (datePartStr.length() == 8) {
+				// 20160102
+				sb.append(datePartStr.substring(0, 4)).append('-').append(datePartStr.substring(4, 6)).append('-')
+						.append(datePartStr.substring(6, 8));
+				datePartStr = sb.toString();
+				sb.setLength(0);
+			} else if (datePartStr.length() == 7) {
+				datePartStr = checkStrIfIsDate(dateStr);
+			}
+		} else {
+			if (datePartStr.indexOf("-") < 4) {
+				throw new Exception("暂不支持此种格式");
+			}
+			if (datePartStr.indexOf("-") == datePartStr.lastIndexOf("-")) {
+				// 只有一个-
+				datePartStr = getRightDateStrIfPossible(datePartStr);
+			}
 		}
 		sb.append(datePartStr);
 		if (dateStrArr.length == 2) {
@@ -227,12 +253,66 @@ public class DateTimeCode {
 		return format.format(srcDate);
 	}
 
-	private static String getFormatDateStr(String dateStr) {
-		return dateStr.replaceAll("\\D", "").trim();
+	private static String getRightDateStrIfPossible(String dateStr) throws Exception {
+		String subStr = dateStr.substring(4);
+		String[] subArr = subStr.split("-");
+		if (subArr.length == 1) {
+			throw new Exception("暂不支持此种格式");
+		}
+		StringBuffer sb = new StringBuffer();
+		sb.append(dateStr.substring(0, 4)).append('-');// 年
+		if (StringUtils.isBlank(subArr[0])) {
+			if (subArr[1].length() == 2) {
+				// 12
+				sb.append('0').append(subArr[1].charAt(0)).append("-0").append(subArr[1].charAt(1));
+				return sb.toString();
+			} else if (subArr[1].length() == 4) {
+				// 1213
+				sb.append(subArr[1].substring(0, 2)).append("-").append(subArr[1].substring(2));
+				return sb.toString();
+			} else if (subArr[1].length() == 3) {
+				// 012
+				if (subArr[1].charAt(0) == '0') {
+					sb.append(subArr[1].substring(0, 2)).append("-0").append(subArr[1].substring(2));
+					return sb.toString();
+				} else if (subArr[1].charAt(1) == '3') {
+					// 130
+					sb.append("0").append(subArr[1].charAt(0)).append("-").append(subArr[1].substring(1));
+					return sb.toString();
+				}
+				throw new Exception("暂不支持此种格式");
+			}
+		}
+		return null;
 	}
 
+	/**
+	 * 检查是否是日期
+	 */
+	private static String checkStrIfIsDate(String dateStr) throws Exception {
+		String lastStr = dateStr.substring(dateStr.length() - 2);
+		if ("31".equals(lastStr) || "30".equals(lastStr)) {
+			// 日期
+			StringBuffer sb = new StringBuffer();
+			sb.append(dateStr.substring(0, 4)).append("-0").append(dateStr.substring(4, 5)).append("-")
+					.append(dateStr.substring(5));
+			return sb.toString();
+		}
+		throw new Exception("暂不支持此种格式");
+	}
+
+	/**
+	 * 删除非法字符
+	 */
+	private static String getFormatDateStr(String dateStr, String replaceToStr) {
+		return dateStr.trim().replaceAll("\\D+", replaceToStr).trim();
+	}
+
+	/**
+	 * 删除非法字符
+	 */
 	private static String getFormatTimeStr(String timeStr) {
-		return timeStr.trim().replace("秒", "").replaceAll("\\D", ":").trim();
+		return timeStr.trim().replaceAll("\\D+$", "").replaceAll("\\D+", ":").trim();
 	}
 
 }
