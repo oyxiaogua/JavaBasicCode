@@ -422,7 +422,17 @@ public class TestStrCode {
 		System.out.println("串长度.length()" + s1.length() + ":" + s2.length());
 		System.out.println(
 				"字符串CodePointCount" + s1.codePointCount(0, s1.length()) + ":" + s2.codePointCount(0, s2.length()));
+	}
 
+	@Test
+	public void testStrPaddingWithReplaceIssue() throws Exception {
+		String str = "A B";
+		// str内部不能有空格
+		String paddingStr = String.format("%5s", str).replace(' ', '0');
+		Assert.assertEquals("00A0B", paddingStr);
+
+		paddingStr = String.format("%-5s", str).replace(' ', '0');
+		Assert.assertEquals("A0B00", paddingStr);
 	}
 
 	public void printStr(String... strs) {

@@ -318,7 +318,7 @@ public class DateTimeCode {
 				}
 			}
 			if (timeStr.length() == 6) {
-				//121314
+				// 121314
 				if (parseIntValue(timeStr.substring(0, 2)) <= 23 && parseIntValue(timeStr.substring(2, 4)) <= 59
 						&& parseIntValue(timeStr.substring(4, 6)) <= 59) {
 					sb.append(timeStr.substring(0, 2)).append(':').append(timeStr.substring(2, 4)).append(':')
@@ -383,14 +383,7 @@ public class DateTimeCode {
 		}
 		String datePartStr = replaceDateStr(dateStr, "-");
 		if (numPartStr.contentEquals(datePartStr)) {
-			if (datePartStr.length() == 6 && parseIntValue(datePartStr.substring(4)) <= 12
-					&& parseIntValue(datePartStr.substring(4)) >= 1) {
-				// 201612
-				sb.append(datePartStr.substring(0, 4)).append("-0").append(datePartStr.substring(4, 5)).append("-0")
-						.append(datePartStr.substring(5, 6));
-				datePartStr = sb.toString();
-				sb.setLength(0);
-			} else if (datePartStr.length() == 8) {
+			if (datePartStr.length() == 8) {
 				// 20160102
 				sb.append(datePartStr.substring(0, 4)).append('-').append(datePartStr.substring(4, 6)).append('-')
 						.append(datePartStr.substring(6, 8));
@@ -423,11 +416,7 @@ public class DateTimeCode {
 		StringBuffer sb = new StringBuffer();
 		sb.append(dateStr.substring(0, 4)).append('-');// 年
 		if (StringUtils.isBlank(subArr[0])) {
-			if (subArr[1].length() == 2) {
-				// 12
-				sb.append('0').append(subArr[1].charAt(0)).append("-0").append(subArr[1].charAt(1));
-				return sb.toString();
-			} else if (subArr[1].length() == 4) {
+			if (subArr[1].length() == 4) {
 				// 1213
 				sb.append(subArr[1].substring(0, 2)).append("-").append(subArr[1].substring(2));
 				return sb.toString();
