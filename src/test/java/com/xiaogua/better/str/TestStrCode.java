@@ -425,7 +425,7 @@ public class TestStrCode {
 	}
 
 	@Test
-	public void testStrPaddingWithReplaceIssue() throws Exception {
+	public void testStringFormatStrPaddingWithReplaceIssue() throws Exception {
 		String str = "A B";
 		// str内部不能有空格
 		String paddingStr = String.format("%5s", str).replace(' ', '0');
@@ -433,6 +433,33 @@ public class TestStrCode {
 
 		paddingStr = String.format("%-5s", str).replace(' ', '0');
 		Assert.assertEquals("A0B00", paddingStr);
+	}
+
+	@Test
+	public void testStringFormatIntegerPaddingWithZeor() {
+		int value = 2;
+		String rtnStr = String.format("%05d", value);
+		Assert.assertEquals("00002", rtnStr);
+		rtnStr = String.format("%-5d", value).replace(' ', '0');
+		Assert.assertEquals("20000", rtnStr);
+
+		value = -2;
+		rtnStr = String.format("%06d", value);
+		Assert.assertEquals("-00002", rtnStr);
+
+		rtnStr = String.format("%-6d", value).replace(' ', '0');
+		Assert.assertEquals("-20000", rtnStr);
+	}
+
+	@Test
+	public void testStringFormatHex() {
+		int value = 12345;
+		String hexStr = String.format("%#X", value);
+		Assert.assertEquals("0X" + Integer.toHexString(value), hexStr);
+
+		value = -12345;
+		hexStr = String.format("%#X", value);
+		Assert.assertEquals("0X" + Integer.toHexString(value).toUpperCase(), hexStr);
 	}
 
 	public void printStr(String... strs) {

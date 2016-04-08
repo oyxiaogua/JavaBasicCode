@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -46,4 +47,23 @@ public class TestTimeZoneCode {
 		System.out.println("Los_Angeles :" + fullDateFormat.format(new Date()));
 	}
 
+	@Test
+	public void testGetAllPossibleTime() {
+		String str = "123";
+		List<String> rtnList = TimeZoneCode.getAllPossibleTime(str);
+		System.out.println(rtnList);
+
+		str = "121314";
+		rtnList = TimeZoneCode.getAllPossibleTime(str);
+		System.out.println(rtnList);
+
+		str = "1234";
+		rtnList = TimeZoneCode.getAllPossibleTime(str);
+		System.out.println(rtnList);
+
+		str = "12345";
+		rtnList = TimeZoneCode.getAllPossibleTime(str);
+		System.out.println(rtnList);
+
+	}
 }
