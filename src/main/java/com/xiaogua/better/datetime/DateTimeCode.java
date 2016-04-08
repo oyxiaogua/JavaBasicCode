@@ -335,8 +335,8 @@ public class DateTimeCode {
 					return sb.toString();
 				}
 				// 212
-				if (parseIntValue(timeStr.substring(0, 2)) <= 23 && parseIntValue(timeStr.substring(2, 3)) > 5
-						&& parseIntValue(timeStr.substring(3)) <= 59) {
+				if (parseIntValue(timeStr.substring(0, 2)) <= 23 && parseIntValue(timeStr.substring(1, 3)) > 59
+						&& parseIntValue(timeStr.substring(1, 3)) > 59 && parseIntValue(timeStr.substring(3)) <= 59) {
 					sb.append(timeStr.substring(0, 2)).append(':').append(formatStr(timeStr.substring(2, 3)))
 							.append(':').append(timeStr.substring(3));
 					return sb.toString();

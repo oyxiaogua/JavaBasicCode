@@ -1,8 +1,12 @@
 package com.xiaogua.better.basic;
 
+import java.security.Provider;
+import java.security.SecureRandom;
+import java.security.Security;
 import java.util.Arrays;
 import java.util.Random;
 
+import org.apache.commons.codec.binary.Hex;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -65,7 +69,7 @@ public class TestRandom {
 	public void testRandomString() {
 		System.out.println(RandomCode.randomString(10));
 	}
-	
+
 	@Test
 	public void testRandomStringWithCommonLang3() {
 		System.out.println(RandomCode.randomStringWithCommonLang3(10));
@@ -94,6 +98,31 @@ public class TestRandom {
 	public void testGenerateRandomArrSumOfN() {
 		int[] rtnArr = RandomCode.generateRandomArrSumOfN(20, 9, true);
 		System.out.println(Arrays.toString(rtnArr));
+	}
+
+	@Test
+	public void testSecureProvider() {
+		Provider[] providerArr = Security.getProviders();
+		for (Provider provider : providerArr) {
+			System.out.println(provider);
+		}
+	}
+
+	@Test
+	public void testSecureRandom() {
+		SecureRandom random = new SecureRandom();
+		int randomInt = random.nextInt(100);
+		System.out.println(randomInt);
+
+		byte bytes[] = new byte[20];
+		random.nextBytes(bytes);
+		System.out.println(Hex.encodeHex(bytes));
+
+		int seedByteCount = 10;
+		byte[] seed = random.generateSeed(seedByteCount);
+		random.setSeed(seed);
+		randomInt = random.nextInt();
+		System.out.println(randomInt);
 	}
 
 	private int getRandRate(double rateA[]) {

@@ -231,9 +231,9 @@ public class TestDateTimeCode {
 		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
 		Assert.assertEquals("02:41:23", formatTimeStr);
 
-		dateStr = "23612";
+		dateStr = "16602";
 		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
-		Assert.assertEquals("23:06:12", formatTimeStr);
+		Assert.assertEquals("16:06:02", formatTimeStr);
 
 		dateStr = "23461";
 		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
