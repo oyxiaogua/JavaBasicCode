@@ -163,6 +163,14 @@ public class TestDateTimeCode {
 		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, "yyyy_MM_dd");
 		Assert.assertEquals("2016_01_31", formatDateStr);
 
+		dateStr = "2016012";
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, "yyyy_MM_dd");
+		Assert.assertEquals("2016_01_02", formatDateStr);
+
+		dateStr = "2016-1-2";
+		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, "yyyy_MM_dd");
+		Assert.assertEquals("2016_01_02", formatDateStr);
+
 		dateStr = "2016年1_2日3时2:3";
 		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, fullDateFormatStr);
 		Assert.assertEquals("2016-01-02 03:02:03", formatDateStr);
@@ -175,8 +183,68 @@ public class TestDateTimeCode {
 		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, fullDateFormatStr);
 		Assert.assertEquals("2016-01-02 03:02:03", formatDateStr);
 
-		dateStr = "  2016-1-2 3:2:3 ";
+		dateStr = "  2016-1-2 :::3:2:3::: ";
 		formatDateStr = DateTimeCode.getFormatDateTimeStr(dateStr, fullDateFormatStr);
 		Assert.assertEquals("2016-01-02 03:02:03", formatDateStr);
+	}
+
+	@Test
+	public void testGetFormatTimeStr() throws Exception {
+		String dateStr = "121314";
+		String formatTimeStr = null;
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("12:13:14", formatTimeStr);
+
+		dateStr = "1";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("01:00:00", formatTimeStr);
+
+		dateStr = "1:2:";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("01:02:00", formatTimeStr);
+
+		dateStr = "1:2:30";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("01:02:30", formatTimeStr);
+
+		dateStr = "23:3";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("23:03:00", formatTimeStr);
+
+		dateStr = "24:3";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("02:04:03", formatTimeStr);
+
+		dateStr = "241:3";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("02:41:03", formatTimeStr);
+
+		dateStr = "2:586";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("02:58:06", formatTimeStr);
+
+		dateStr = "24";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("02:04:00", formatTimeStr);
+
+		dateStr = "241";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("02:41:00", formatTimeStr);
+
+		dateStr = "24123";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("02:41:23", formatTimeStr);
+
+		dateStr = "23612";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("23:06:12", formatTimeStr);
+
+		dateStr = "23461";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("23:46:01", formatTimeStr);
+		
+		dateStr = "234611";
+		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
+		Assert.assertEquals("23:46:11", formatTimeStr);
 	}
 }

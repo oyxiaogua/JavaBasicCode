@@ -182,7 +182,7 @@ public class DateTimeCode {
 	}
 
 	/**
-	 * 返回正确的时间日期串(规范时间日期格式串)
+	 * 返回正确的时间日期串(规范时间日期格式串,只对规范数据有效,数据不规范会抛出异常)
 	 */
 	public static String getFormatDateTimeStr(String dateStr, String destFmtStr) throws Exception {
 		if (StringUtils.isBlank(dateStr)) {
@@ -202,18 +202,189 @@ public class DateTimeCode {
 			dateStrArr = dateStr.split("\\s+");
 		}
 		String srcFmtStr = "yyyy-MM-dd";
-		if (dateStrArr.length == 1 && dateStr.length() > 9) {
+		if (dateStrArr.length == 1 && dateStr.length() > 10) {
 			throw new Exception("暂不支持此种格式");
 		}
 		StringBuffer sb = new StringBuffer();
-		// 时间部分
-		String numPartStr = getFormatDateStr(dateStrArr[0], "");
-		if (StringUtils.isBlank(numPartStr) || numPartStr.length() < 6) {
-			throw new IllegalArgumentException("dateStr错误");
+		String datePartStr = getFormatDateStr(dateStrArr[0]);
+		sb.append(datePartStr);
+		if (dateStrArr.length == 2) {
+			String timePartStr = getFormatTimeStr(dateStrArr[1]);
+			sb.append(" ").append(timePartStr);
+			dateStr = sb.toString();
+			sb.setLength(0);
+			sb.append(srcFmtStr).append(" ").append("HH:mm:ss");
+			srcFmtStr = sb.toString();
+		} else {
+			dateStr = sb.toString();
 		}
-		String datePartStr = getFormatDateStr(dateStrArr[0], "-");
+		Date srcDate = DateUtils.parseDate(dateStr, srcFmtStr);
+		DateFormat format = new SimpleDateFormat(destFmtStr);
+		format.setLenient(true);
+		return format.format(srcDate);
+	}
+
+	/**
+	 * 获取格式化后的时间
+	 */
+	public static String getFormatTimeStr(String timeStr) throws Exception {
+		timeStr = replaceTimeStr(timeStr);
+		if (StringUtils.isBlank(timeStr)) {
+			return "";
+		}
+		if (timeStr.length() > 6) {
+			throw new IllegalArgumentException("错误的时间");
+		}
+		if (timeStr.length() == 0) {
+			return "00:00:00";
+		}
+		StringBuffer sb = new StringBuffer();
+		if (timeStr.length() == 1) {
+			sb.append(formatStr(timeStr)).append(":00:00");
+			return sb.toString();
+		}
+		if (parseIntValue(timeStr.replace(":", "")) > 235959) {
+			throw new IllegalArgumentException("错误的时间");
+		}
+		if (timeStr.indexOf(":") > 0) {
+			String[] timeArr = timeStr.split(":", -1);
+			if (timeArr.length == 3) {
+				// 1:2:3
+				if (parseIntValue(timeArr[0]) <= 23 && parseIntValue(timeArr[1]) <= 59
+						&& parseIntValue(timeArr[2]) <= 59) {
+					sb.append(formatStr(timeArr[0])).append(':').append(formatStr(timeArr[1])).append(':')
+							.append(formatStr(timeArr[2]));
+					return sb.toString();
+				}
+			}
+			if (timeArr.length == 2) {
+				if (timeArr[0].length() == 4) {
+					// 1213:4
+					if (parseIntValue(timeArr[0].substring(0, 2)) <= 23 && parseIntValue(timeArr[0].substring(2)) <= 59
+							&& parseIntValue(timeArr[1]) <= 59) {
+						sb.append(timeArr[0].substring(0, 2)).append(':').append(timeArr[0].substring(2, 4)).append(':')
+								.append(formatStr(timeArr[1]));
+						return sb.toString();
+					}
+				}
+				if (timeArr[1].length() == 4) {
+					// 1:1213
+					if (parseIntValue(timeArr[0]) <= 23 && parseIntValue(timeArr[1].substring(0, 2)) <= 59
+							&& parseIntValue(timeArr[1].substring(2)) <= 59) {
+						sb.append(formatStr(timeArr[0])).append(':').append(timeArr[1].substring(0, 2)).append(':')
+								.append(timeArr[1].substring(2, 4));
+						return sb.toString();
+					}
+				}
+				if (timeArr[0].length() >= 2) {
+					// 2:41
+					if (parseIntValue(timeArr[0].substring(0, 2)) >= 24 && parseIntValue(timeArr[0].substring(1)) <= 59
+							&& parseIntValue(timeArr[1]) <= 59) {
+						sb.append(formatStr(timeArr[0].substring(0, 1))).append(':')
+								.append(formatStr(timeArr[0].substring(1))).append(':').append(formatStr(timeArr[1]));
+						return sb.toString();
+					}
+				}
+				if (timeArr[1].length() >= 2) {
+					// 58:1
+					if (parseIntValue(timeArr[0]) <= 23 && parseIntValue(timeArr[1].substring(0, 2)) >= 56
+							&& parseIntValue(timeArr[1].substring(0, 2)) <= 59) {
+						sb.append(formatStr(timeArr[0])).append(':').append(timeArr[1].substring(0, 2)).append(':')
+								.append(formatStr(timeArr[1].substring(2)));
+						return sb.toString();
+					}
+				}
+				// 1:2
+				if (parseIntValue(timeArr[0]) <= 23 && parseIntValue(timeArr[1]) <= 59) {
+					sb.append(formatStr(timeArr[0])).append(':').append(formatStr(timeArr[1])).append(":00");
+					return sb.toString();
+				}
+			}
+		} else if (timeStr.indexOf(":") < 0) {
+			if (timeStr.length() >= 2 && timeStr.length() <= 3) {
+				if (parseIntValue(timeStr.substring(0, 2)) > 23) {
+					// 2:5
+					if (timeStr.length() == 2) {
+						sb.append(formatStr(timeStr.substring(0, 1))).append(':')
+								.append(formatStr(timeStr.substring(1))).append(":00");
+						return sb.toString();
+					}
+					if (parseIntValue(timeStr.substring(1)) <= 59) {
+						// 2:59
+						sb.append(formatStr(timeStr.substring(0, 1))).append(':')
+								.append(formatStr(timeStr.substring(1))).append(":00");
+						return sb.toString();
+					}
+				}
+			}
+			if (timeStr.length() == 6) {
+				//121314
+				if (parseIntValue(timeStr.substring(0, 2)) <= 23 && parseIntValue(timeStr.substring(2, 4)) <= 59
+						&& parseIntValue(timeStr.substring(4, 6)) <= 59) {
+					sb.append(timeStr.substring(0, 2)).append(':').append(timeStr.substring(2, 4)).append(':')
+							.append(timeStr.substring(4, 6));
+					return sb.toString();
+				}
+			}
+			if (timeStr.length() == 5) {
+				// 122
+				if (parseIntValue(timeStr.substring(0, 2)) > 23 && parseIntValue(timeStr.substring(1, 3)) <= 59
+						&& parseIntValue(timeStr.substring(3)) <= 59) {
+					sb.append(formatStr(timeStr.substring(0, 1))).append(':').append(timeStr.substring(1, 3))
+							.append(':').append(timeStr.substring(3));
+					return sb.toString();
+				}
+				// 212
+				if (parseIntValue(timeStr.substring(0, 2)) <= 23 && parseIntValue(timeStr.substring(2, 3)) > 5
+						&& parseIntValue(timeStr.substring(3)) <= 59) {
+					sb.append(timeStr.substring(0, 2)).append(':').append(formatStr(timeStr.substring(2, 3)))
+							.append(':').append(timeStr.substring(3));
+					return sb.toString();
+				}
+				// 221
+				if (parseIntValue(timeStr.substring(0, 2)) <= 23 && parseIntValue(timeStr.substring(2, 4)) <= 59
+						&& parseIntValue(timeStr.substring(3)) > 59) {
+					sb.append(timeStr.substring(0, 2)).append(':').append(timeStr.substring(2, 4)).append(':')
+							.append(formatStr(timeStr.substring(4)));
+					return sb.toString();
+				}
+			}
+		}
+		throw new Exception("暂不支持此种格式");
+	}
+
+	private static int parseIntValue(String str) throws Exception {
+		if (str.length() == 0) {
+			return 0;
+		}
+		int rtn = Integer.parseInt(str);
+		if (rtn < 0) {
+			throw new Exception("错误的时间");
+		}
+		return rtn;
+	}
+
+	private static String formatStr(String str) {
+		if (str.length() == 0) {
+			return "00";
+		}
+		return String.format("%2s", str).replace(' ', '0');
+	}
+
+	/**
+	 * 获取格式化后的时间
+	 */
+	private static String getFormatDateStr(String dateStr) throws Exception {
+		StringBuffer sb = new StringBuffer();
+		// 时间部分
+		String numPartStr = replaceDateStr(dateStr, "");
+		if (StringUtils.isBlank(numPartStr) || numPartStr.length() < 6) {
+			throw new IllegalArgumentException("错误的日期");
+		}
+		String datePartStr = replaceDateStr(dateStr, "-");
 		if (numPartStr.contentEquals(datePartStr)) {
-			if (datePartStr.length() == 6) {
+			if (datePartStr.length() == 6 && parseIntValue(datePartStr.substring(4)) <= 12
+					&& parseIntValue(datePartStr.substring(4)) >= 1) {
 				// 201612
 				sb.append(datePartStr.substring(0, 4)).append("-0").append(datePartStr.substring(4, 5)).append("-0")
 						.append(datePartStr.substring(5, 6));
@@ -237,22 +408,12 @@ public class DateTimeCode {
 				datePartStr = getRightDateStrIfPossible(datePartStr);
 			}
 		}
-		sb.append(datePartStr);
-		if (dateStrArr.length == 2) {
-			String timePartStr = getFormatTimeStr(dateStrArr[1]);
-			sb.append(" ").append(timePartStr);
-			dateStr = sb.toString();
-			sb.setLength(0);
-			sb.append(srcFmtStr).append(" ").append("HH:mm:ss");
-			srcFmtStr = sb.toString();
-		} else {
-			dateStr = sb.toString();
-		}
-		Date srcDate = DateUtils.parseDate(dateStr, srcFmtStr);
-		DateFormat format = new SimpleDateFormat(destFmtStr);
-		return format.format(srcDate);
+		return datePartStr;
 	}
 
+	/**
+	 * 返回时间字符串(如果可能)
+	 */
 	private static String getRightDateStrIfPossible(String dateStr) throws Exception {
 		String subStr = dateStr.substring(4);
 		String[] subArr = subStr.split("-");
@@ -290,10 +451,15 @@ public class DateTimeCode {
 	 * 检查是否是日期
 	 */
 	private static String checkStrIfIsDate(String dateStr) throws Exception {
-		String lastStr = dateStr.substring(dateStr.length() - 2);
-		if ("31".equals(lastStr) || "30".equals(lastStr)) {
-			// 日期
-			StringBuffer sb = new StringBuffer();
+		StringBuffer sb = new StringBuffer();
+		if (dateStr.charAt(4) == '0') {
+			// 2016011
+			sb.append(dateStr.substring(0, 4)).append("-").append(dateStr.substring(4, 6)).append("-0")
+					.append(dateStr.substring(6));
+			return sb.toString();
+		}
+		if (dateStr.charAt(5) == '3' && Character.digit(dateStr.charAt(6), 10) <= 1) {
+			// 2016131
 			sb.append(dateStr.substring(0, 4)).append("-0").append(dateStr.substring(4, 5)).append("-")
 					.append(dateStr.substring(5));
 			return sb.toString();
@@ -304,15 +470,16 @@ public class DateTimeCode {
 	/**
 	 * 删除非法字符
 	 */
-	private static String getFormatDateStr(String dateStr, String replaceToStr) {
+	private static String replaceDateStr(String dateStr, String replaceToStr) {
 		return dateStr.trim().replaceAll("\\D+", replaceToStr).trim();
 	}
 
 	/**
 	 * 删除非法字符
 	 */
-	private static String getFormatTimeStr(String timeStr) {
-		return timeStr.trim().replaceAll("\\D+$", "").replaceAll("\\D+", ":").trim();
+	private static String replaceTimeStr(String timeStr) {
+		return timeStr.trim().replaceAll("\\D+$", "").replaceAll("\\D+", ":").replaceAll("^:+", "")
+				.replaceAll(":+$", "").trim();
 	}
 
 }
