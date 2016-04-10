@@ -293,6 +293,17 @@ public class TestInteger {
 		Assert.assertNotEquals(-20, int2);
 	}
 	
+	@Test
+	public void testIntegerComplement(){
+		 int a = 2;
+		 int b=~a;
+		 //2补码:0000 0010 
+		 //2取反后补码   1111 1101
+		 //取反后反码     1111 1100
+		 //原码                1000 0011
+		 Assert.assertEquals(-3, b);
+	}
+	
 	public int getUnsignedByte(short data) {
 		// 将data字节型数据转换为0~65535
 		return data & 0x0FFFF;
