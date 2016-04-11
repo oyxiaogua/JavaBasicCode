@@ -304,6 +304,16 @@ public class TestInteger {
 		 Assert.assertEquals(-3, b);
 	}
 	
+	@Test
+	public void testIntegerShiftOperation() {
+		//无符号向右移动7位
+		System.out.println(0xff >>> 7);//1
+		//转换为int>>>7
+		System.out.println((((byte) 0xff) >>> 7));
+		//低位截取
+		System.out.println((byte) (((byte) 0xff) >>> 7));
+	}
+	
 	public int getUnsignedByte(short data) {
 		// 将data字节型数据转换为0~65535
 		return data & 0x0FFFF;
