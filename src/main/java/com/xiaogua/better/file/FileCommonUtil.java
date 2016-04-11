@@ -42,17 +42,17 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
-	 * 获取BufferedWriter 
+	 * 获取BufferedWriter
 	 */
 	public BufferedWriter getBufferedWriter(String filePath, String encoding) throws Exception {
 		return getBufferedWriter(filePath, encoding, false);
 	}
-	
+
 	/**
 	 * 获取BufferedWriter 支持追加写
 	 */
-	public BufferedWriter getBufferedWriter(String filePath, String encoding,boolean append) throws Exception {
-		OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filePath,append), encoding);
+	public BufferedWriter getBufferedWriter(String filePath, String encoding, boolean append) throws Exception {
+		OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filePath, append), encoding);
 		BufferedWriter bw = new BufferedWriter(osw);
 		return bw;
 	}
@@ -328,14 +328,18 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 		}
 		return fileList;
 	}
-	
-	
+
 	/**
 	 * 按段读取文件内容(默认过滤掉空行)
-	 * @param includeLowerBound 开始行(从1开始)
-	 * @param includeUpperBound 结束行(从1开始)
-	 * @param skipFirstLine 是否跳过第一行
-	 * @param encoding 编码
+	 * 
+	 * @param includeLowerBound
+	 *            开始行(从1开始)
+	 * @param includeUpperBound
+	 *            结束行(从1开始)
+	 * @param skipFirstLine
+	 *            是否跳过第一行
+	 * @param encoding
+	 *            编码
 	 */
 	public List<String> getRangeDataList(File file, int includeLowerBound, int includeUpperBound, boolean skipFirstLine,
 			String encoding) throws Exception {
@@ -382,7 +386,18 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 		}
 		return new ArrayList<String>();
 	}
-	
+
+	/**
+	 * 获取流内容
+	 */
+	public static String getStreamContent(InputStream stream, String charset) throws Exception {
+		try {
+			return IOUtils.toString(stream, charset);
+		} finally {
+			IOUtils.closeQuietly(stream);
+		}
+	}
+
 	private void closeBufferedStream(BufferedReader br, BufferedInputStream bis) {
 		try {
 			IOUtils.closeQuietly(br);
@@ -395,5 +410,5 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 			log.error("close bufferedinputstream error:", e);
 		}
 	}
-	
+
 }

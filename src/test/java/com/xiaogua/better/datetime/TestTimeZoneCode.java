@@ -61,9 +61,14 @@ public class TestTimeZoneCode {
 		rtnList = TimeZoneCode.getAllPossibleTime(str);
 		System.out.println(rtnList);
 
-		str = "12345";
+		str = "12366";
 		rtnList = TimeZoneCode.getAllPossibleTime(str);
 		System.out.println(rtnList);
+	}
 
+	@Test
+	public void testCreateTimeZone() {
+		TimeZone timeZone = TimeZone.getTimeZone("GMT+08:00");
+		System.out.println(timeZone.getDisplayName());
 	}
 }

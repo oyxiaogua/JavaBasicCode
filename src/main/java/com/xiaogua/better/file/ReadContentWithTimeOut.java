@@ -35,4 +35,23 @@ public class ReadContentWithTimeOut {
 		}
 		return writer.toString();
 	}
+
+	/**
+	 * @see http://stackoverflow.com/questions/804951/is-it-possible-to-read-
+	 *      from-a-inputstream-with-a-timeout
+	 */
+	public static int readInputStreamWithTimeout(InputStream is, byte[] b, int timeoutMillis) throws Exception {
+		int bufferOffset = 0;
+		long maxTimeMillis = System.currentTimeMillis() + timeoutMillis;
+		int readLength = -1, readResult = -1;
+		while (System.currentTimeMillis() < maxTimeMillis && bufferOffset < b.length) {
+			readLength = java.lang.Math.min(is.available(), b.length - bufferOffset);
+			readResult = is.read(b, bufferOffset, readLength);
+			if (readResult == -1) {
+				break;
+			}
+			bufferOffset += readResult;
+		}
+		return bufferOffset;
+	}
 }
