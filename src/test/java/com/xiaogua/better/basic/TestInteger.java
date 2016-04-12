@@ -314,6 +314,24 @@ public class TestInteger {
 		System.out.println((byte) (((byte) 0xff) >>> 7));
 	}
 	
+	@Test
+	public void testStrToInteger() {
+		String numberStr = "1234";
+		int intValue = org.apache.commons.lang3.math.NumberUtils.toInt(numberStr, -1);
+		Assert.assertEquals(1234, intValue);
+
+		intValue = org.apache.commons.lang3.math.NumberUtils.toInt(null, -1);
+		Assert.assertEquals(-1, intValue);
+		
+		//会删除空白字符,不能为null
+		intValue = org.springframework.util.NumberUtils.parseNumber(numberStr, Integer.class);
+		Assert.assertEquals(1234, intValue);
+
+		numberStr = " 12 34 ";
+		intValue = org.springframework.util.NumberUtils.parseNumber(numberStr, Integer.class);
+		Assert.assertEquals(1234, intValue);
+	}
+	
 	public int getUnsignedByte(short data) {
 		// 将data字节型数据转换为0~65535
 		return data & 0x0FFFF;
