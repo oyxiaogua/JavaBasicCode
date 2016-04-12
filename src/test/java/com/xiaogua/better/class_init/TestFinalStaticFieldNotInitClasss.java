@@ -9,6 +9,11 @@ public class TestFinalStaticFieldNotInitClasss {
 	}
 
 	@Test
+	public void testFinalStaticFieldInitStaticField() {
+		System.out.println(Simple_Static_Field_Class.final_static_random_value);
+	}
+
+	@Test
 	public void testStaticFieldNotInitClasss() {
 		System.out.println(Simple_Static_Field_Class.static_value);
 	}

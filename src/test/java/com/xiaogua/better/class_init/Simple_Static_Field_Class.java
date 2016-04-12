@@ -10,6 +10,7 @@ public class Simple_Static_Field_Class {
 	}
 
 	public static final int final_static_value = 234;
+	public static final int final_static_random_value = (int) (Math.random() * 100);
 	public static int static_value = 123;
 	public int normal_value = 3;
 
