@@ -22,6 +22,8 @@ public class DateTimeCode {
 	public final static String HTTP_DATETIME_PATTERN = "EEE, dd MMM yyyy HH:mm:ss z";
 	/** 标准日期时间格式，精确到毫秒 */
 	public final static String NORM_DATETIME_MS_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
+	/** 普通日期时间格式 */
+	public final static String FULL_DATETIME = "yyyy-MM-dd HH:mm:ss";
 
 	/**
 	 * 获取GMT时间
@@ -223,6 +225,23 @@ public class DateTimeCode {
 		format.setLenient(true);
 		return format.format(srcDate);
 	}
+
+	/**
+	 * 字符串转为Date
+	 */
+	public static Date getDateFromStr(String dateStr, String formatStr) throws Exception {
+		DateFormat dateFormatter = new SimpleDateFormat(formatStr);
+		return dateFormatter.parse(dateStr);
+	}
+	
+	/**
+	 * Date转为字符串
+	 */
+	public static String getStrFromDate(Date date, String formatStr) throws Exception {
+		DateFormat dateFormatter = new SimpleDateFormat(formatStr);
+		return dateFormatter.format(date);
+	}
+
 
 	/**
 	 * 获取格式化后的时间
