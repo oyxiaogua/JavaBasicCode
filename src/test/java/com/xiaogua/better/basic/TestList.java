@@ -13,6 +13,8 @@ import org.junit.Test;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
+import com.xiaogua.better.bean.Sub_Dog;
+import com.xiaogua.better.bean.Super_Animal;
 
 public class TestList {
 	@Test
@@ -150,23 +152,61 @@ public class TestList {
 	@Test
 	public void testConvertListValue() {
 		List<List<String>> list = new ArrayList<List<String>>();
-		list.add(Arrays.<String>asList(null, "a"));
-		list.add(Arrays.<String>asList(null, "b"));
-		list.add(Arrays.<String>asList(null, null));
-		list.add(Arrays.<String>asList());
+		list.add(Arrays.<String> asList(null, "a"));
+		list.add(Arrays.<String> asList(null, "b"));
+		list.add(Arrays.<String> asList(null, null));
+		list.add(Arrays.<String> asList());
 		List<String> rtnList = ListCode.convertListListWithFlatMap(list);
 		System.out.println(rtnList);
 
 		List<String> rtnList2 = ListCode.convertListValueWithReduce(list);
 		System.out.println(rtnList2);
 	}
-	
+
 	@Test
-	public void testListSize(){
-		List<String> list=new ArrayList<String>(256);
+	public void testListSize() {
+		List<String> list = new ArrayList<String>(256);
 		list.add("test_1");
 		list.add("test_2");
 		Assert.assertEquals(2, list.size());
+	}
+
+	@Test
+	public void testListSort() {
+		List<Super_Animal> animalList = new ArrayList<Super_Animal>();
+		animalList.add(new Super_Animal(1));
+		animalList.add(new Super_Animal(33));
+		animalList.add(new Super_Animal(21));
+		animalList.add(new Super_Animal(12));
+
+		List<Sub_Dog> dogList = new ArrayList<Sub_Dog>();
+		dogList.add(new Sub_Dog(1));
+		dogList.add(new Sub_Dog(33));
+		dogList.add(new Sub_Dog(21));
+		dogList.add(new Sub_Dog(12));
+		
+		mySort(animalList);
+		System.out.println(animalList);
+		
+//		mySort(dogList);----->error
+//		System.out.println(dogList);
+		
+		mySort2(animalList);
+		System.out.println(animalList);
+		
+		mySort2(dogList);
+		System.out.println(dogList);
+
+	}
+
+	//T实现了Comparable接口
+	public static <T extends Comparable<T>> void mySort(List<T> list) {
+		Collections.sort(list);
+	}
+
+	//T类型或者是T的父类型必须实现了Comparable接口
+	public static <T extends Comparable<? super T>> void mySort2(List<T> list) {
+		Collections.sort(list);
 	}
 
 }

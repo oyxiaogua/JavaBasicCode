@@ -157,7 +157,7 @@ public class TestMap {
 	@Test
 	public void testSortedMapTailMap() {
 		SortedMap<Integer, String> sortedMap = new TreeMap<Integer, String>();
-		for (int i = 10; i >0; i--) {
+		for (int i = 10; i > 0; i--) {
 			sortedMap.put(i, "test_" + i);
 		}
 		SortedMap<Integer, String> subMap = sortedMap.tailMap(5);
@@ -165,21 +165,32 @@ public class TestMap {
 		System.out.println(i + "," + subMap.get(i));
 		System.out.println(subMap);
 	}
-	
-	
+
 	@Test
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void testIteratorHashMap(){
-		//hashmap遍历
-		HashMap map=new HashMap();
+	public void testIteratorHashMap() {
+		// hashmap遍历
+		HashMap map = new HashMap();
 		map.put("test_key_1", "test_value_1");
 		map.put("test_key_2", "test_value_2");
 		map.put("test_key_3", "test_value_3");
 		map.put("test_key_4", "test_value_4");
 		Set<Map.Entry> entrySet = map.entrySet();
 		for (Entry entry : entrySet) {
-			System.out.println(entry.getKey()+","+entry.getValue());
+			System.out.println(entry.getKey() + "," + entry.getValue());
 		}
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testWrongUseIsEmpty() {
+		Map<String, String> map = getMapValue();
+		if (!map.isEmpty()) {
+			System.out.println(map);
+		}
+	}
+
+	public Map<String, String> getMapValue() {
+		return null;
 	}
 
 	public static boolean mapEquals(Map<?, ?> m1, Map<?, ?> m2) {
