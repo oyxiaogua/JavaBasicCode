@@ -5,7 +5,10 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
+
+import com.xiaogua.better.bean.Private_Set_Bean;
 
 public class TestReflect {
 	@Test
@@ -20,5 +23,12 @@ public class TestReflect {
 		for (Method method : results) {
 			System.out.println(method.getName());
 		}
+	}
+
+	@Test
+	public void testSetField() {
+		Private_Set_Bean bean = new Private_Set_Bean();
+		ReflectCode.setField(bean, "name", "testName");
+		Assert.assertEquals("testName", bean.getName());
 	}
 }

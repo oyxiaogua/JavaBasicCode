@@ -33,15 +33,15 @@ public class TestInteger {
 		long y = Integer.MAX_VALUE + (long) 1;
 		Assert.assertTrue(y > 0);
 	}
-	
+
 	@Test
 	public void testIntegerOverFlow2() {
-		int minValue=Integer.MIN_VALUE;
-		int maxValue=Integer.MAX_VALUE;
-		Assert.assertTrue(maxValue>maxValue+1);
-		Assert.assertEquals(-1, maxValue-minValue);
-		Assert.assertEquals(1, minValue-maxValue);
-		Assert.assertEquals(maxValue+minValue, maxValue-minValue);
+		int minValue = Integer.MIN_VALUE;
+		int maxValue = Integer.MAX_VALUE;
+		Assert.assertTrue(maxValue > maxValue + 1);
+		Assert.assertEquals(-1, maxValue - minValue);
+		Assert.assertEquals(1, minValue - maxValue);
+		Assert.assertEquals(maxValue + minValue, maxValue - minValue);
 	}
 
 	@Test
@@ -249,15 +249,15 @@ public class TestInteger {
 		int i = 0;
 		System.out.println(true ? x : i);// 88
 		System.out.println(true ? x : 0);// X
-		System.out.println(true ? i : x);//0
+		System.out.println(true ? i : x);// 0
 		System.out.println(false ? i : x);// 88
 		Assert.assertEquals('\0', (false ? x : 0));
 		Assert.assertEquals(0, (true ? i : x));
 
 	}
-	
+
 	@Test
-	public void testIntegerSignum(){
+	public void testIntegerSignum() {
 		Assert.assertEquals(0, Integer.signum(0));
 		Assert.assertEquals(-1, Integer.signum(Integer.MIN_VALUE));
 		Assert.assertEquals(1, Integer.signum(Integer.MAX_VALUE));
@@ -269,7 +269,7 @@ public class TestInteger {
 		int resultNum = Integer.parseInt(hindiNumber);
 		Assert.assertEquals(1234567890, resultNum);
 	}
-	
+
 	@Test
 	public void testPatternMatchInteger() {
 		final Pattern digit = Pattern.compile("[0-9]*");
@@ -278,7 +278,7 @@ public class TestInteger {
 		System.out.println(String.format("digit match = %s", digit.matcher(hindiNumber).matches()));
 		System.out.println(String.format("Unicode digit match = %s", unicode_digit.matcher(hindiNumber).matches()));
 	}
-	
+
 	@Test
 	public void testConvertedToInt() {
 		final short sh1 = -20;
@@ -292,28 +292,28 @@ public class TestInteger {
 		Assert.assertEquals(-20, int1);
 		Assert.assertNotEquals(-20, int2);
 	}
-	
+
 	@Test
-	public void testIntegerComplement(){
-		 int a = 2;
-		 int b=~a;
-		 //2补码:0000 0010 
-		 //2取反后补码   1111 1101
-		 //取反后反码     1111 1100
-		 //原码                1000 0011
-		 Assert.assertEquals(-3, b);
+	public void testIntegerComplement() {
+		int a = 2;
+		int b = ~a;
+		// 2补码:0000 0010
+		// 2取反后补码 1111 1101
+		// 取反后反码 1111 1100
+		// 原码 1000 0011
+		Assert.assertEquals(-3, b);
 	}
-	
+
 	@Test
 	public void testIntegerShiftOperation() {
-		//无符号向右移动7位
-		System.out.println(0xff >>> 7);//1
-		//转换为int>>>7
+		// 无符号向右移动7位
+		System.out.println(0xff >>> 7);// 1
+		// 转换为int>>>7
 		System.out.println((((byte) 0xff) >>> 7));
-		//低位截取
+		// 低位截取
 		System.out.println((byte) (((byte) 0xff) >>> 7));
 	}
-	
+
 	@Test
 	public void testStrToInteger() {
 		String numberStr = "1234";
@@ -322,8 +322,8 @@ public class TestInteger {
 
 		intValue = org.apache.commons.lang3.math.NumberUtils.toInt(null, -1);
 		Assert.assertEquals(-1, intValue);
-		
-		//会删除空白字符,不能为null
+
+		// 会删除空白字符,不能为null
 		intValue = org.springframework.util.NumberUtils.parseNumber(numberStr, Integer.class);
 		Assert.assertEquals(1234, intValue);
 
@@ -331,12 +331,21 @@ public class TestInteger {
 		intValue = org.springframework.util.NumberUtils.parseNumber(numberStr, Integer.class);
 		Assert.assertEquals(1234, intValue);
 	}
-	
+
+	@Test
+	public void testAddIntegerWithChar() {
+		System.out.println((int) '1');// 49
+		System.out.println(1 + '1' + '1' + 1);// 100
+		System.out.println('1' + 1 + '1' + 1);// 100
+		System.out.println(1 + 1 + "1" + 1);// 211
+		System.out.println("1" + 1 + '1' + 1);// 1111
+	}
+
 	public int getUnsignedByte(short data) {
 		// 将data字节型数据转换为0~65535
 		return data & 0x0FFFF;
 	}
-	
+
 	// 得到2的n次方
 	public int getPower2(int num) {
 		return (int) (Math.log10(num) / Math.log10(2));

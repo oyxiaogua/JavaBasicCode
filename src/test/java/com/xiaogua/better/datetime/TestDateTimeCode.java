@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Locale;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
@@ -242,5 +243,13 @@ public class TestDateTimeCode {
 		dateStr = "234611";
 		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
 		Assert.assertEquals("23:46:11", formatTimeStr);
+	}
+	
+	@Test
+	public void testFormatEnglishDate(){
+		//Fri Jan 02 04:05:06 CST 2015
+		DateFormat df = new SimpleDateFormat(DateTimeCode.DATE_DEFAULT_FORMAT,Locale.ENGLISH); 
+		String dateStr=df.format(new Date());
+		System.out.println(dateStr);
 	}
 }

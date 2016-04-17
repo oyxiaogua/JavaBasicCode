@@ -24,6 +24,8 @@ public class DateTimeCode {
 	public final static String NORM_DATETIME_MS_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
 	/** 普通日期时间格式 */
 	public final static String FULL_DATETIME = "yyyy-MM-dd HH:mm:ss";
+	
+	public final static String DATE_DEFAULT_FORMAT="EEE MMM dd HH:mm:ss zzz yyyy";
 
 	/**
 	 * 获取GMT时间

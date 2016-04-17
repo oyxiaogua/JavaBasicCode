@@ -5,13 +5,19 @@ import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.MethodDescriptor;
 import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.xiaogua.better.bean.Contain_List_Bean;
+import com.xiaogua.better.bean.Friend_Bean;
 import com.xiaogua.better.bean.Normal_Pkg_Bean;
 import com.xiaogua.better.bean.Sub_All_Bean;
 import com.xiaogua.better.bean.Sub_Normal_Bean;
@@ -230,4 +236,67 @@ public class TestOperateJavaBean {
 		System.out.println(destBean);
 	}
 
+	@Test
+	public void testShallowCopyBeanWithApacheBeanUtils() throws Exception {
+		// 浅复制
+		Contain_List_Bean bean = new Contain_List_Bean(1, "test_1");
+		List<Friend_Bean> friendList = new ArrayList<Friend_Bean>();
+		for (int i = 1; i < 5; i++) {
+			friendList.add(new Friend_Bean(i, "test_" + i));
+		}
+		bean.setFriendList(friendList);
+
+		Contain_List_Bean destBean = new Contain_List_Bean();
+		org.apache.commons.beanutils.BeanUtils.copyProperties(destBean, bean);
+
+		destBean.getFriendList().remove(0);
+		Assert.assertEquals(3, bean.getFriendList().size());
+
+		bean.getFriendList().add(new Friend_Bean(5, "test_5"));
+		Assert.assertEquals(4, destBean.getFriendList().size());
+		Assert.assertEquals("test_5", destBean.getFriendList().get(3).getFriendName());
+	}
+
+	@Test
+	public void testShallowCopyBeanWithSpringBeanUtils() throws Exception {
+		// 浅复制
+		Contain_List_Bean bean = new Contain_List_Bean(1, "test_1");
+		List<Friend_Bean> friendList = new ArrayList<Friend_Bean>();
+		for (int i = 1; i < 5; i++) {
+			friendList.add(new Friend_Bean(i, "test_" + i));
+		}
+		bean.setFriendList(friendList);
+
+		Contain_List_Bean destBean = new Contain_List_Bean();
+		org.springframework.beans.BeanUtils.copyProperties(bean, destBean);
+
+		destBean.getFriendList().remove(0);
+		Assert.assertEquals(3, bean.getFriendList().size());
+
+		bean.getFriendList().add(new Friend_Bean(5, "test_5"));
+		Assert.assertEquals(4, destBean.getFriendList().size());
+		Assert.assertEquals("test_5", destBean.getFriendList().get(3).getFriendName());
+	}
+
+	@Test
+	public void testApacheBeanUtilsMapConvert() throws Exception {
+		Sub_Normal_Bean subBean = new Sub_Normal_Bean("subName", 2,
+				DateTimeCode.getDateFromStr("2015-1-2 4:5:6", DateTimeCode.FULL_DATETIME));
+		
+		Object obj=org.apache.commons.beanutils.BeanUtils.getProperty(subBean, "subDate");
+		System.out.println(obj+","+obj.getClass());//日期变为String类型
+		
+		Map<String, String> rtnMap = org.apache.commons.beanutils.BeanUtils.describe(subBean);
+		System.out.println(rtnMap);
+
+		rtnMap.remove("class");
+		Sub_Normal_Bean subBean2 = new Sub_Normal_Bean();
+		
+		org.apache.commons.beanutils.locale.converters.DateLocaleConverter converter = new org.apache.commons.beanutils.locale.converters.DateLocaleConverter(
+				Locale.ENGLISH, DateTimeCode.DATE_DEFAULT_FORMAT);
+		org.apache.commons.beanutils.ConvertUtils.register(converter, Date.class);
+
+		org.apache.commons.beanutils.BeanUtils.populate(subBean2, rtnMap);
+		System.out.println(subBean2);
+	}
 }
