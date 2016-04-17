@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import com.xiaogua.better.bean.Contain_List_Bean;
 import com.xiaogua.better.bean.Friend_Bean;
+import com.xiaogua.better.bean.MyApacheBeanUtilStringConverter;
 import com.xiaogua.better.bean.Normal_Pkg_Bean;
 import com.xiaogua.better.bean.Sub_All_Bean;
 import com.xiaogua.better.bean.Sub_Normal_Bean;
@@ -282,21 +283,39 @@ public class TestOperateJavaBean {
 	public void testApacheBeanUtilsMapConvert() throws Exception {
 		Sub_Normal_Bean subBean = new Sub_Normal_Bean("subName", 2,
 				DateTimeCode.getDateFromStr("2015-1-2 4:5:6", DateTimeCode.FULL_DATETIME));
-		
-		Object obj=org.apache.commons.beanutils.BeanUtils.getProperty(subBean, "subDate");
-		System.out.println(obj+","+obj.getClass());//日期变为String类型
-		
+
+		Object obj = org.apache.commons.beanutils.BeanUtils.getProperty(subBean, "subDate");
+		System.out.println(obj + "," + obj.getClass());// 日期变为String类型
+
 		Map<String, String> rtnMap = org.apache.commons.beanutils.BeanUtils.describe(subBean);
 		System.out.println(rtnMap);
 
 		rtnMap.remove("class");
 		Sub_Normal_Bean subBean2 = new Sub_Normal_Bean();
-		
+
 		org.apache.commons.beanutils.locale.converters.DateLocaleConverter converter = new org.apache.commons.beanutils.locale.converters.DateLocaleConverter(
 				Locale.ENGLISH, DateTimeCode.DATE_DEFAULT_FORMAT);
 		org.apache.commons.beanutils.ConvertUtils.register(converter, Date.class);
 
 		org.apache.commons.beanutils.BeanUtils.populate(subBean2, rtnMap);
 		System.out.println(subBean2);
+	}
+
+	@Test
+	public void testApacheBeanUtilsConvert() throws Exception {
+		org.apache.commons.beanutils.ConvertUtilsBean convertUtilsBean = new org.apache.commons.beanutils.ConvertUtilsBean();
+		convertUtilsBean.deregister(String.class);
+		convertUtilsBean.register(new MyApacheBeanUtilStringConverter(), String.class);
+
+		org.apache.commons.beanutils.BeanUtilsBean beanUtilsBean = new org.apache.commons.beanutils.BeanUtilsBean(
+				convertUtilsBean, new org.apache.commons.beanutils.PropertyUtilsBean());
+		Friend_Bean bean = new Friend_Bean(null, "test  contain space  string");
+
+		System.out.println("Get Name By PropertyUtils: " + PropertyUtils.getProperty(bean, "friendName"));
+		System.out.println("Get Name By BeanUtils: " + beanUtilsBean.getProperty(bean, "friendName"));
+
+		Map<String, String> beanMap = beanUtilsBean.describe(bean);
+		System.out.println(beanMap);
+
 	}
 }
