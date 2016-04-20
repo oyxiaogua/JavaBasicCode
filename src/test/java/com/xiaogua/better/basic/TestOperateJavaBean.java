@@ -318,4 +318,46 @@ public class TestOperateJavaBean {
 		System.out.println(beanMap);
 
 	}
+
+	@Test
+	public void testCopyBeanWithCglibBeanCopier() throws Exception {
+		Sub_Normal_Bean subBean = new Sub_Normal_Bean("parentName", 1,
+				DateTimeCode.getDateFromStr("2015-1-2 3:4:5", DateTimeCode.FULL_DATETIME), "subName", 2,
+				DateTimeCode.getDateFromStr("2015-1-2 4:5:6", DateTimeCode.FULL_DATETIME), 3, true);
+		Sub_All_Bean destBean = new Sub_All_Bean();
+
+		net.sf.cglib.beans.BeanCopier copier = net.sf.cglib.beans.BeanCopier.create(Sub_Normal_Bean.class,
+				Sub_All_Bean.class, false);
+		copier.copy(subBean, destBean, null);
+		System.out.println(destBean);
+
+		destBean = new Sub_All_Bean();
+		subBean = new Sub_Normal_Bean("parentName", 1,
+				DateTimeCode.getDateFromStr("2015-1-2 3:4:5", DateTimeCode.FULL_DATETIME));
+		copier.copy(subBean, destBean, null);
+		System.out.println(destBean);
+	}
+
+	@Test
+	public void testShallowCopyBeanWithCglibBeanCopier() throws Exception {
+		// 浅复制
+		Contain_List_Bean bean = new Contain_List_Bean(1, "test_1");
+		List<Friend_Bean> friendList = new ArrayList<Friend_Bean>();
+		for (int i = 1; i < 5; i++) {
+			friendList.add(new Friend_Bean(i, "test_" + i));
+		}
+		bean.setFriendList(friendList);
+
+		Contain_List_Bean destBean = new Contain_List_Bean();
+		net.sf.cglib.beans.BeanCopier copier = net.sf.cglib.beans.BeanCopier.create(Contain_List_Bean.class,
+				Contain_List_Bean.class, false);
+		copier.copy(bean, destBean, null);
+
+		destBean.getFriendList().remove(0);
+		Assert.assertEquals(3, bean.getFriendList().size());
+
+		bean.getFriendList().add(new Friend_Bean(5, "test_5"));
+		Assert.assertEquals(4, destBean.getFriendList().size());
+		Assert.assertEquals("test_5", destBean.getFriendList().get(3).getFriendName());
+	}
 }

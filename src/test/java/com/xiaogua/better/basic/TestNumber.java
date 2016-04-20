@@ -72,15 +72,13 @@ public class TestNumber {
 		i = Double.NEGATIVE_INFINITY;
 		Assert.assertTrue(i == i + 1);
 		Assert.assertTrue(Double.isInfinite(i));
-		
-		float floatA=Float.POSITIVE_INFINITY;
-		Assert.assertTrue(floatA== Double.POSITIVE_INFINITY);
-		Assert.assertTrue(Float.isNaN(floatA*0));
-		Assert.assertTrue(Float.isInfinite(floatA*1));
-		Assert.assertFalse(Float.isFinite(floatA*1));
-		Assert.assertFalse(Float.isFinite(floatA*0));
 
-
+		float floatA = Float.POSITIVE_INFINITY;
+		Assert.assertTrue(floatA == Double.POSITIVE_INFINITY);
+		Assert.assertTrue(Float.isNaN(floatA * 0));
+		Assert.assertTrue(Float.isInfinite(floatA * 1));
+		Assert.assertFalse(Float.isFinite(floatA * 1));
+		Assert.assertFalse(Float.isFinite(floatA * 0));
 
 	}
 
@@ -104,15 +102,46 @@ public class TestNumber {
 		Assert.assertEquals(1, Float.compare(zero, negZero));
 		Assert.assertEquals(-1, Float.compare(negZero, zero));
 	}
-	
+
 	@Test
-	public void testDoubleFloat(){
-		Float a=1.1f;
-		Float b=1.1f;
-		Assert.assertFalse(a==b);
-		Double a2=1.1d;
-		Double b2=1.1d;
-		Assert.assertFalse(a2==b2);
+	public void testDoubleFloat() {
+		Float a = 1.1f;
+		Float b = 1.1f;
+		Assert.assertFalse(a == b);
+		Double a2 = 1.1d;
+		Double b2 = 1.1d;
+		Assert.assertFalse(a2 == b2);
+	}
+
+	@Test
+	public void testIsEven() {
+		boolean isEven = NumberCode.isEven(-2);
+		Assert.assertTrue(isEven);
+		isEven = NumberCode.isEven(0);
+		Assert.assertTrue(isEven);
+		isEven = NumberCode.isEven(2);
+		Assert.assertTrue(isEven);
+		isEven = NumberCode.isEven(-1);
+		Assert.assertFalse(isEven);
+
+		isEven = NumberCode.isEven(1);
+		Assert.assertFalse(isEven);
+	}
+
+	@Test
+	public void testIsOdd() {
+		boolean isOdd = NumberCode.isOdd(-1);
+		Assert.assertTrue(isOdd);
+		isOdd = NumberCode.isOdd(1);
+		Assert.assertTrue(isOdd);
+		isOdd = NumberCode.isEven(0);
+		Assert.assertFalse(isOdd);
+
+		isOdd = NumberCode.isOdd(2);
+		Assert.assertFalse(isOdd);
+
+		isOdd = NumberCode.isOdd(-2);
+		Assert.assertFalse(isOdd);
 	}
 
 	public final static boolean isNumberWithCommonsLang3(String str) {
