@@ -3,6 +3,8 @@ package com.xiaogua.better.str;
 import java.security.MessageDigest;
 import java.util.Map;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 public class StringCommonUtils extends org.apache.commons.lang3.StringUtils {
 	/**
 	 * 删除首尾空白字符
@@ -215,9 +217,16 @@ public class StringCommonUtils extends org.apache.commons.lang3.StringUtils {
 	}
 
 	/**
+	 * 推荐
+	 */
+	public static String md5HexWithDigestUtils(String str) throws Exception {
+		return DigestUtils.md5Hex(str);
+	}
+	
+	/**
 	 * 求字符串md5值
 	 */
-	public static String md5(String str) throws Exception {
+	public static String md5Hex(String str) throws Exception {
 		if (str == null) {
 			return null;
 		}

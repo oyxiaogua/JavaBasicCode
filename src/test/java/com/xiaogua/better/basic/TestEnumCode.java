@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import com.xiaogua.better.bean.Enum_Type_Class;
 import com.xiaogua.better.bean.Interface_Enum_Bean;
+import com.xiaogua.better.bean.MyFruitEnumClass;
 import com.xiaogua.better.bean.Public_Enum_Gender;
 import com.xiaogua.better.bean.Simple_Class;
 import com.xiaogua.better.bean.Simple_Color_Enum;
@@ -124,9 +125,9 @@ public class TestEnumCode {
 		clz = Simple_Color_Enum.RED.getClass();
 		System.out.println(clz);// Simple_Color_Enum
 		// getClass()只能实例使用
-		
-		clz=this.getClass();
-		System.out.println(clz);//TestEnumCode
+
+		clz = this.getClass();
+		System.out.println(clz);// TestEnumCode
 	}
 
 	@Test
@@ -149,6 +150,15 @@ public class TestEnumCode {
 				System.out.println(method);
 			}
 		}
+	}
+
+	@Test
+	public void testMyFruitEnumClass() {
+		MyFruitEnumClass myEnum = MyFruitEnumClass.APPLE;
+		System.out.println(myEnum);
+
+		MyFruitEnumClass myEnum2 = MyFruitEnumClass.valueOf(0);
+		System.out.println(myEnum2);
 	}
 
 }
