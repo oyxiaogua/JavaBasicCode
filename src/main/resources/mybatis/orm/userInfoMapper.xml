@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userInfoDao">
+
+	<insert id="batchInsertUserInfo" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into t_user_2
+		(name,address)
+		values
+		<foreach collection="list" item="user" index="index"
+			separator=",">
+			(#{user.name},#{user.address})
+		</foreach>
+	</insert>
+
+	<select id="selectValueAfterSleep" resultType="java.util.Map">
+		select sleep(5) as
+		rtnValue
+		from dual
+	</select>
+
+	<select id="selectUserInfoList" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select * from t_user_2 where instr(name,#{name})>0
+	</select>
+
+</mapper>

@@ -10,6 +10,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Assert;
 import org.junit.Test;
@@ -452,7 +454,7 @@ public class TestStrCode {
 	}
 
 	@Test
-	public void testStringFormatHex() {
+	public void testStringFormatHex() throws Exception {
 		int value = 12345;
 		String hexStr = String.format("%#X", value);
 		Assert.assertEquals("0X" + Integer.toHexString(value), hexStr);
@@ -460,6 +462,11 @@ public class TestStrCode {
 		value = -12345;
 		hexStr = String.format("%#X", value);
 		Assert.assertEquals("0X" + Integer.toHexString(value).toUpperCase(), hexStr);
+		
+		String str="1234";
+		String str2=Hex.encodeHexString(Base64.encodeBase64(str.getBytes()));
+		System.out.println(str2);
+		System.out.println(new String(Base64.decodeBase64(Hex.decodeHex(str2.toCharArray()))));
 	}
 
 	public void printStr(String... strs) {

@@ -1,5 +1,8 @@
 package com.xiaogua.better.basic;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -10,9 +13,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.junit.Test;
 
+import com.xiaogua.better.bean.Enum_Change_Bean;
 import com.xiaogua.better.bean.Enum_Type_Class;
 import com.xiaogua.better.bean.Interface_Enum_Bean;
 import com.xiaogua.better.bean.MyFruitEnumClass;
@@ -159,6 +164,36 @@ public class TestEnumCode {
 
 		MyFruitEnumClass myEnum2 = MyFruitEnumClass.valueOf(0);
 		System.out.println(myEnum2);
+	}
+
+	@Test(expected = Exception.class)
+	public void testDeSerializableEnumAfterDeleteValue() throws Exception {
+		String fileSavePath = "e:/test_tmp/enum_data.bin";
+		// Enum_Change_Bean enumOne = Enum_Change_Bean.ONE;
+		// byte[] byteArr = SerializeCode.convertObjToByteArr(enumOne);
+		// OutputStream out = new FileOutputStream(new File(fileSavePath));
+		// IOUtils.write(byteArr, out);
+		// IOUtils.closeQuietly(out);
+		InputStream in = new FileInputStream(new File(fileSavePath));
+		byte[] byteArr = IOUtils.toByteArray(in);
+		IOUtils.closeQuietly(in);
+		Enum_Change_Bean enum2 = (Enum_Change_Bean) SerializeCode.convertByteArrToObj(byteArr);
+		System.out.println(enum2);
+	}
+
+	@Test
+	public void testDeSerializableEnumAfterAddNewValue() throws Exception {
+		String fileSavePath = "e:/test_tmp/enum_data.bin";
+		// Enum_Change_Bean enumOne = Enum_Change_Bean.ONE;
+		// byte[] byteArr = SerializeCode.convertObjToByteArr(enumOne);
+		// OutputStream out = new FileOutputStream(new File(fileSavePath));
+		// IOUtils.write(byteArr, out);
+		// IOUtils.closeQuietly(out);
+		InputStream in = new FileInputStream(new File(fileSavePath));
+		byte[] byteArr = IOUtils.toByteArray(in);
+		IOUtils.closeQuietly(in);
+		Enum_Change_Bean enum2 = (Enum_Change_Bean) SerializeCode.convertByteArrToObj(byteArr);
+		System.out.println(enum2);
 	}
 
 }

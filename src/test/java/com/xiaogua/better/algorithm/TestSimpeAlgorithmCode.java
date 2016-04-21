@@ -1,5 +1,8 @@
 package com.xiaogua.better.algorithm;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,6 +11,19 @@ public class TestSimpeAlgorithmCode {
 	public void testIterativeAtoi() {
 		int rtnNum = iterativeAtoi("-1");
 		Assert.assertEquals(-1, rtnNum);
+	}
+
+	@Test
+	public void testFindSerialNumberEqualN() {
+		List<List<Integer>> rtnList = SimpleAlgorithmCode.findSerialNumberEqualN(39);
+		System.out.println(rtnList);
+	}
+
+	@Test
+	public void testChangeArrWithSpecialRules() {
+		int[] dataArr = new int[] { -1,1, 0, 3, 5, -1, -2, 1, -2, 3,-3 };
+		SimpleAlgorithmCode.changeArrValueWithSpecialRules(dataArr);
+		System.out.println(Arrays.toString(dataArr));
 	}
 
 	private static int iterativeAtoi(String number) {

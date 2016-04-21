@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -125,6 +126,13 @@ public class TestRandom {
 		System.out.println(randomInt);
 	}
 
+	@Test
+	public void testRandomCnStrWithCommonLang3() {
+		//简体繁体都有
+		String str=RandomStringUtils.random(20, 0x4e00, 0x9fa5, false,false);
+		System.out.println(str);
+	}
+	
 	private int getRandRate(double rateA[]) {
 		double random = new Random().nextDouble();
 		for (int i = 0; i < rateA.length; i++) {

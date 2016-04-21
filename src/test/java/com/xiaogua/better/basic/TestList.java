@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -184,27 +185,75 @@ public class TestList {
 		dogList.add(new Sub_Dog(33));
 		dogList.add(new Sub_Dog(21));
 		dogList.add(new Sub_Dog(12));
-		
+
 		mySort(animalList);
 		System.out.println(animalList);
-		
-//		mySort(dogList);----->error
-//		System.out.println(dogList);
-		
+
+		// mySort(dogList);----->error
+		// System.out.println(dogList);
+
 		mySort2(animalList);
 		System.out.println(animalList);
-		
+
 		mySort2(dogList);
 		System.out.println(dogList);
 
 	}
 
-	//T实现了Comparable接口
+	@Test
+	public void testRemoveListBlankElementWithIterator() {
+		List<String> list = new ArrayList<>();
+		list.add("1");
+		list.add("2");
+		list.add("3");
+		list.add(" ");
+		list.add("  ");
+		Iterator<String> iterator = list.iterator();
+		while (iterator.hasNext()) {
+			String s = iterator.next();
+			if (StringUtils.isBlank(s)) {
+				iterator.remove();
+			}
+		}
+		System.out.println("list:" + list);
+	}
+
+	@Test(expected = UnsupportedOperationException.class)
+	public void testRemoveListBlankElement() {
+		// 不可修改
+		List<String> list = Arrays.asList("1", "2", "3", "", " ");
+		Iterator<String> iterator = list.iterator();
+		while (iterator.hasNext()) {
+			String s = iterator.next();
+			if (StringUtils.isBlank(s)) {
+				iterator.remove();
+			}
+		}
+		System.out.println("list:" + list);
+	}
+
+	@Test
+	public void testIteratorList() {
+		List<String> nameList = Lists.newArrayList("张三", "李四");
+		for (Iterator<String> iterator = nameList.iterator(); iterator.hasNext();) {
+			System.out.println("name1:" + iterator.next());
+			iterator.remove();
+		}
+		Assert.assertEquals(0, nameList.size());
+		List<String> nameList2 = Lists.newArrayList("赵六", "钱七");
+		for (Iterator<String> iterator = nameList2.iterator(); iterator.hasNext();) {
+			System.out.println("name2:" + iterator.next());
+			iterator.remove();
+		}
+		Assert.assertEquals(0, nameList2.size());
+	}
+
+	// T实现了Comparable接口
 	public static <T extends Comparable<T>> void mySort(List<T> list) {
 		Collections.sort(list);
 	}
 
-	//T类型或者是T的父类型必须实现了Comparable接口
+	// T类型或者是T的父类型必须实现了Comparable接口
 	public static <T extends Comparable<? super T>> void mySort2(List<T> list) {
 		Collections.sort(list);
 	}
