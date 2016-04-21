@@ -235,6 +235,11 @@ public class TestInteger {
 		// 8进制转为10进制
 		rtnNum = Integer.valueOf(octStr, 8);
 		System.out.println(rtnNum);
+
+		hexStr = Integer.toHexString(intNum);
+		System.out.println(hexStr);
+		int rtnInt = Integer.valueOf(hexStr, 16);
+		System.out.println(rtnInt);
 	}
 
 	@Test

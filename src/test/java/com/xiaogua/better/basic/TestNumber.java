@@ -114,6 +114,15 @@ public class TestNumber {
 	}
 
 	@Test
+	public void testDoubleHex() {
+		double doubleNum = 123456.1234;
+		String hexStr = Double.toHexString(doubleNum);
+		System.out.println(hexStr);
+		double rtnInt = Double.valueOf(hexStr);
+		System.out.println(rtnInt);
+	}
+
+	@Test
 	public void testIsEven() {
 		boolean isEven = NumberCode.isEven(-2);
 		Assert.assertTrue(isEven);
