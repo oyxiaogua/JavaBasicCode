@@ -43,6 +43,8 @@ public class TestBoolean {
 		System.out.println(getBooleanValue(false, 13) && getBooleanValue(true, 14)
 				|| getBooleanValue(true, 15) && getBooleanValue(false, 16));// false
 
+		Assert.assertFalse(true ? false : true ? false : true);
+		Assert.assertFalse(true ? false : (true ? false : true));
 	}
 
 	public boolean getBooleanValue(boolean a, int id) {

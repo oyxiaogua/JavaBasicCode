@@ -346,6 +346,77 @@ public class TestInteger {
 		System.out.println("1" + 1 + '1' + 1);// 1111
 	}
 
+	@Test
+	public void testIntegerDivision() {
+		int rtn = (-11 % -7);
+		System.out.println(rtn);
+	}
+
+	@Test
+	public void testIntegerOperationPriority() {
+		int a = 1;
+		int b = 2;
+		// ---->
+		int rtnInt = (a = 3) + (b = 4) + a * b;
+		Assert.assertEquals(19, rtnInt);
+		Assert.assertEquals(3, a);
+		Assert.assertEquals(4, b);
+
+		a = 2;
+		b = 1;
+		int c = a > b ? (a = 4) : (b = 3);
+		Assert.assertEquals(4,a);
+		Assert.assertEquals(1,b);
+		Assert.assertEquals(4,c);//短路
+	}
+	
+	@Test
+	public void testIntegerIncrementAndSum() {
+		int a = 1;
+		a += a += a++;
+		System.out.println(a);
+		//1.a=a+(a+=a++) 
+		//2.a=1+(a=a+(a++))
+		//3.a=1+(a=1+(a++))
+		//4.a=1+(a=1+1)
+		//5.a=1+2
+		
+		a=1;
+		a+=a++;
+		System.out.println(a);//2-->a=1+(a++)
+		
+		a=1;
+		a+=++a;
+		System.out.println(a);//3-->a=1+(++a)
+	}
+	
+	@Test
+	public void testIntegerTypeConvert(){
+		int a = 10;
+		double d = 9.5;
+		System.out.println(a > d ? a : d);//10.0
+		System.out.println(3>2?'a':true);//a (Object)
+
+		char charA = 'a';
+		int intC = 0;
+		System.out.println(true ? charA : 0);//a (0常量)
+		System.out.println(false ? intC : charA);//97
+		System.out.println(true ? charA : intC);//97
+	}
+
+	@Test
+	public void testIntegerEquals() {
+		int a = 10;
+		int b = 10;
+		double c = 10.0;
+		Assert.assertTrue(a == b);// 缓存
+		Assert.assertTrue(a == c);// int-->double
+
+		a = 127;
+		b = 127;
+		Assert.assertTrue(a == b);// 缓存
+	}
+
 	public int getUnsignedByte(short data) {
 		// 将data字节型数据转换为0~65535
 		return data & 0x0FFFF;
