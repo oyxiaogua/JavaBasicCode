@@ -462,11 +462,17 @@ public class TestStrCode {
 		value = -12345;
 		hexStr = String.format("%#X", value);
 		Assert.assertEquals("0X" + Integer.toHexString(value).toUpperCase(), hexStr);
-		
-		String str="1234";
-		String str2=Hex.encodeHexString(Base64.encodeBase64(str.getBytes()));
+
+		String str = "1234";
+		String str2 = Hex.encodeHexString(Base64.encodeBase64(str.getBytes()));
 		System.out.println(str2);
 		System.out.println(new String(Base64.decodeBase64(Hex.decodeHex(str2.toCharArray()))));
+	}
+
+	@Test
+	public void testGetCurrentMethodName() {
+		String methodName = Thread.currentThread().getStackTrace()[1].getMethodName();
+		System.out.println(methodName);
 	}
 
 	public void printStr(String... strs) {
