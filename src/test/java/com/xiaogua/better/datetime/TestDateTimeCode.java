@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import javax.xml.datatype.XMLGregorianCalendar;
@@ -239,17 +240,26 @@ public class TestDateTimeCode {
 		dateStr = "23461";
 		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
 		Assert.assertEquals("23:46:01", formatTimeStr);
-		
+
 		dateStr = "234611";
 		formatTimeStr = DateTimeCode.getFormatTimeStr(dateStr);
 		Assert.assertEquals("23:46:11", formatTimeStr);
 	}
-	
+
 	@Test
-	public void testFormatEnglishDate(){
-		//Fri Jan 02 04:05:06 CST 2015
-		DateFormat df = new SimpleDateFormat(DateTimeCode.DATE_DEFAULT_FORMAT,Locale.ENGLISH); 
-		String dateStr=df.format(new Date());
+	public void testFormatEnglishDate() {
+		// Fri Jan 02 04:05:06 CST 2015
+		DateFormat df = new SimpleDateFormat(DateTimeCode.DATE_DEFAULT_FORMAT, Locale.ENGLISH);
+		String dateStr = df.format(new Date());
 		System.out.println(dateStr);
+	}
+
+	@Test
+	public void testGetIntervalPeriods() throws Exception {
+		String startDateStr = "2016-12-31 3:4:5";
+		String endDateStr = "2017-1-1 23:3:5";
+		List<String> rtnList = DateTimeCode.getIntervalPeriods(startDateStr, DateTimeCode.FULL_DATETIME, endDateStr,
+				DateTimeCode.FULL_DATETIME, Enum_Date_Dimension.DAY);
+		System.out.println(rtnList);
 	}
 }

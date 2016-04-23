@@ -2,9 +2,11 @@ package com.xiaogua.better.datetime;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import javax.xml.datatype.DatatypeFactory;
@@ -24,8 +26,8 @@ public class DateTimeCode {
 	public final static String NORM_DATETIME_MS_PATTERN = "yyyy-MM-dd HH:mm:ss.SSS";
 	/** 普通日期时间格式 */
 	public final static String FULL_DATETIME = "yyyy-MM-dd HH:mm:ss";
-	
-	public final static String DATE_DEFAULT_FORMAT="EEE MMM dd HH:mm:ss zzz yyyy";
+
+	public final static String DATE_DEFAULT_FORMAT = "EEE MMM dd HH:mm:ss zzz yyyy";
 
 	/**
 	 * 获取GMT时间
@@ -235,7 +237,7 @@ public class DateTimeCode {
 		DateFormat dateFormatter = new SimpleDateFormat(formatStr);
 		return dateFormatter.parse(dateStr);
 	}
-	
+
 	/**
 	 * Date转为字符串
 	 */
@@ -243,7 +245,6 @@ public class DateTimeCode {
 		DateFormat dateFormatter = new SimpleDateFormat(formatStr);
 		return dateFormatter.format(date);
 	}
-
 
 	/**
 	 * 获取格式化后的时间
@@ -490,6 +491,69 @@ public class DateTimeCode {
 	private static String replaceTimeStr(String timeStr) {
 		return timeStr.trim().replaceAll("\\D+$", "").replaceAll("\\D+", ":").replaceAll("^:+", "")
 				.replaceAll(":+$", "").trim();
+	}
+
+	/**
+	 * 转换字符串格式
+	 */
+	public static Date getDateFromStr(String dateStr, String fromFormatStr, String toFormatStr) throws Exception {
+		Date date = getDateFromStr(dateStr, fromFormatStr);
+		return getDateWithFormat(date, toFormatStr);
+	}
+
+	/**
+	 * 转换字符串格式
+	 */
+	public static Date getDateWithFormat(Date date, String formatStr) throws Exception {
+		DateFormat dateFormatter = new SimpleDateFormat(formatStr);
+		String dateStr = dateFormatter.format(date);
+		return dateFormatter.parse(dateStr);
+	}
+
+	/**
+	 * 获取2个时间段内时间
+	 */
+	public static List<String> getIntervalPeriods(String startDateStr, String startDateFormatStr, String endDateStr,
+			String endDateFormatStr, Enum_Date_Dimension dimen) throws Exception {
+		if (dimen == null) {
+			throw new Exception("dimen cannot be null");
+		}
+		int cVal = 0;
+		String dateFormatStr = null;
+		switch (dimen) {
+		case DAY:
+			dateFormatStr = dimen.getFormatStr();
+			cVal = dimen.getInterval();
+			break;
+		case MONTH:
+			dateFormatStr = dimen.getFormatStr();
+			cVal = dimen.getInterval();
+			break;
+		case YEAR:
+			dateFormatStr = dimen.getFormatStr();
+			cVal = dimen.getInterval();
+			break;
+		default:
+			throw new Exception("not support enum type");
+		}
+
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormatStr);
+		Calendar calendarBegin = Calendar.getInstance();
+		Calendar calendarEnd = Calendar.getInstance();
+
+		Date dateBegin = getDateFromStr(startDateStr, startDateFormatStr, dateFormatStr);
+		Date dateEnd = getDateFromStr(endDateStr, endDateFormatStr, dateFormatStr);
+		calendarBegin.setTime(dateBegin);
+		calendarEnd.setTime(dateEnd);
+
+		List<String> dates = new ArrayList<String>();
+		dates.add(sdf.format(dateBegin));
+		while (calendarBegin.before(calendarEnd)) {
+			calendarBegin.add(cVal, 1);
+			String dateStr = sdf.format(calendarBegin.getTime());
+			dates.add(dateStr);
+		}
+		return dates;
 	}
 
 }

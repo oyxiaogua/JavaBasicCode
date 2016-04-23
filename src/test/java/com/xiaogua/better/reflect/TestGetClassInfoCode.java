@@ -117,4 +117,27 @@ public class TestGetClassInfoCode {
 		String str = mth.getName();
 		Assert.assertEquals("method_inner_class", str);
 	}
+
+	@Test
+	public void testReflectStaticInnerClass() throws Exception {
+		String outClassPathStr = "com.xiaogua.better.bean.Static_Inner_Class";
+		String innerClassPathStr = outClassPathStr + "$Inner_Static_Class";
+		Class<?> innerCls = Class.forName(innerClassPathStr);
+		Constructor<?> constructor = innerCls.getDeclaredConstructor(String.class);
+		constructor.setAccessible(true);
+		Object o = constructor.newInstance(new Object[] { "test" });
+		Method method = innerCls.getDeclaredMethod("getNameInfo", new Class<?>[] {});
+		method.setAccessible(true);
+		String rtnStr = (String) method.invoke(o, new Object[] {});
+		System.out.println(rtnStr);
+
+		method = innerCls.getDeclaredMethod("setName", new Class<?>[] { String.class });
+		method.setAccessible(true);
+		method.invoke(o, new Object[] { "test_2" });
+
+		method = innerCls.getDeclaredMethod("getNameInfo", new Class<?>[] {});
+		method.setAccessible(true);
+		rtnStr = (String) method.invoke(o, new Object[] {});
+		System.out.println(rtnStr);
+	}
 }
