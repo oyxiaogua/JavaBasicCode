@@ -153,6 +153,12 @@ public class TestNumber {
 		Assert.assertFalse(isOdd);
 	}
 
+	@Test
+	public void testGetExponent(){
+		double index=Math.log(16)/Math.log(2);//2^4=16
+		Assert.assertEquals(4.0, index, 0.0001);
+	}
+	
 	public final static boolean isNumberWithCommonsLang3(String str) {
 		if (StringCommonUtils.isBlank(str)) {
 			return false;

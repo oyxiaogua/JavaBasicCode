@@ -1,12 +1,16 @@
 package com.xiaogua.better.json;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xiaogua.better.basic.JacksonJsonCode;
 import com.xiaogua.better.bean.Normal_Hello_Bean;
 import com.xiaogua.better.bean.Super_Template_Class;
@@ -44,6 +48,7 @@ public class TestFastJson {
 		jsonStr = JacksonJsonCode.convertObjToStr(templateClass);
 		logger.info(jsonStr);
 
+		@SuppressWarnings("unchecked")
 		Super_Template_Class<Normal_Hello_Bean> bean2 = JacksonJsonCode.convertStrToObj(jsonStr,
 				Super_Template_Class.class);
 		logger.info(bean2);
@@ -74,4 +79,20 @@ public class TestFastJson {
 		obj = JacksonJsonCode.convertStrToObj(jsonStr, With_InnerClass_Prop_Class.class);
 		logger.info(obj);
 	}
+
+	@Test
+	public void testFastJsonConvertMap() throws Exception {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("a", 1);
+		map.put("b", "");
+		map.put("c", null);
+		map.put("d", "2");
+		map.put(null, "3");
+		String jsonStr = JSONObject.toJSONString(map);
+		logger.info(jsonStr);
+		// 输出空值
+		jsonStr = JSONObject.toJSONString(map, SerializerFeature.WriteMapNullValue);
+		logger.info(jsonStr);
+	}
+
 }
