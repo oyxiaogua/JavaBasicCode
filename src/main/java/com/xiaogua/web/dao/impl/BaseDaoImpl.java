@@ -22,7 +22,7 @@ public class BaseDaoImpl implements IBaseDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	public <T> void batchInsert(String namespace, String statement, List<T> beanList) {
+	public <T> void insert(String namespace, String statement, List<T> beanList) {
 		long start = System.currentTimeMillis();
 		sqlSessionTemplate.insert(getStatementWithNameSpace(namespace, statement), beanList);
 		logger.info("batchInsert",
@@ -49,6 +49,13 @@ public class BaseDaoImpl implements IBaseDao {
 
 	private String getStatementWithNameSpace(String namespace, String statement) {
 		return namespace + "." + statement;
+	}
+
+	public <T> void update(String namespace, String statement, List<T> beanList) {
+		long start = System.currentTimeMillis();
+		sqlSessionTemplate.update(getStatementWithNameSpace(namespace, statement), beanList);
+		logger.info("batchUpdate",
+				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
 	}
 
 }

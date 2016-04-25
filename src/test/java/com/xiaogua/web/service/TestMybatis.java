@@ -34,7 +34,7 @@ public class TestMybatis extends BaseTest {
 			user = new UserNameInfo("test_1", "address_1");
 			userList.add(user);
 		}
-		baseDao.batchInsert(defaultUserNameSpace, "batchInsertUserInfo", userList);
+		baseDao.insert(defaultUserNameSpace, "batchInsertUserInfo", userList);
 		System.out.println(userList);
 		for (UserNameInfo userNameInfo : userList) {
 			Assert.assertTrue(userNameInfo.getId() > 0);
@@ -64,6 +64,20 @@ public class TestMybatis extends BaseTest {
 		} finally {
 			log.error("cost time=" + (System.currentTimeMillis() - start));
 		}
+	}
+
+	@Test
+	public void testMybatisBatchUpdateUserInfo() {
+		List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> map = null;
+		for (int i = 1; i <= 9; i++) {
+			map = new HashMap<String, Object>();
+			map.put("id", i);
+			map.put("name", "测试更新update_" + 1);
+			map.put("address", "测试更新地址address_" + 1);
+			mapList.add(map);
+		}
+		baseDao.update(defaultUserNameSpace, "batchUpdateUserInfo", mapList);
 	}
 
 }
