@@ -1,7 +1,9 @@
 package com.xiaogua.better.basic;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Spliterator.OfInt;
 import java.util.function.IntConsumer;
 
@@ -16,7 +18,7 @@ public class TestArrayCode {
 		a = (int[]) ArrayCode.resizeArray(a, 5);
 		Assert.assertEquals(5, a.length);
 	}
-	
+
 	@Test
 	public void testPrintArr() {
 		int[] intArr = new int[] { 1, 2, 3, 4, 5 };
@@ -113,22 +115,22 @@ public class TestArrayCode {
 		String s = (String) Array.get(array, 5);
 		Assert.assertEquals("hello", s);
 	}
-	
+
 	@Test
 	public void testRemoveEmptyStrings() {
 		String[] strArr = new String[] { " ", null, "    ", "", "a" };
 		String[] rtnArr = ArrayCode.removeEmptyStrings(strArr, true);
 		System.out.println(Arrays.toString(rtnArr));
 	}
-	
+
 	@Test
-	public void testCreateMutilDimensionArray2(){
-		int[] initArr=new int[]{1,2,3,4,5};
-		int[][] intArr=new int[][]{initArr};//int[1][initArr.length]
-		System.out.println(intArr.length+","+intArr[0].length);
+	public void testCreateMutilDimensionArray2() {
+		int[] initArr = new int[] { 1, 2, 3, 4, 5 };
+		int[][] intArr = new int[][] { initArr };// int[1][initArr.length]
+		System.out.println(intArr.length + "," + intArr[0].length);
 		System.out.println(Arrays.deepToString(intArr));
 	}
-	
+
 	@Test
 	public void testArraySpliterator() {
 		int len = 10;
@@ -149,12 +151,51 @@ public class TestArrayCode {
 		System.out.println("-----------------");
 		rtnInt.forEachRemaining(consumer);
 	}
-	
+
 	@Test
 	public void testApacheCommonArrayUtilsContain() {
-		//better way to check array contain value
-		int[] intArr = new int[] { 1, 3, 90, 11, -8, 0, 34,55 };
+		// better way to check array contain value
+		int[] intArr = new int[] { 1, 3, 90, 11, -8, 0, 34, 55 };
 		boolean isContain = ArrayUtils.contains(intArr, 11);
 		Assert.assertTrue(isContain);
 	}
+
+	@Test
+	public void testGetArrayLen() {
+		int[][][] mutilArr = { { { 0 }, { 1, 2 }, { 3, 4, 5 } }, { { 1, 2, 3, 4 } } };
+		System.out.println(Arrays.deepToString(mutilArr[0]));
+		Class<?> cls = mutilArr.getClass();
+		boolean isArr = cls.isArray();
+		Assert.assertTrue(isArr);
+		String clsName = cls.getName();
+		System.out.println("name=" + clsName);
+		int nrDims = 1 + clsName.lastIndexOf('[');
+		Object obj = mutilArr;
+		int arrLen = 0;
+		for (int n = 0; n < nrDims; n++) {
+			arrLen = Array.getLength(obj);
+			System.out.println("dim[" + n + "]=" + arrLen);
+			if (arrLen > 0) {
+				obj = Array.get(obj, 0);
+			}
+		}
+		List<Integer> dimList = new ArrayList<Integer>();
+		dimList.add(0);
+		printArrLen(mutilArr, dimList);
+	}
+
+	public void printArrLen(Object obj, List<Integer> dimList) {
+		int arrLen = Array.getLength(obj);
+		Object tmpObj = null;
+		System.out.println("arr"+dimList + " len=" + arrLen);
+		for (int n = 0; n < arrLen; n++) {
+			tmpObj = Array.get(obj, n);
+			if (tmpObj.getClass().isArray()) {
+				dimList.add(n);
+				printArrLen(tmpObj, dimList);
+				dimList.remove(dimList.size() - 1);
+			}
+		}
+	}
+
 }

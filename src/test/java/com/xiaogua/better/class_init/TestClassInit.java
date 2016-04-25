@@ -5,7 +5,14 @@ import org.junit.Test;
 public class TestClassInit {
 
 	@Test
-	public void testInit() {
+	public void testInitSubBClass() {
 		System.out.println(new Sub_Class_B().a);
+	}
+
+	@Test
+	public void testInitSubFooClass() {
+		new Sub_Extend_Foo_Class();
+		System.out.println("------------");
+		System.out.println(new Sub_Extend_Foo_Class().j);
 	}
 }
