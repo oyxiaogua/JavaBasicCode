@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.xiaogua.better.bean.Abs_ExecuteManager;
 import com.xiaogua.better.bean.Interface_Execute;
+import com.xiaogua.web.util.SpringCommonCode;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/spring-inject.xml")
@@ -37,7 +38,7 @@ public class TestSpringInject {
 	}
 
 	@Test
-	public void testSpringReplacerInjection() {
+	public void testSpringReplacerInjection() throws Exception {
 		Object rtnObj = null;
 		for (int i = 0; i < 3; i++) {
 			rtnObj = execute.execute();

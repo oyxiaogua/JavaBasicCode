@@ -180,7 +180,6 @@ public class TestArrayCode {
 			}
 		}
 		List<Integer> dimList = new ArrayList<Integer>();
-		dimList.add(0);
 		printArrLen(mutilArr, dimList);
 	}
 

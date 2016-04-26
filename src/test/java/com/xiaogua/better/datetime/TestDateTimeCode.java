@@ -262,4 +262,10 @@ public class TestDateTimeCode {
 				DateTimeCode.FULL_DATETIME, Enum_Date_Dimension.DAY);
 		System.out.println(rtnList);
 	}
+	
+	@Test
+	public void testGetLastMonthDateStr(){
+		String dateStr=DateTimeCode.getLastMonthDateStr(new Date(), 2);
+		System.out.println(dateStr);
+	}
 }

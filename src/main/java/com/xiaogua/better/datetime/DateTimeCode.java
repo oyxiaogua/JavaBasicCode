@@ -556,4 +556,30 @@ public class DateTimeCode {
 		return dates;
 	}
 
+	/**
+	 * 如果天数小于minDay返回上个月的时间字符串yyyyMM
+	 */
+	public static String getLastMonthDateStr(Date createDate, int minDay) {
+		DateFormat df = new SimpleDateFormat("yyyyMMdd");
+		String dateStr = df.format(createDate);
+		String day = dateStr.substring(6, 8);
+		if (Integer.parseInt(day) > minDay) {
+			return dateStr.substring(0, 6);
+		}
+		StringBuilder dateSb = new StringBuilder();
+		String month = dateStr.substring(4, 6);// 获取月
+		String year = dateStr.substring(0, 4);// 获取年
+		if ("01".equals(month)) {
+			dateSb.append((Integer.parseInt(year) - 1)).append("12");
+		} else {
+			dateSb.append(year);
+			if (Integer.parseInt(month) < 11) {
+				dateSb.append("0").append((Integer.parseInt(month) - 1));
+			} else {
+				dateSb.append((Integer.parseInt(month) - 1));
+			}
+		}
+		return dateSb.toString();
+	}
+
 }
