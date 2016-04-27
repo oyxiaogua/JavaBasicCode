@@ -11,7 +11,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.xiaogua.better.bean.Abs_ExecuteManager;
 import com.xiaogua.better.bean.Interface_Execute;
-import com.xiaogua.web.util.SpringCommonCode;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/spring-inject.xml")
