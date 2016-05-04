@@ -5,7 +5,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -248,6 +250,64 @@ public class TestList {
 		Assert.assertEquals(0, nameList2.size());
 	}
 
+	@Test
+	public void testListInsertWithOrder() {
+		//有序插入 迭代查找
+		int[] intArr = new int[] { 1, 0, -1, -3, 9, 3, 5, -4, 3, 2, 4, 3, 5, 10, -1, -2 };
+		List<Integer> list = new LinkedList<Integer>();
+		ListIterator<Integer> listIterator = null;
+		boolean insertFlag = false;
+		int i = Integer.MIN_VALUE;
+		for (int intValue : intArr) {
+			listIterator = list.listIterator();
+			insertFlag = false;
+			while (listIterator.hasNext()) {
+				i = listIterator.next();
+				if (i < intValue) {
+					continue;
+				} else {
+					listIterator.set(intValue);
+					listIterator.add(i);
+					insertFlag = true;
+					break;
+				}
+			}
+			if (!insertFlag) {
+				listIterator.add(intValue);
+			}
+		}
+		System.out.println(list);
+	}
+
+	@Test
+	public void testListInsertWithOrder2() {
+		//有序插入 排序
+		int[] intArr = new int[] { 1, 0, -1, -3, 9, 3, 5, -4, 3, 2, 4, 3, 5, 10, -1, -2 };
+		List<Integer> list = new ArrayList<Integer>();
+		for (int intValue : intArr) {
+			list.add(intValue);
+		}
+		Collections.sort(list);
+		System.out.println(list);
+	}
+	
+	@Test
+	public void testListInsertWithOrder3() {
+		//有序插入 二分搜索
+		int[] intArr = new int[] { 1, 0, -1, -3, 9, 3, 5, -4, 3, 2, 4, 3, 5, 10, -1, -2 };
+		List<Integer> list = new LinkedList<Integer>();
+		int index = -1;
+		for (int intValue : intArr) {
+			index = Collections.binarySearch(list, intValue);
+			if (index < 0) {
+				list.add(Math.abs(index) - 1, intValue);
+			} else {
+				list.add(index, intValue);
+			}
+		}
+		System.out.println(list);
+	}
+	
 	// T实现了Comparable接口
 	public static <T extends Comparable<T>> void mySort(List<T> list) {
 		Collections.sort(list);

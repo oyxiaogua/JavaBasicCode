@@ -58,4 +58,12 @@ public class BaseDaoImpl implements IBaseDao {
 				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
 	}
 
+	public int getTotalNum(String namespace, String statement, Map<String, Object> paramMap) {
+		long start = System.currentTimeMillis();
+		int total = sqlSessionTemplate.selectOne(getStatementWithNameSpace(namespace, statement), paramMap);
+		logger.info("getTotalNum",
+				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
+		return total;
+	}
+
 }

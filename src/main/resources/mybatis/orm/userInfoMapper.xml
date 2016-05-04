@@ -39,4 +39,10 @@
 		</foreach>
 	</update>
 
+
+    <select id="selectUserInfoTotalNum" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(*) from t_user_2 where instr(name,#{name})>0
+	</select>
+	
 </mapper>

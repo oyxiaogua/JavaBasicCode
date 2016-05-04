@@ -11,4 +11,7 @@ public interface IBaseDao {
 	public List<Map<String, Object>> queryListMap(String namespace, String statement, Map<String, Object> paramMap);
 
 	public <T> void update(String namespace, String statement, List<T> beanList);
+	
+	public int  getTotalNum(String namespace, String statement, Map<String, Object> paramMap);
+
 }

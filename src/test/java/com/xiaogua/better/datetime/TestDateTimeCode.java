@@ -1,5 +1,6 @@
 package com.xiaogua.better.datetime;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -262,10 +263,42 @@ public class TestDateTimeCode {
 				DateTimeCode.FULL_DATETIME, Enum_Date_Dimension.DAY);
 		System.out.println(rtnList);
 	}
-	
+
 	@Test
-	public void testGetLastMonthDateStr(){
-		String dateStr=DateTimeCode.getLastMonthDateStr(new Date(), 2);
+	public void testGetLastMonthDateStr() {
+		String dateStr = DateTimeCode.getLastMonthDateStr(new Date(), 2);
 		System.out.println(dateStr);
 	}
+
+	@Test
+	public void testGetFragmentInDays() {
+		long rtn = org.apache.commons.lang3.time.DateUtils.getFragmentInDays(new Date(), Calendar.YEAR);
+		System.out.println(rtn);
+	}
+	
+	@Test
+	public void testConvertDateTimestampLong() throws Exception{
+		long timeStamp=DateTimeCode.getTimestampLongFromDate(new Date());
+		System.out.println(timeStamp);
+		
+		String dateStr=DateTimeCode.convertTimeStampToDateStr(timeStamp, DateTimeCode.FULL_DATETIME);
+		System.out.println(dateStr);
+	}
+	
+	@Test
+	public void testConvertTimestampString() throws Exception {
+		Timestamp timeStamp = DateTimeCode.convertDateToTimeStamp(new Date());
+		String dateStr = DateTimeCode.convertTimeStampToDateStr(timeStamp, DateTimeCode.FULL_DATETIME);
+		System.out.println(dateStr);
+
+		Timestamp timeStamp2 = DateTimeCode.convertDateStrToTimeStamp(dateStr);
+		System.out.println(timeStamp2);
+		
+		dateStr=DateTimeCode.getStrFromDate(new Date(), DateTimeCode.NORM_DATETIME_MS_PATTERN);
+		System.out.println(dateStr);
+		
+		timeStamp2 = DateTimeCode.convertDateStrToTimeStamp(dateStr);
+		System.out.println(timeStamp2);
+	}
+	
 }

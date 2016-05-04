@@ -1,8 +1,8 @@
 package com.xiaogua.web;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class BaseTest {
-	public static ApplicationContext context = new ClassPathXmlApplicationContext("spring/spring-all.xml");
+	public static ApplicationContext context = new FileSystemXmlApplicationContext("src/main/resources/spring/spring-all.xml");
 }

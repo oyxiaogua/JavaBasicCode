@@ -79,5 +79,14 @@ public class TestMybatis extends BaseTest {
 		}
 		baseDao.update(defaultUserNameSpace, "batchUpdateUserInfo", mapList);
 	}
+	
+	@Test
+	public void testMybatisGetTotalNum() {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("name", "test");
+		int total = baseDao.getTotalNum(defaultUserNameSpace, "selectUserInfoTotalNum",
+				paramMap);
+		System.out.println(total);
+	}
 
 }

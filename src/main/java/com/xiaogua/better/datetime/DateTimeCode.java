@@ -1,5 +1,6 @@
 package com.xiaogua.better.datetime;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class DateTimeCode {
 		TimeZone pst = TimeZone.getTimeZone("Etc/GMT+0");
 		Date curDate = new Date();
 		dateFormatter.setTimeZone(pst);
-		return dateFormatter.format(curDate);// 这就是我们想要获取的值
+		return dateFormatter.format(curDate);
 	}
 
 	/**
@@ -580,6 +581,50 @@ public class DateTimeCode {
 			}
 		}
 		return dateSb.toString();
+	}
+
+	/**
+	 * 时间戳(数字)转时间字符串
+	 */
+	public static String convertTimeStampToDateStr(long timeStamp, String dateFormatter) throws Exception {
+		Date date = new Date(timeStamp);
+		return getStrFromDate(date, dateFormatter);
+	}
+
+	/**
+	 * 时间戳(数字)转时间字符串
+	 */
+	public static String convertTimeStampToDateStr(String longStr, String dateFormatter) throws Exception {
+		return convertTimeStampToDateStr(Long.parseLong(longStr.trim()), dateFormatter);
+	}
+
+	/**
+	 * 时间转时间戳(数字)
+	 */
+	public static long getTimestampLongFromDate(Date date) throws Exception {
+		return date.getTime();
+	}
+
+	/**
+	 * 时间戳转时间字符串
+	 */
+	public static String convertTimeStampToDateStr(Timestamp timestamp, String dateFormatter) {
+		DateFormat df = new SimpleDateFormat(dateFormatter);
+		return df.format(timestamp);
+	}
+
+	/**
+	 * 时间字符串转时间戳,timestampstr格式(yyyy-mm-dd hh:mm:ss)
+	 */
+	public static Timestamp convertDateStrToTimeStamp(String timeStampStr) {
+		return Timestamp.valueOf(timeStampStr);
+	}
+
+	/**
+	 * 时间转时间戳
+	 */
+	public static Timestamp convertDateToTimeStamp(Date date) {
+		return new Timestamp(date.getTime());
 	}
 
 }
