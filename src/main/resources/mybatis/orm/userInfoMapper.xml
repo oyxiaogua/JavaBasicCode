@@ -40,9 +40,74 @@
 	</update>
 
 
-    <select id="selectUserInfoTotalNum" parameterType="java.util.Map"
+	<select id="selectUserInfoTotalNum" parameterType="java.util.Map"
 		resultType="java.lang.Integer">
 		select count(*) from t_user_2 where instr(name,#{name})>0
 	</select>
-	
+
+	<select id="queryUserInfoByChoose" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select * from t_user_2
+		<where>
+			<choose>
+				<when test="status=='0'.toString()">
+					name=#{name_1}
+				</when>
+				<when test="status=='1'.toString()">
+					name=#{name_2}
+				</when>
+				<otherwise>
+					name=#{name_3}
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
+	<sql id="getUserInfoField">
+		<trim prefix="," suffixOverrides=",">
+			<if test="@com.xiaogua.better.str.StringCommonUtils@isNotNull(address)">
+				address,
+			</if>
+			<if test="status != null and status != 'null' and status !='' ">
+				status
+			</if>
+		</trim>
+	</sql>
+
+	<sql id="getUserInfoValue">
+		<trim prefix="," suffixOverrides=",">
+			<if test="@com.xiaogua.better.str.StringCommonUtils@isNotNull(address)">
+				#{address},
+			</if>
+			<if test="status != null and status != 'null' and status !='' ">
+				#{status}
+			</if>
+		</trim>
+	</sql>
+
+	<insert id="saveUserInfo" parameterType="java.util.Map">
+		insert into t_user_2(name
+		<include refid="getUserInfoField" />
+		)
+		values(#{name}
+		<include refid="getUserInfoValue" />
+		)
+	</insert>
+
+	<select id="queryUserInfoByName" parameterType="java.lang.String"
+		resultType="java.util.Map">
+		select * from t_user_2
+		<where>
+			<choose>
+				<when
+					test="@com.xiaogua.better.str.StringCommonUtils@isNotEmpty(_parameter)">
+					name=#{name}
+				</when>
+				<otherwise>
+					name is null
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
 </mapper>

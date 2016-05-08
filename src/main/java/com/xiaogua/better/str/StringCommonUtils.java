@@ -40,6 +40,10 @@ public class StringCommonUtils extends org.apache.commons.lang3.StringUtils {
 			return false;
 		}
 	}
+	
+	public static boolean isNotNull(String str) {
+		return !isNull(str);
+	}
 
 	/**
 	 * 删除左边空格

@@ -79,14 +79,40 @@ public class TestMybatis extends BaseTest {
 		}
 		baseDao.update(defaultUserNameSpace, "batchUpdateUserInfo", mapList);
 	}
-	
+
 	@Test
 	public void testMybatisGetTotalNum() {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("name", "test");
-		int total = baseDao.getTotalNum(defaultUserNameSpace, "selectUserInfoTotalNum",
-				paramMap);
+		int total = baseDao.getTotalNum(defaultUserNameSpace, "selectUserInfoTotalNum", paramMap);
 		System.out.println(total);
 	}
 
+	@Test
+	public void testMybatisChoose() {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("status", "0");
+		paramMap.put("name_1", "test_name1");
+		paramMap.put("name_2", "test_name2");
+		paramMap.put("name_3", "test_name3");
+		List<Map<String, Object>> rtnList = baseDao.queryListMap(defaultUserNameSpace, "queryUserInfoByChoose",
+				paramMap);
+		System.out.println(rtnList);
+	}
+
+	@Test
+	public void testSaveUserInfo() {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("name", "test_name4");
+		paramMap.put("address", "null2");
+		paramMap.put("status", "3");
+		baseDao.insert(defaultUserNameSpace, "saveUserInfo", paramMap);
+	}
+
+	@Test
+	public void testQueryUserInfoByName() {
+		List<Map<String, Object>> rtnList = baseDao.queryListMap(defaultUserNameSpace, "queryUserInfoByName",
+				"test_name4");
+		System.out.println(rtnList);
+	}
 }

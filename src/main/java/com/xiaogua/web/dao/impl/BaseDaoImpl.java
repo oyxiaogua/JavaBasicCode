@@ -22,6 +22,13 @@ public class BaseDaoImpl implements IBaseDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
+	public void insert(String namespace, String statement, Map<String, Object> paramMap) {
+		long start = System.currentTimeMillis();
+		sqlSessionTemplate.insert(getStatementWithNameSpace(namespace, statement), paramMap);
+		logger.info("insert",
+				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
+	}
+
 	public <T> void insert(String namespace, String statement, List<T> beanList) {
 		long start = System.currentTimeMillis();
 		sqlSessionTemplate.insert(getStatementWithNameSpace(namespace, statement), beanList);
@@ -47,8 +54,13 @@ public class BaseDaoImpl implements IBaseDao {
 		return rtnList;
 	}
 
-	private String getStatementWithNameSpace(String namespace, String statement) {
-		return namespace + "." + statement;
+	public <T> List<Map<String, Object>> queryListMap(String namespace, String statement, T t) {
+		long start = System.currentTimeMillis();
+		List<Map<String, Object>> rtnList = sqlSessionTemplate
+				.<Map<String, Object>> selectList(getStatementWithNameSpace(namespace, statement), t);
+		logger.info("queryListMap GeneType",
+				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
+		return rtnList;
 	}
 
 	public <T> void update(String namespace, String statement, List<T> beanList) {
@@ -64,6 +76,10 @@ public class BaseDaoImpl implements IBaseDao {
 		logger.info("getTotalNum",
 				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
 		return total;
+	}
+
+	private String getStatementWithNameSpace(String namespace, String statement) {
+		return namespace + "." + statement;
 	}
 
 }
