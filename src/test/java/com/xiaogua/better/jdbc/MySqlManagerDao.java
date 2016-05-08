@@ -19,7 +19,7 @@ public class MySqlManagerDao {
 	private static String jdbcDriver = "com.mysql.jdbc.Driver";
 	private static String database = "jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useOldAliasMetadataBehavior=true&useSSL=false";
 	private static String user = "root";
-	private static String password = "A*K0L;]";
+	private static String password = "1234";
 
 	public MySqlManagerDao() {
 		super();
