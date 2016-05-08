@@ -252,7 +252,7 @@ public class TestList {
 
 	@Test
 	public void testListInsertWithOrder() {
-		//有序插入 迭代查找
+		// 有序插入 迭代查找
 		int[] intArr = new int[] { 1, 0, -1, -3, 9, 3, 5, -4, 3, 2, 4, 3, 5, 10, -1, -2 };
 		List<Integer> list = new LinkedList<Integer>();
 		ListIterator<Integer> listIterator = null;
@@ -281,7 +281,7 @@ public class TestList {
 
 	@Test
 	public void testListInsertWithOrder2() {
-		//有序插入 排序
+		// 有序插入 排序
 		int[] intArr = new int[] { 1, 0, -1, -3, 9, 3, 5, -4, 3, 2, 4, 3, 5, 10, -1, -2 };
 		List<Integer> list = new ArrayList<Integer>();
 		for (int intValue : intArr) {
@@ -290,10 +290,10 @@ public class TestList {
 		Collections.sort(list);
 		System.out.println(list);
 	}
-	
+
 	@Test
 	public void testListInsertWithOrder3() {
-		//有序插入 二分搜索
+		// 有序插入 二分搜索
 		int[] intArr = new int[] { 1, 0, -1, -3, 9, 3, 5, -4, 3, 2, 4, 3, 5, 10, -1, -2 };
 		List<Integer> list = new LinkedList<Integer>();
 		int index = -1;
@@ -307,7 +307,18 @@ public class TestList {
 		}
 		System.out.println(list);
 	}
-	
+
+	@Test
+	public void testSwapListValue() {
+		List<String> list = new ArrayList<String>();
+		list.add("test_1");
+		list.add("test_2");
+		list.add("test_3");
+		System.out.println(list);
+		list.set(0, list.set(2, list.get(0)));
+		System.out.println(list);
+	}
+
 	// T实现了Comparable接口
 	public static <T extends Comparable<T>> void mySort(List<T> list) {
 		Collections.sort(list);

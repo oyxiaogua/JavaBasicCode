@@ -19,6 +19,68 @@
 		</replaced-method>
 		<replaced-method name="execute" replacer="replacerExecute" />
 	</bean>
-	
+
+
+	<bean id="personBean" class="com.xiaogua.better.bean.PersonNormalBean">
+		<property name="id" value="1" />
+		<property name="personName" value="injectPersonName" />
+		<property name="personSex" value="男" />
+		<property name="personAge" value="30" />
+		<property name="son">
+			<bean class="com.xiaogua.better.bean.SonNormalBean">
+				<property name="id" value="2" />
+				<property name="sonName" value="injectSonName" />
+				<property name="sonSex" value="女" />
+				<property name="sonAge" value="3" />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="son2" class="com.xiaogua.better.bean.SonNormalBean">
+		<property name="id" value="3" />
+		<property name="sonSex" value="男" />
+		<property name="sonAge">
+			<bean id="personBean.son.sonAge"
+				class="org.springframework.beans.factory.config.PropertyPathFactoryBean" />
+		</property>
+		<property name="sonName">
+			<bean id="personBean.son.sonName"
+				class="org.springframework.beans.factory.config.PropertyPathFactoryBean" />
+		</property>
+	</bean>
+
+	<bean id="son3"
+		class="org.springframework.beans.factory.config.PropertyPathFactoryBean">
+		<property name="targetBeanName" value="personBean" />
+		<property name="propertyPath" value="son" />
+	</bean>
+
+	<bean id="son4" class="com.xiaogua.better.bean.SonNormalBean">
+		<property name="sonAge">
+			<bean id="java.sql.Connection.TRANSACTION_SERIALIZABLE"
+				class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean" />
+		</property>
+	</bean>
+
+	<bean id="transactionSerial"
+		class="org.springframework.beans.factory.config.FieldRetrievingFactoryBean">
+		<property name="staticField" value="java.sql.Connection.TRANSACTION_SERIALIZABLE" />
+	</bean>
+
+	<bean id="son5" class="com.xiaogua.better.bean.SonNormalBean">
+		<property name="sonAge" ref="transactionSerial" />
+	</bean>
+
+
+	<bean id="son6" class="com.xiaogua.better.bean.SonNormalBean">
+		<property name="sonName">
+			<bean
+				class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+				<!-- <property name="targetObject" ref="" /> -->
+				<property name="targetClass" value="com.xiaogua.better.datetime.DateTimeCode" />
+				<property name="targetMethod" value="getUTCTimeStr" />
+			</bean>
+		</property>
+	</bean>
 
 </beans>

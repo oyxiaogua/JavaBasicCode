@@ -11,6 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.xiaogua.better.bean.Abs_ExecuteManager;
 import com.xiaogua.better.bean.Interface_Execute;
+import com.xiaogua.better.bean.PersonNormalBean;
+import com.xiaogua.better.bean.SonNormalBean;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:spring/spring-inject.xml")
@@ -21,6 +23,19 @@ public class TestSpringInject {
 	private Abs_ExecuteManager executeManager;
 	@Resource(name = "executeImpl2")
 	private Interface_Execute execute;
+
+	@Autowired
+	private PersonNormalBean personBean;
+	@Resource(name = "son2")
+	private SonNormalBean sonBean;
+	@Resource(name = "son3")
+	private SonNormalBean sonBean3;
+	@Resource(name = "son4")
+	private SonNormalBean sonBean4;
+	@Resource(name = "son5")
+	private SonNormalBean sonBean5;
+	@Resource(name = "son6")
+	private SonNormalBean sonBean6;
 
 	@Test
 	public void testSpringLookUpMethodInjection() {
@@ -48,5 +63,15 @@ public class TestSpringInject {
 			rtnObj = execute.execute("sit down");
 			log.error(i + ",rtnValue=" + rtnObj);
 		}
+	}
+
+	@Test
+	public void testInjectBean() {
+		System.out.println(personBean);
+		System.out.println(sonBean);
+		System.out.println(sonBean3);
+		System.out.println(sonBean4);
+		System.out.println(sonBean5);
+		System.out.println(sonBean6);
 	}
 }

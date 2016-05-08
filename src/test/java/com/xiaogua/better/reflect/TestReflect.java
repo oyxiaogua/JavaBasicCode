@@ -2,12 +2,14 @@ package com.xiaogua.better.reflect;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.xiaogua.better.bean.InterfaceGetUserInfo;
 import com.xiaogua.better.bean.Private_Set_Bean;
 
 public class TestReflect {
@@ -30,5 +32,15 @@ public class TestReflect {
 		Private_Set_Bean bean = new Private_Set_Bean();
 		ReflectCode.setField(bean, "name", "testName");
 		Assert.assertEquals("testName", bean.getName());
+	}
+
+	@Test
+	public void testGetMethodParamName() throws Exception {
+		Parameter[] paramList = InterfaceGetUserInfo.class.getMethod("getUserInfo", String.class, String.class)
+				.getParameters();
+		for (Parameter param : paramList) {
+			System.out.println(param.getName());
+		}
+
 	}
 }
