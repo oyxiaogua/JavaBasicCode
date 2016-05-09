@@ -319,6 +319,18 @@ public class TestList {
 		System.out.println(list);
 	}
 
+	@Test
+	public void testChangeListAddress() {
+		List<String> list = new ArrayList<String>();
+		addValueToList(list);
+		Assert.assertEquals(0, list.size());
+	}
+
+	private void addValueToList(List<String> list) {
+		list = new ArrayList<String>();
+		list.add("test_1");
+	}
+
 	// T实现了Comparable接口
 	public static <T extends Comparable<T>> void mySort(List<T> list) {
 		Collections.sort(list);

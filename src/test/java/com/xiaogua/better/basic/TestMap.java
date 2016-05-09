@@ -189,6 +189,13 @@ public class TestMap {
 		}
 	}
 
+	@Test(expected=UnsupportedOperationException.class)
+	public void testNotModifiedEmptyMap() {
+		Map<String, String> empMap = Collections.<String, String> emptyMap();
+		System.out.println(empMap);
+		empMap.put("key_1", "value_1");
+	}
+
 	public Map<String, String> getMapValue() {
 		return null;
 	}

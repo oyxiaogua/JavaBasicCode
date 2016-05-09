@@ -475,6 +475,19 @@ public class TestStrCode {
 		System.out.println(methodName);
 	}
 
+	@Test
+	public void testInstanceOf() {
+		Object str = null;
+		// 此处不需要判断空
+		if (str instanceof String) {
+			System.out.println("str is string");
+		} else {
+			System.out.println("str is not string");
+		}
+		boolean isInstanceOfString = (null instanceof String);
+		Assert.assertFalse(isInstanceOfString);
+	}
+
 	public void printStr(String... strs) {
 		for (int i = 0, len = strs.length; i < len; i++) {
 			System.out.println(strs[i]);

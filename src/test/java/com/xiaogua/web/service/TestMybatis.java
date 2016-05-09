@@ -30,11 +30,12 @@ public class TestMybatis extends BaseTest {
 	public void testMysqlInsertMultipleRowsAndWriteBackId() {
 		List<UserNameInfo> userList = new ArrayList<UserNameInfo>();
 		UserNameInfo user = null;
-		for (int i = 1; i < 2; i++) {
+		for (int i = 1; i < 3; i++) {
 			user = new UserNameInfo("test_1", "address_1");
 			userList.add(user);
 		}
-		baseDao.insert(defaultUserNameSpace, "batchInsertUserInfo", userList);
+		int rtnInt = baseDao.insert(defaultUserNameSpace, "batchInsertUserInfo", userList);
+		System.out.println(rtnInt);
 		System.out.println(userList);
 		for (UserNameInfo userNameInfo : userList) {
 			Assert.assertTrue(userNameInfo.getId() > 0);
@@ -73,11 +74,22 @@ public class TestMybatis extends BaseTest {
 		for (int i = 1; i <= 9; i++) {
 			map = new HashMap<String, Object>();
 			map.put("id", i);
-			map.put("name", "测试更新update_" + 1);
-			map.put("address", "测试更新地址address_" + 1);
+			map.put("name", "测试更新update_" + i);
+			map.put("address", "测试更新地址address_" + i);
 			mapList.add(map);
 		}
-		baseDao.update(defaultUserNameSpace, "batchUpdateUserInfo", mapList);
+		int rtnInt = baseDao.update(defaultUserNameSpace, "batchUpdateUserInfo", mapList);
+		System.out.println(rtnInt);
+	}
+
+	@Test
+	public void testMybatisUpdateUserInfo() {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", 1);
+		map.put("name", "测试更新update_3");
+		map.put("address", "测试更新地址address_3");
+		int rtnInt = baseDao.update(defaultUserNameSpace, "updateUserInfo", map);
+		System.out.println(rtnInt);
 	}
 
 	@Test
@@ -114,5 +126,41 @@ public class TestMybatis extends BaseTest {
 		List<Map<String, Object>> rtnList = baseDao.queryListMap(defaultUserNameSpace, "queryUserInfoByName",
 				"test_name4");
 		System.out.println(rtnList);
+	}
+
+	@Test
+	public void testCheckUserNameExist() {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("name", "test_name5");
+		// 检查是否存在
+		int total = baseDao.getTotalNum(defaultUserNameSpace, "checkUserNameExist", paramMap);
+		System.out.println(total);
+	}
+
+	@Test
+	public void testSaveUserInfoWithIgnoreExistName() {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("name", "test_name6");
+		paramMap.put("address", "test2");
+		int affect = baseDao.insert(defaultUserNameSpace, "saveUserInfoWithIgnoreExistName", paramMap);
+		System.out.println(affect);
+	}
+
+	@Test
+	public void testSaveUserInfoWithUpdateExistValue() {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("name", "test_name6");
+		paramMap.put("address", "test4");
+		int affect = baseDao.insert(defaultUserNameSpace, "saveUserInfoWithUpdateExistValue", paramMap);
+		System.out.println(affect);
+	}
+
+	@Test
+	public void testSaveUserInfoWithReplaceExistValue() {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("name", "test_name6");
+		paramMap.put("address", "test5");
+		int affect = baseDao.insert(defaultUserNameSpace, "saveUserInfoWithReplaceExistValue", paramMap);
+		System.out.println(affect);
 	}
 }

@@ -22,18 +22,20 @@ public class BaseDaoImpl implements IBaseDao {
 		this.sqlSessionTemplate = sqlSessionTemplate;
 	}
 
-	public void insert(String namespace, String statement, Map<String, Object> paramMap) {
+	public int insert(String namespace, String statement, Map<String, Object> paramMap) {
 		long start = System.currentTimeMillis();
-		sqlSessionTemplate.insert(getStatementWithNameSpace(namespace, statement), paramMap);
+		int rtnInt = sqlSessionTemplate.insert(getStatementWithNameSpace(namespace, statement), paramMap);
 		logger.info("insert",
 				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
+		return rtnInt;
 	}
 
-	public <T> void insert(String namespace, String statement, List<T> beanList) {
+	public <T> int insert(String namespace, String statement, List<T> beanList) {
 		long start = System.currentTimeMillis();
-		sqlSessionTemplate.insert(getStatementWithNameSpace(namespace, statement), beanList);
+		int rtnInt = sqlSessionTemplate.insert(getStatementWithNameSpace(namespace, statement), beanList);
 		logger.info("batchInsert",
 				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
+		return rtnInt;
 	}
 
 	public Map<String, Object> queryMap(String namespace, String statement, Map<String, Object> paramMap) {
@@ -63,16 +65,29 @@ public class BaseDaoImpl implements IBaseDao {
 		return rtnList;
 	}
 
-	public <T> void update(String namespace, String statement, List<T> beanList) {
+	public <T> int update(String namespace, String statement, List<T> beanList) {
 		long start = System.currentTimeMillis();
-		sqlSessionTemplate.update(getStatementWithNameSpace(namespace, statement), beanList);
+		int rtnInt = sqlSessionTemplate.update(getStatementWithNameSpace(namespace, statement), beanList);
 		logger.info("batchUpdate",
 				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
+		return rtnInt;
+	}
+
+	public <T> int update(String namespace, String statement, Map<String, Object> paramMap) {
+		long start = System.currentTimeMillis();
+		int rtnInt = sqlSessionTemplate.update(getStatementWithNameSpace(namespace, statement), paramMap);
+		logger.info("batchUpdate",
+				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
+		return rtnInt;
 	}
 
 	public int getTotalNum(String namespace, String statement, Map<String, Object> paramMap) {
 		long start = System.currentTimeMillis();
-		int total = sqlSessionTemplate.selectOne(getStatementWithNameSpace(namespace, statement), paramMap);
+		Integer total = sqlSessionTemplate.selectOne(getStatementWithNameSpace(namespace, statement), paramMap);
+		if (total == null) {
+			// 此处自动拆箱可能报空指针
+			return 0;
+		}
 		logger.info("getTotalNum",
 				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
 		return total;
