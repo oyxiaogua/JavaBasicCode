@@ -38,6 +38,14 @@ public class BaseDaoImpl implements IBaseDao {
 		return rtnInt;
 	}
 
+	public <T> int insert(String namespace, String statement, T bean) {
+		long start = System.currentTimeMillis();
+		int rtnInt = sqlSessionTemplate.insert(getStatementWithNameSpace(namespace, statement), bean);
+		logger.info("insert",
+				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
+		return rtnInt;
+	}
+
 	public Map<String, Object> queryMap(String namespace, String statement, Map<String, Object> paramMap) {
 		long start = System.currentTimeMillis();
 		Map<String, Object> rtnMap = sqlSessionTemplate

@@ -7,6 +7,8 @@ public interface IBaseDao {
 	public int insert(String namespace, String statement, Map<String, Object> paramMap);
 
 	public <T> int insert(String namespace, String statement, List<T> beanList);
+	
+	public <T> int insert(String namespace, String statement,T bean);
 
 	public Map<String, Object> queryMap(String namespace, String statement, Map<String, Object> paramMap);
 

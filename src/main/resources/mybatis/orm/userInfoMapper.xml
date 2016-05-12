@@ -13,6 +13,14 @@
 		</foreach>
 	</insert>
 
+	<insert id="insertUserInfo" parameterType="com.xiaogua.better.bean.UserNameInfo"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into t_user_2
+		(name,address)
+		values
+		(#{name},#{address})
+	</insert>
+
 	<select id="selectValueAfterSleep" resultType="java.util.Map">
 		select sleep(5) as
 		rtnValue
@@ -139,7 +147,7 @@
 	</insert>
 
 	<insert id="saveUserInfoWithReplaceExistValue" parameterType="java.util.Map">
-		replace  into t_user_3(name,address)
+		replace into t_user_3(name,address)
 		values(#{name},#{address})
 	</insert>
 

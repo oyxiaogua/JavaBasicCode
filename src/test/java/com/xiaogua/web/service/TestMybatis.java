@@ -163,4 +163,11 @@ public class TestMybatis extends BaseTest {
 		int affect = baseDao.insert(defaultUserNameSpace, "saveUserInfoWithReplaceExistValue", paramMap);
 		System.out.println(affect);
 	}
+
+	@Test
+	public void testSaveUserInfoWithJavaBean() {
+		UserNameInfo info = new UserNameInfo("测试姓名_3", "测试地址_3");
+		baseDao.insert(defaultUserNameSpace, "insertUserInfo", info);
+		System.out.println(info);
+	}
 }
