@@ -29,4 +29,5 @@ public class TestQueue {
 			System.out.println(String.format("j=%s,queue size=%s,current value=%s", j, queue.size(), str));
 		}
 	}
+	
 }

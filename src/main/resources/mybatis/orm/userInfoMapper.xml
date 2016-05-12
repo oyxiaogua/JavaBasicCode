@@ -123,7 +123,7 @@
 
 	<select id="checkUserNameExist" parameterType="java.util.Map"
 		resultType="java.lang.Integer">
-		select 1 from t_user_2 where name=#{name}
+		select 1 from t_user_2 where name=#{name} limit 0,1
 	</select>
 
 	<insert id="saveUserInfoWithIgnoreExistName" parameterType="java.util.Map">

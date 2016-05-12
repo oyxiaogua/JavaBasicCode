@@ -6,6 +6,7 @@ import java.math.MathContext;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.google.common.primitives.UnsignedLong;
 import com.xiaogua.better.str.StringCommonUtils;
 
 public class TestNumber {
@@ -154,11 +155,20 @@ public class TestNumber {
 	}
 
 	@Test
-	public void testGetExponent(){
-		double index=Math.log(16)/Math.log(2);//2^4=16
+	public void testGetExponent() {
+		double index = Math.log(16) / Math.log(2);// 2^4=16
 		Assert.assertEquals(4.0, index, 0.0001);
 	}
-	
+
+	@Test
+	public void testLongMaxValue() {
+		System.out.println(Long.MAX_VALUE+","+UnsignedLong.MAX_VALUE);
+		String bigNumStr = "12345678901234567890";
+		UnsignedLong unsignedLong=UnsignedLong.valueOf(bigNumStr);
+		long rtnValue = unsignedLong.longValue();
+		System.out.println(unsignedLong.toString()+","+rtnValue);
+	}
+
 	public final static boolean isNumberWithCommonsLang3(String str) {
 		if (StringCommonUtils.isBlank(str)) {
 			return false;
