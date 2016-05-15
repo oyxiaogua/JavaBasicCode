@@ -20,6 +20,14 @@ public class TestBigDecimalCode {
 		decimal = new BigDecimal("6e2");
 		rtnDecimal = BigDecimalCode.getWithoutTrailingZeroes(decimal);
 		Assert.assertEquals("600", rtnDecimal.toString());
+
+		String str = "3.1190102E9";
+		BigDecimal b = new BigDecimal(str);
+		System.out.println(b.toPlainString());
+
+		double doubleValue=3.1190102E9;
+		DecimalFormat df = new DecimalFormat("0");
+		System.out.println(df.format(doubleValue));
 	}
 
 	@Test

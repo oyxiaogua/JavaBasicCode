@@ -14,4 +14,5 @@ public class TestBigInteger {
 		System.out.println("商:" + biArray[0]);
 		System.out.println("余数:" + biArray[1]);
 	}
+
 }
