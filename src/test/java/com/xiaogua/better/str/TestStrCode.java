@@ -13,8 +13,11 @@ import java.util.Map.Entry;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.text.translate.CharSequenceTranslator;
+import org.apache.commons.lang3.text.translate.NumericEntityEscaper;
 import org.junit.Assert;
 import org.junit.Test;
+import org.unbescape.html.HtmlEscape;
 
 public class TestStrCode {
 	@Test
@@ -85,7 +88,10 @@ public class TestStrCode {
 	@Test
 	public void testCleanWhitespace() {
 		String str = " 　\u00a0\u00a0\u3000\u3000   ";
-		Assert.assertEquals(0, StringCommonUtils.trimWhitespace(str).length());
+		Assert.assertEquals(2, StringCommonUtils.trimWhitespace(str).length());
+
+		char a = '\u00a0';
+		Assert.assertFalse(Character.isWhitespace(a));
 
 		String htmlSpaceStr = StringEscapeUtils.unescapeHtml4("&nbsp;");
 		Assert.assertFalse(htmlSpaceStr.equals(" "));
@@ -486,6 +492,28 @@ public class TestStrCode {
 		}
 		boolean isInstanceOfString = (null instanceof String);
 		Assert.assertFalse(isInstanceOfString);
+	}
+
+	@Test
+	public void testNumericEntityEscaper() {
+		CharSequenceTranslator escaper = StringEscapeUtils.ESCAPE_XML11
+				.with(NumericEntityEscaper.between(0x4e00, 0x9fa5));
+		String str = "测试as123";
+		String escaperStr = escaper.translate(str);
+		System.out.println(escaperStr);
+
+		CharSequenceTranslator unEscaper = StringEscapeUtils.UNESCAPE_XML;
+		String unEscaperStr = unEscaper.translate(escaperStr);
+		System.out.println(unEscaperStr);
+
+		unEscaperStr = StringEscapeUtils.unescapeHtml4(escaperStr);
+		System.out.println(unEscaperStr);
+
+		// https://github.com/unbescape/unbescape
+		escaperStr = HtmlEscape.escapeHtml5(str);
+		unEscaperStr = HtmlEscape.unescapeHtml(escaperStr);
+		System.out.println(escaperStr);
+		System.out.println(unEscaperStr);
 	}
 
 	public void printStr(String... strs) {

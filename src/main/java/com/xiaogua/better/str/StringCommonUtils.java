@@ -18,7 +18,7 @@ public class StringCommonUtils extends org.apache.commons.lang3.StringUtils {
 		}
 		str = str.trim();
 		StringBuilder sb = new StringBuilder(str);
-		while ((sb.length() > 0) && (Character.isWhitespace(str.charAt(0)))) {
+		while ((sb.length() > 0) && (Character.isWhitespace(sb.charAt(0)))) {
 			sb.deleteCharAt(0);
 		}
 		while ((sb.length() > 0) && (Character.isWhitespace(sb.charAt(sb.length() - 1)))) {
