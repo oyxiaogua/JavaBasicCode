@@ -46,9 +46,19 @@ public class TestInteger {
 
 	@Test
 	public void testMathAbs() {
-		// 移除
+		// 溢出
 		int intAbs = Math.abs(Integer.MIN_VALUE);
 		Assert.assertTrue(intAbs < 0);
+	}
+
+	@Test(expected = NumberFormatException.class)
+	public void testIntegerValueOfNumberFormatException() {
+		Assert.assertEquals(-2147483648, Integer.MIN_VALUE);
+		String str = "-2147483649";
+		long longRtn = Long.valueOf(str);
+		Assert.assertEquals(-2147483649L, longRtn);
+		int intRtn = Integer.valueOf(str);
+		System.out.println(intRtn);
 	}
 
 	@Test
@@ -365,43 +375,43 @@ public class TestInteger {
 		a = 2;
 		b = 1;
 		int c = a > b ? (a = 4) : (b = 3);
-		Assert.assertEquals(4,a);
-		Assert.assertEquals(1,b);
-		Assert.assertEquals(4,c);//短路
+		Assert.assertEquals(4, a);
+		Assert.assertEquals(1, b);
+		Assert.assertEquals(4, c);// 短路
 	}
-	
+
 	@Test
 	public void testIntegerIncrementAndSum() {
 		int a = 1;
 		a += a += a++;
 		System.out.println(a);
-		//1.a=a+(a+=a++) 
-		//2.a=1+(a=a+(a++))
-		//3.a=1+(a=1+(a++))
-		//4.a=1+(a=1+1)
-		//5.a=1+2
-		
-		a=1;
-		a+=a++;
-		System.out.println(a);//2-->a=1+(a++)
-		
-		a=1;
-		a+=++a;
-		System.out.println(a);//3-->a=1+(++a)
+		// 1.a=a+(a+=a++)
+		// 2.a=1+(a=a+(a++))
+		// 3.a=1+(a=1+(a++))
+		// 4.a=1+(a=1+1)
+		// 5.a=1+2
+
+		a = 1;
+		a += a++;
+		System.out.println(a);// 2-->a=1+(a++)
+
+		a = 1;
+		a += ++a;
+		System.out.println(a);// 3-->a=1+(++a)
 	}
-	
+
 	@Test
-	public void testIntegerTypeConvert(){
+	public void testIntegerTypeConvert() {
 		int a = 10;
 		double d = 9.5;
-		System.out.println(a > d ? a : d);//10.0
-		System.out.println(3>2?'a':true);//a (Object)
+		System.out.println(a > d ? a : d);// 10.0
+		System.out.println(3 > 2 ? 'a' : true);// a (Object)
 
 		char charA = 'a';
 		int intC = 0;
-		System.out.println(true ? charA : 0);//a (0常量)
-		System.out.println(false ? intC : charA);//97
-		System.out.println(true ? charA : intC);//97
+		System.out.println(true ? charA : 0);// a (0常量)
+		System.out.println(false ? intC : charA);// 97
+		System.out.println(true ? charA : intC);// 97
 	}
 
 	@Test
