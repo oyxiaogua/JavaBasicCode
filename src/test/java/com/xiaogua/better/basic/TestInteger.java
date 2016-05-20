@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -57,7 +58,9 @@ public class TestInteger {
 		String str = "-2147483649";
 		long longRtn = Long.valueOf(str);
 		Assert.assertEquals(-2147483649L, longRtn);
-		int intRtn = Integer.valueOf(str);
+		int intRtn = NumberUtils.toInt(str);
+		Assert.assertEquals(0, intRtn);
+		intRtn = Integer.valueOf(str);
 		System.out.println(intRtn);
 	}
 
