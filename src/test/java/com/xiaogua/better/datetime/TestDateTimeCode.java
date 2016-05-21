@@ -12,6 +12,8 @@ import java.util.Locale;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -275,16 +277,16 @@ public class TestDateTimeCode {
 		long rtn = org.apache.commons.lang3.time.DateUtils.getFragmentInDays(new Date(), Calendar.YEAR);
 		System.out.println(rtn);
 	}
-	
+
 	@Test
-	public void testConvertDateTimestampLong() throws Exception{
-		long timeStamp=DateTimeCode.getTimestampLongFromDate(new Date());
+	public void testConvertDateTimestampLong() throws Exception {
+		long timeStamp = DateTimeCode.getTimestampLongFromDate(new Date());
 		System.out.println(timeStamp);
-		
-		String dateStr=DateTimeCode.convertTimeStampToDateStr(timeStamp, DateTimeCode.FULL_DATETIME);
+
+		String dateStr = DateTimeCode.convertTimeStampToDateStr(timeStamp, DateTimeCode.FULL_DATETIME);
 		System.out.println(dateStr);
 	}
-	
+
 	@Test
 	public void testConvertTimestampString() throws Exception {
 		Timestamp timeStamp = DateTimeCode.convertDateToTimeStamp(new Date());
@@ -293,12 +295,71 @@ public class TestDateTimeCode {
 
 		Timestamp timeStamp2 = DateTimeCode.convertDateStrToTimeStamp(dateStr);
 		System.out.println(timeStamp2);
-		
-		dateStr=DateTimeCode.getStrFromDate(new Date(), DateTimeCode.NORM_DATETIME_MS_PATTERN);
+
+		dateStr = DateTimeCode.getStrFromDate(new Date(), DateTimeCode.NORM_DATETIME_MS_PATTERN);
 		System.out.println(dateStr);
-		
+
 		timeStamp2 = DateTimeCode.convertDateStrToTimeStamp(dateStr);
 		System.out.println(timeStamp2);
 	}
-	
+
+	@Test
+	public void testIsEndOfTheMonth() throws Exception {
+		Date date = DateTimeCode.getDateFromStr("2016-5-31", DateTimeCode.YYYY_MM_DD);
+		boolean booeleanRtn = DateTimeCode.isEndOfTheMonth(date);
+		Assert.assertTrue(booeleanRtn);
+
+		date = DateTimeCode.getDateFromStr("2016-2-29", DateTimeCode.YYYY_MM_DD);
+		booeleanRtn = DateTimeCode.isEndOfTheMonth(date);
+		Assert.assertTrue(booeleanRtn);
+	}
+
+	@Test
+	public void testIsEndOfTheYear() throws Exception {
+		Date date = DateTimeCode.getDateFromStr("2016-12-31", DateTimeCode.YYYY_MM_DD);
+		boolean booeleanRtn = DateTimeCode.isEndOfTheYear(date);
+		Assert.assertTrue(booeleanRtn);
+
+		date = DateTimeCode.getDateFromStr("2015-12-31", DateTimeCode.YYYY_MM_DD);
+		booeleanRtn = DateTimeCode.isEndOfTheYear(date);
+		Assert.assertTrue(booeleanRtn);
+
+		date = DateTimeCode.getDateFromStr("2015-12-30", DateTimeCode.YYYY_MM_DD);
+		booeleanRtn = DateTimeCode.isEndOfTheYear(date);
+		Assert.assertFalse(booeleanRtn);
+	}
+
+	@Test
+	public void testDateFormatUtilsFormat() {
+		String dateStr = DateFormatUtils.format(System.currentTimeMillis(), DateTimeCode.FULL_DATETIME);
+		System.out.println(dateStr);
+	}
+
+	@Test
+	public void testJodaDateTime() {
+		Date firstDate = new DateTime().withTimeAtStartOfDay().toDate();
+		System.out.println(DateFormatUtils.format(firstDate, "yyyy-MM-dd HH:mm:ss"));
+
+		Date lastDate = new DateTime().withTime(23, 59, 59, 0).toDate();
+		System.out.println(DateFormatUtils.format(lastDate, "yyyy-MM-dd HH:mm:ss"));
+
+		Date past10day = new DateTime().withTime(12, 0, 0, 0).plusMonths(1).minusDays(10).toDate();
+		System.out.println(DateFormatUtils.format(past10day, "yyyy-MM-dd HH:mm:ss"));
+
+		DateTime now = new DateTime();
+		// 位于本周第几天
+		System.out.println(now.getDayOfWeek());
+		// 位于本月第几天
+		System.out.println(now.getDayOfMonth());
+		// 位于本年第几天
+		System.out.println(now.getDayOfYear());
+
+		// 几点
+		System.out.println(now.getHourOfDay());
+		// 几分
+		System.out.println(now.getMinuteOfHour());
+		// 几秒
+		System.out.println(now.getSecondOfMinute());
+	}
+
 }

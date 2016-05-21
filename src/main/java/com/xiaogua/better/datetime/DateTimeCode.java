@@ -30,6 +30,8 @@ public class DateTimeCode {
 
 	public final static String DATE_DEFAULT_FORMAT = "EEE MMM dd HH:mm:ss zzz yyyy";
 
+	public final static String YYYY_MM_DD = "yyyy-MM-dd";
+
 	/**
 	 * 获取GMT时间
 	 * 
@@ -627,4 +629,22 @@ public class DateTimeCode {
 		return new Timestamp(date.getTime());
 	}
 
+	/**
+	 * 判断是否是当月最后一天
+	 */
+	public static boolean isEndOfTheMonth(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+		return calendar.get(Calendar.DATE) == maxDay;
+	}
+
+	/**
+	 * 判断是否是当年最后一天
+	 */
+	public static boolean isEndOfTheYear(Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		return (11 == calendar.get(Calendar.MONTH)) && (31 == calendar.get(Calendar.DATE));
+	}
 }

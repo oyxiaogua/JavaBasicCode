@@ -9,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Assert;
@@ -324,6 +325,18 @@ public class TestList {
 		List<String> list = new ArrayList<String>();
 		addValueToList(list);
 		Assert.assertEquals(0, list.size());
+	}
+
+	@Test
+	public void testReturnEmptyList() {
+		Assert.assertEquals(0, returnEmptyList(null).size());
+	}
+
+	private List<Integer> returnEmptyList(List<Integer> idList) {
+		if (CollectionUtils.isEmpty(idList)) {
+			return Collections.emptyList();
+		}
+		return Lists.newArrayList(1, 2);
 	}
 
 	private void addValueToList(List<String> list) {

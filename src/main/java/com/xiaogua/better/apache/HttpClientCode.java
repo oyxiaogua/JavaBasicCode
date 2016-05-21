@@ -12,6 +12,9 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 
 public class HttpClientCode {
 	private static HttpClient client = null;
+	private static final int defaultTimeout = 1000 * 5;
+	public static RequestConfig defaultConfig = RequestConfig.custom().setSocketTimeout(defaultTimeout)
+			.setConnectTimeout(defaultTimeout).setConnectionRequestTimeout(defaultTimeout).build();
 
 	static {
 		PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();

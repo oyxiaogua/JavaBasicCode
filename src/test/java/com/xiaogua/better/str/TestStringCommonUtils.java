@@ -1,8 +1,11 @@
 package com.xiaogua.better.str;
 
 import java.security.MessageDigest;
+import java.util.Arrays;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -62,4 +65,60 @@ public class TestStringCommonUtils {
 		System.out.println(Hex.encodeHexString(byteArr));
 	}
 
+	@Test
+	public void testStringUtilsSplit() {
+		String s1 = "A_B_C_DC";
+		// 单个字符的切割
+		System.out.println(Arrays.deepToString(StringUtils.split(s1, '_')));
+		System.out.println(Arrays.deepToString(StringUtils.splitByWholeSeparator(s1, "C_")));
+	}
+
+	@Test
+	public void testStringUtilsSubstringBetween() {
+		String s1 = "A0A123A456B78B9B";
+		System.out.println(StringUtils.substringBetween(s1, "A", "B"));
+		System.out.println(StringUtils.substringAfter(s1, "A"));
+		System.out.println(StringUtils.substringAfterLast(s1, "A"));
+		System.out.println(StringUtils.substringBefore(s1, "B"));
+		System.out.println(StringUtils.substringBeforeLast(s1, "B"));
+
+		System.out.println("-------------------------------");
+		String s2 = "A1BA2BCDA";
+		// 返回字符串数组
+		System.out.println(Arrays.deepToString(StringUtils.substringsBetween(s2, "A", "B")));
+	}
+
+	@Test
+	public void testStringUtilsIgnoreCase() {
+		String s1 = "adxwedwe";
+		System.out.println(StringUtils.startsWithIgnoreCase(s1, "A"));
+		System.out.println(StringUtils.endsWithIgnoreCase(s1, "E"));
+		System.out.println(StringUtils.indexOfIgnoreCase(s1, "D"));
+	}
+
+	@Test
+	public void testStringUtilsIsAlpha() {
+		String s1 = "asdfgw";
+		// 是否全有英文字符组成
+		System.out.println(StringUtils.isAlpha(s1));
+
+		String s2 = "asq12dfeAsdfASAr";
+		// 是否全有英文或者数字组成
+		System.out.println(StringUtils.isAlphanumeric(s2));
+	}
+
+	@Test
+	public void testStringUtilsIsNumeric() {
+		String s1 = "100";
+		// 仅整型数字
+		Assert.assertTrue(StringUtils.isNumeric(s1));
+		String s2 = "100.1";
+		Assert.assertFalse(StringUtils.isNumeric(s2));
+
+		// 仅整型数字
+		Assert.assertFalse(NumberUtils.isDigits(s2));
+		// 判断出浮点型, 需要用到
+		// org.apache.commons.lang3.math.NumberUtils.isNumber(String)
+		Assert.assertTrue(NumberUtils.isNumber(s2));
+	}
 }

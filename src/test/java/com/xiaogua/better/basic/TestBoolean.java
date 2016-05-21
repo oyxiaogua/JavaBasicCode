@@ -47,6 +47,25 @@ public class TestBoolean {
 		Assert.assertFalse(true ? false : (true ? false : true));
 	}
 
+	@Test
+	public void testValueOf(){
+		boolean booleanValue=valueOf("ON");
+		Assert.assertTrue(booleanValue);
+	}
+	
+	public static boolean valueOf(String s) {
+		 if(s == null){
+			 return false;
+		 }
+		 if(s.equalsIgnoreCase("true") || s.equalsIgnoreCase("yes") || s.equalsIgnoreCase("y") || s.equalsIgnoreCase("on")){
+			 return true;
+		 }
+		 if(s.trim().equals("1")){
+			 return true;
+		 }
+		return false;
+	 }
+	
 	public boolean getBooleanValue(boolean a, int id) {
 		if (a) {
 			System.out.println("execute true,id=" + id);

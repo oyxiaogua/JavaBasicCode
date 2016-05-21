@@ -430,6 +430,13 @@ public class TestInteger {
 		Assert.assertTrue(a == b);// 缓存
 	}
 
+	@Test
+	public void testNumberUtilsToInt() {
+		String str = "+1234";
+		int intValue = NumberUtils.toInt(str);
+		Assert.assertEquals(1234, intValue);
+	}
+
 	public int getUnsignedByte(short data) {
 		// 将data字节型数据转换为0~65535
 		return data & 0x0FFFF;

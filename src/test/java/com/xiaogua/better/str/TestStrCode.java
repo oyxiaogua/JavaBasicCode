@@ -9,9 +9,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.text.translate.CharSequenceTranslator;
 import org.apache.commons.lang3.text.translate.NumericEntityEscaper;
@@ -514,6 +516,25 @@ public class TestStrCode {
 		unEscaperStr = HtmlEscape.unescapeHtml(escaperStr);
 		System.out.println(escaperStr);
 		System.out.println(unEscaperStr);
+	}
+
+	@Test
+	public void testUUID() {
+		UUID uuid = UUID.randomUUID();
+		String uuidStr = uuidTo32Str(uuid);
+		System.out.println(uuidStr);
+	}
+
+	@Test
+	public void testObjDefaultVal() {
+		String str = ObjectUtils.defaultIfNull(null, "defaultVal");
+		System.out.println(str);
+	}
+
+	public static String uuidTo32Str(UUID uuid) {
+		long leastSigBits = uuid.getLeastSignificantBits();
+		long mostSigBits = uuid.getMostSignificantBits();
+		return Long.toHexString(mostSigBits) + Long.toHexString(leastSigBits);
 	}
 
 	public void printStr(String... strs) {

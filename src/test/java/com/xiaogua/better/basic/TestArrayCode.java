@@ -183,10 +183,26 @@ public class TestArrayCode {
 		printArrLen(mutilArr, dimList);
 	}
 
+	@Test
+	public void testArrayUtilsToPrimitive() {
+		Integer[] intPkgArr = new Integer[] { 1, 2, 3, 4 };
+		int[] intArr = ArrayUtils.toPrimitive(intPkgArr);
+		System.out.println(ArrayUtils.toString(intArr));
+		Integer[] intPkgArr2 = ArrayUtils.toObject(intArr);
+		System.out.println(ArrayUtils.toString(intPkgArr2));
+	}
+
+	@Test
+	public void testArrayUtilsAdd() {
+		String[] strArr = { "1", "2", "3" };
+		String[] newStrArr = ArrayUtils.add(strArr, null);
+		System.out.println(ArrayUtils.toString(newStrArr));
+	}
+
 	public void printArrLen(Object obj, List<Integer> dimList) {
 		int arrLen = Array.getLength(obj);
 		Object tmpObj = null;
-		System.out.println("arr"+dimList + " len=" + arrLen);
+		System.out.println("arr" + dimList + " len=" + arrLen);
 		for (int n = 0; n < arrLen; n++) {
 			tmpObj = Array.get(obj, n);
 			if (tmpObj.getClass().isArray()) {

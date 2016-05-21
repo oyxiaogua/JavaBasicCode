@@ -3,8 +3,13 @@ package com.xiaogua.better.file;
 import java.io.File;
 import java.io.FileReader;
 import java.io.LineNumberReader;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 public class TestFileCommonUtil {
@@ -52,6 +57,30 @@ public class TestFileCommonUtil {
 		List<File> fileList = FileCommonUtil.getFileListByBFS(new File("e:/test_tmp/ftp"));
 		for (File file : fileList) {
 			System.out.println(file.getCanonicalPath());
+		}
+	}
+
+	@Test
+	public void testFileUtilsReadLines() throws Exception {
+		String path = "e:/test_tmp/test_utff8_txt.txt";
+		File file = new File(path);
+		// 读取整个文本文件内容
+		String centent = FileUtils.readFileToString(file, "UTF-8");
+		System.out.println(centent);
+		// 按行读取,
+		List<String> lines = FileUtils.readLines(file, "UTF-8");
+		for (String str : lines) {
+			System.out.println(str);
+		}
+	}
+
+	@Test
+	public void testJava7ReadAllLines() throws Exception {
+		String filePath = "e:/test_tmp/test_utff8_txt.txt";
+		Path path = Paths.get(filePath);
+		List<String> lines = Files.readAllLines(path, Charset.forName("UTF-8"));
+		for (String s : lines) {
+			System.out.println(s);
 		}
 	}
 }
