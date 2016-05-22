@@ -151,4 +151,17 @@
 		values(#{name},#{address})
 	</insert>
 
+
+	<select id="getUserNameList" parameterType="java.util.List"
+		resultType="java.lang.String">
+		select name from t_user_2
+		<if test="list != null and list.size() > 0">
+			where id in
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
 </mapper>

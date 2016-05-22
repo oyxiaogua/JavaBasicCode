@@ -170,4 +170,18 @@ public class TestMybatis extends BaseTest {
 		baseDao.insert(defaultUserNameSpace, "insertUserInfo", info);
 		System.out.println(info);
 	}
+
+	@Test
+	public void testGetUserNameList() {
+		List<Integer> idList = null;
+		List<String> rtnList = baseDao.queryList(defaultUserNameSpace, "getUserNameList", idList);
+		System.out.println(rtnList);
+
+		idList = new ArrayList<Integer>();
+		idList.add(65);
+		idList.add(-1);
+		rtnList = baseDao.queryList(defaultUserNameSpace, "getUserNameList", idList);
+		System.out.println(rtnList);
+
+	}
 }

@@ -73,6 +73,14 @@ public class BaseDaoImpl implements IBaseDao {
 		return rtnList;
 	}
 
+	public <T, U> List<U> queryList(String namespace, String statement, T t) {
+		long start = System.currentTimeMillis();
+		List<U> rtnList = sqlSessionTemplate.<U> selectList(getStatementWithNameSpace(namespace, statement), t);
+		logger.info("queryList GeneType",
+				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
+		return rtnList;
+	}
+
 	public <T> int update(String namespace, String statement, List<T> beanList) {
 		long start = System.currentTimeMillis();
 		int rtnInt = sqlSessionTemplate.update(getStatementWithNameSpace(namespace, statement), beanList);
