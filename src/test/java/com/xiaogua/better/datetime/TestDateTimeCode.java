@@ -16,6 +16,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
+import org.quartz.CronExpression;
 
 public class TestDateTimeCode {
 	private static String fullDateFormatStr = "yyyy-MM-dd HH:mm:ss";
@@ -360,6 +361,13 @@ public class TestDateTimeCode {
 		System.out.println(now.getMinuteOfHour());
 		// 几秒
 		System.out.println(now.getSecondOfMinute());
+	}
+
+	@Test
+	public void testConvertDateToCronExpression() {
+		Date date = new Date();
+		String cronStr = DateTimeCode.convertDateToCronExpression(date);
+		Assert.assertTrue(CronExpression.isValidExpression(cronStr));
 	}
 
 }

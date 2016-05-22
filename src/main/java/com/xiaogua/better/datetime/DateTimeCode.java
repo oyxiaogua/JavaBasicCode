@@ -647,4 +647,25 @@ public class DateTimeCode {
 		calendar.setTime(date);
 		return (11 == calendar.get(Calendar.MONTH)) && (31 == calendar.get(Calendar.DATE));
 	}
+
+	/**
+	 * 将Date转换为quartz cron 表达式.
+	 */
+	public static String convertDateToCronExpression(Date date) {
+		Calendar c = Calendar.getInstance();
+		c.setTime(date);
+		StringBuilder cronSb = new StringBuilder();
+		cronSb.append(c.get(Calendar.SECOND));
+		cronSb.append(" ");
+		cronSb.append(c.get(Calendar.MINUTE));
+		cronSb.append(" ");
+		cronSb.append(c.get(Calendar.HOUR_OF_DAY));
+		cronSb.append(" ");
+		cronSb.append(c.get(Calendar.DAY_OF_MONTH));
+		cronSb.append(" ");
+		cronSb.append(c.get(Calendar.MONTH) + 1);
+		cronSb.append(" ");
+		cronSb.append("?");
+		return cronSb.toString();
+	}
 }
