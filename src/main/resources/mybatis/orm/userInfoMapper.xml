@@ -164,4 +164,16 @@
 		</if>
 	</select>
 
+	<select id="queryUserNameWithLike" parameterType="java.lang.String"
+		resultType="java.lang.String">
+		select name from t_user_2 where name like
+		concat('%',#{name},'%')
+	</select>
+
+	<select id="selectUserInfoNoOrder" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select * from t_user_2 order by null
+	</select>
+
+
 </mapper>

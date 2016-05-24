@@ -33,7 +33,7 @@ public class BaseDaoImpl implements IBaseDao {
 	public <T> int insert(String namespace, String statement, List<T> beanList) {
 		long start = System.currentTimeMillis();
 		int rtnInt = sqlSessionTemplate.insert(getStatementWithNameSpace(namespace, statement), beanList);
-		logger.info("batchInsert",
+		logger.info("batchInsert List<T>",
 				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
 		return rtnInt;
 	}
@@ -41,7 +41,7 @@ public class BaseDaoImpl implements IBaseDao {
 	public <T> int insert(String namespace, String statement, T bean) {
 		long start = System.currentTimeMillis();
 		int rtnInt = sqlSessionTemplate.insert(getStatementWithNameSpace(namespace, statement), bean);
-		logger.info("insert",
+		logger.info("insert T",
 				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
 		return rtnInt;
 	}
@@ -68,7 +68,7 @@ public class BaseDaoImpl implements IBaseDao {
 		long start = System.currentTimeMillis();
 		List<Map<String, Object>> rtnList = sqlSessionTemplate
 				.<Map<String, Object>> selectList(getStatementWithNameSpace(namespace, statement), t);
-		logger.info("queryListMap GeneType",
+		logger.info("queryListMap GeneType T",
 				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
 		return rtnList;
 	}
@@ -76,15 +76,23 @@ public class BaseDaoImpl implements IBaseDao {
 	public <T, U> List<U> queryList(String namespace, String statement, T t) {
 		long start = System.currentTimeMillis();
 		List<U> rtnList = sqlSessionTemplate.<U> selectList(getStatementWithNameSpace(namespace, statement), t);
-		logger.info("queryList GeneType",
+		logger.info("queryList GeneType T,U",
 				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
 		return rtnList;
+	}
+	
+	public <T, U> U querySingle(String namespace, String statement, T t) {
+		long start = System.currentTimeMillis();
+		U rtn = sqlSessionTemplate.<U> selectOne(getStatementWithNameSpace(namespace, statement), t);
+		logger.info("querySingle GeneType T,U",
+				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
+		return rtn;
 	}
 
 	public <T> int update(String namespace, String statement, List<T> beanList) {
 		long start = System.currentTimeMillis();
 		int rtnInt = sqlSessionTemplate.update(getStatementWithNameSpace(namespace, statement), beanList);
-		logger.info("batchUpdate",
+		logger.info("batchUpdate List<T>",
 				"[" + namespace + "." + statement + "] execute, cost:" + (System.currentTimeMillis() - start) + "ms");
 		return rtnInt;
 	}

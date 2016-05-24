@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mysqlFunDao">
+	<select id="testGroupConcat" resultType="java.lang.String">
+		select
+		group_concat(name) from t_user_2 where name like
+		concat('%',#{name},'%')
+	</select>
+
+	<select id="getMysqlTimeZone" resultType="java.lang.String">
+		select
+		date_format(timediff(now(), utc_timestamp),'%H:%i:%s')
+		from dual
+	</select>
+
+	<select id="testMysqlFormatDateTime" resultType="java.lang.String">
+		select
+		date_format(current_timestamp(),'%Y-%m-%d %H:%i:%s')
+		from dual
+	</select>
+
+	<select id="testMysqlBase64" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select to_base64(#{toBase64}) as
+		mysqlBase64,from_base64(#{fromBase64}) as mysqlStr
+		from dual
+	</select>
+
+	<select id="testUnixTimeStamp" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select unix_timestamp(str_to_date(#{dateTimeStr},'%Y-%m-%d
+		%H:%i:%s')) as mysqlTimeStamp,
+		date_format(from_unixtime(#{unixTimeStamp}),'%Y-%m-%d %H:%i:%s') as
+		mysqlDateTime
+		from dual
+	</select>
+
+	<select id="testIpToNumber" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		select  inet_aton(#{ip}) as ipNum, 
+		        inet_ntoa(inet_aton(#{ip})) as ipStr
+		from dual
+	</select>
+
+</mapper>

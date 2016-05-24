@@ -5,10 +5,10 @@
 	<settings>
 		<setting name="logImpl" value="LOG4J" />
 	</settings>
-	
+
 	<mappers>
 		<mapper resource="mybatis/orm/userInfoMapper.xml" />
-
+		<mapper resource="mybatis/orm/mysqlFunMapper.xml" />
 	</mappers>
 
 </configuration>

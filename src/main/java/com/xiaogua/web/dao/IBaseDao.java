@@ -18,6 +18,8 @@ public interface IBaseDao {
 
 	public <T, U> List<U> queryList(String namespace, String statement, T t);
 
+	public <T, U> U querySingle(String namespace, String statement, T t);
+
 	public <T> int update(String namespace, String statement, List<T> beanList);
 
 	public <T> int update(String namespace, String statement, Map<String, Object> paramMap);
