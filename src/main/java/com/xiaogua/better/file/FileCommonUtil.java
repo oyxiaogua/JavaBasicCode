@@ -44,14 +44,14 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 	/**
 	 * 获取BufferedWriter
 	 */
-	public BufferedWriter getBufferedWriter(String filePath, String encoding) throws Exception {
+	public static BufferedWriter getBufferedWriter(String filePath, String encoding) throws Exception {
 		return getBufferedWriter(filePath, encoding, false);
 	}
 
 	/**
 	 * 获取BufferedWriter 支持追加写
 	 */
-	public BufferedWriter getBufferedWriter(String filePath, String encoding, boolean append) throws Exception {
+	public static BufferedWriter getBufferedWriter(String filePath, String encoding, boolean append) throws Exception {
 		OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(filePath, append), encoding);
 		BufferedWriter bw = new BufferedWriter(osw);
 		return bw;
@@ -210,10 +210,6 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 
 	/**
 	 * 获取文件行数
-	 * 
-	 * @param filename
-	 * @return
-	 * @throws IOException
 	 */
 	public static int getFileTotalLine(String filename) throws Exception {
 		InputStream is = new BufferedInputStream(new FileInputStream(filename));
@@ -341,8 +337,8 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 	 * @param encoding
 	 *            编码
 	 */
-	public List<String> getRangeDataList(File file, int includeLowerBound, int includeUpperBound, boolean skipFirstLine,
-			String encoding) throws Exception {
+	public static List<String> getRangeDataList(File file, int includeLowerBound, int includeUpperBound,
+			boolean skipFirstLine, String encoding) throws Exception {
 		List<String> dataLineList = new ArrayList<String>(includeUpperBound - includeLowerBound + 1);
 		BufferedInputStream bis = null;
 		BufferedReader br = null;
@@ -398,7 +394,53 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 		}
 	}
 
-	private void closeBufferedStream(BufferedReader br, BufferedInputStream bis) {
+	/**
+	 * 获取文件行数
+	 */
+	public static long getFileDataSize(File file, String encoding) throws Exception {
+		return getFileDataSize(file, false, encoding);
+	}
+
+	/**
+	 * 获取文件行数
+	 */
+	public static long getFileDataSize(String fileNameStr, boolean skipFirstLine, String encoding) throws Exception {
+		return getFileDataSize(new File(fileNameStr), skipFirstLine, encoding);
+	}
+
+	/**
+	 * 获取文件行数
+	 */
+	public static long getFileDataSize(File file, boolean skipFirstLine, String encoding) throws Exception {
+		BufferedInputStream bis = null;
+		BufferedReader br = null;
+		long totalSize = 0;
+		String tmpStr = null;
+		boolean isFirst = true;
+		try {
+			bis = new BufferedInputStream(new FileInputStream(file));
+			br = new BufferedReader(new InputStreamReader(bis, encoding));
+			while ((tmpStr = br.readLine()) != null) {
+				if (tmpStr.trim().length() == 0) {
+					continue;
+				}
+				if (isFirst) {
+					isFirst = false;
+					if (skipFirstLine) {
+						continue;
+					}
+				}
+				totalSize++;
+			}
+		} catch (Exception e) {
+			log.error(" read content error:", e);
+		} finally {
+			closeBufferedStream(br, bis);
+		}
+		return totalSize;
+	}
+
+	private static void closeBufferedStream(BufferedReader br, BufferedInputStream bis) {
 		try {
 			IOUtils.closeQuietly(br);
 		} catch (Exception e) {
