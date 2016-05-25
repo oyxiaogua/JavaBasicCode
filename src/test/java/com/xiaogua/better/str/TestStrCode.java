@@ -104,9 +104,9 @@ public class TestStrCode {
 
 	@Test
 	public void testContainsIgnoreCase() {
-		String str = "";
+		String str = "test";
 		String[] strArr = new String[] { "Tes", "TEST" };
-		Assert.assertTrue(StringCommonUtils.containsIgnoreCase(strArr, str));
+		Assert.assertTrue(StringCommonUtils.containsIgnoreCase(str,strArr ));
 	}
 
 	@Test

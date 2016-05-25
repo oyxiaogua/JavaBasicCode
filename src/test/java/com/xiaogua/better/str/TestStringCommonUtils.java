@@ -121,4 +121,33 @@ public class TestStringCommonUtils {
 		// org.apache.commons.lang3.math.NumberUtils.isNumber(String)
 		Assert.assertTrue(NumberUtils.isNumber(s2));
 	}
+
+	@Test
+	public void testStringUtilsContain() {
+		String[] dataArr = new String[] { "hello", null, "Test" };
+		boolean contain = StringCommonUtils.containsIgnoreCase("tEST", dataArr);
+		Assert.assertTrue(contain);
+
+		contain = StringCommonUtils.containsAny("tEST", dataArr);
+		Assert.assertFalse(contain);
+
+		contain = StringCommonUtils.containsAny(null, dataArr);
+		System.out.println(contain);// false
+	}
+
+	@Test
+	public void testStartsWithIgnoreCase() {
+		boolean isStart = StringCommonUtils.startsWithIgnoreCase("TESTFOR", "tesT");
+		Assert.assertTrue(isStart);
+	}
+
+	@Test
+	public void testContainsAll() {
+		String[] dataArr = new String[] { "hello", "world", "Test" };
+		boolean isContain = StringCommonUtils.containsAll("Test hello world", dataArr);
+		Assert.assertTrue(isContain);
+
+		isContain = StringCommonUtils.containsAll("Tes_hello world", dataArr);
+		Assert.assertFalse(isContain);
+	}
 }

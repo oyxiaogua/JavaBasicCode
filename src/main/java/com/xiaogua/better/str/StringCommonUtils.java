@@ -40,7 +40,7 @@ public class StringCommonUtils extends org.apache.commons.lang3.StringUtils {
 			return false;
 		}
 	}
-	
+
 	public static boolean isNotNull(String str) {
 		return !isNull(str);
 	}
@@ -226,7 +226,7 @@ public class StringCommonUtils extends org.apache.commons.lang3.StringUtils {
 	public static String md5HexWithDigestUtils(String str) throws Exception {
 		return DigestUtils.md5Hex(str);
 	}
-	
+
 	/**
 	 * 求字符串md5值
 	 */
@@ -249,23 +249,47 @@ public class StringCommonUtils extends org.apache.commons.lang3.StringUtils {
 
 	/**
 	 * 是否包含,不区分大小写
-	 * 
-	 * @param strArr
-	 * @param checkStr
-	 * @return
 	 */
-	public static boolean containsIgnoreCase(String[] strArr, String checkStr) {
+	public static boolean containsIgnoreCase(String checkStr, String[] strArr) {
 		if (checkStr != null && (strArr != null && strArr.length > 0)) {
 			checkStr = checkStr.toLowerCase();
 			for (String str : strArr) {
-				if (str != null && str.toLowerCase().contains(checkStr)) {
+				if (str != null && checkStr.contains(str.toLowerCase())) {
 					return true;
 				}
 			}
 		}
 		if (checkStr == null) {
-			if (strArr == null || strArr.length == 0) {
+			if (strArr == null) {
 				return true;
+			}
+			if (strArr.length == 0) {
+				return false;
+			}
+			for (String str : strArr) {
+				if (str == null) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static boolean containsAll(String checkStr, String[] strArr) {
+		if (checkStr != null && (strArr != null && strArr.length > 0)) {
+			for (String str : strArr) {
+				if (str != null && !checkStr.contains(str)) {
+					return false;
+				}
+			}
+			return true;
+		}
+		if (checkStr == null) {
+			if (strArr == null) {
+				return true;
+			}
+			if (strArr.length == 0) {
+				return false;
 			}
 			for (String str : strArr) {
 				if (str == null) {
