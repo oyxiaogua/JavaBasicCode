@@ -150,4 +150,15 @@ public class TestStringCommonUtils {
 		isContain = StringCommonUtils.containsAll("Tes_hello world", dataArr);
 		Assert.assertFalse(isContain);
 	}
+
+	@Test
+	public void testCountSubstr() {
+		String str = "aaaaaaaaaaa";
+		String subStr = "aaa";
+		int total = StringCommonUtils.countSubstr(str, subStr, true);
+		System.out.println(total);
+
+		total = StringCommonUtils.countSubstr(str, subStr, false);
+		System.out.println(total);
+	}
 }

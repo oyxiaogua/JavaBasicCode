@@ -299,4 +299,31 @@ public class StringCommonUtils extends org.apache.commons.lang3.StringUtils {
 		}
 		return false;
 	}
+
+	/**
+	 * 统计出现次数
+	 */
+	public static int countSubstr(String str, String subStr, boolean allowOverlapping) {
+		if (str == null || subStr == null) {
+			return -1;
+		}
+		if (subStr.length() == 0) {
+			return 0;
+		}
+		int currentIndex = str.indexOf(subStr);
+		if (currentIndex < 0) {
+			return currentIndex;
+		}
+		int startIndex = 0;
+		int count = 0;
+		while ((currentIndex = str.indexOf(subStr, startIndex)) >= 0) {
+			count++;
+			if (!allowOverlapping) {
+				startIndex = currentIndex + subStr.length();
+			} else {
+				startIndex = currentIndex + 1;
+			}
+		}
+		return count;
+	}
 }
