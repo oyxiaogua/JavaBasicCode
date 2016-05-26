@@ -36,7 +36,7 @@ public class TestProcessFile {
 	public void testProcessFile() throws Exception {
 		ExecutorService executor = Executors.newFixedThreadPool(5);
 		Interface_ProcessLine processClz = new ProcessLineImpl();
-		for (int i = 1; i < 2; i++) {
+		for (int i = 1; i < 20; i++) {
 			executor.submit(new ProcessFileTask("e:/test_tmp/test_data/", "test_data_" + i + ".txt", "e:/test_tmp/0524",
 					"UTF-8", "UTF-8", processClz, 100000));
 		}

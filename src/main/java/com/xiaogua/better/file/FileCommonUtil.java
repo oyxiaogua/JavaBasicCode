@@ -42,6 +42,13 @@ public class FileCommonUtil extends org.apache.commons.io.FileUtils {
 	}
 
 	/**
+	 * 获取BufferedReader
+	 */
+	public static BufferedReader getBufferedReader(File file, String encoding) throws Exception {
+		return new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding));
+	}
+
+	/**
 	 * 获取BufferedWriter
 	 */
 	public static BufferedWriter getBufferedWriter(String filePath, String encoding) throws Exception {
