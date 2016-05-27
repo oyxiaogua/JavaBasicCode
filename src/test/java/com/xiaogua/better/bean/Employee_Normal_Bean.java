@@ -11,6 +11,13 @@ public class Employee_Normal_Bean {
 		this.name = name;
 		this.address = address;
 	}
+	
+
+	public Employee_Normal_Bean() {
+		super();
+	}
+
+
 
 	public int getId() {
 		return id;
