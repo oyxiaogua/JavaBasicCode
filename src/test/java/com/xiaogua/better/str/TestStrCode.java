@@ -106,7 +106,7 @@ public class TestStrCode {
 	public void testContainsIgnoreCase() {
 		String str = "test";
 		String[] strArr = new String[] { "Tes", "TEST" };
-		Assert.assertTrue(StringCommonUtils.containsIgnoreCase(str,strArr ));
+		Assert.assertTrue(StringCommonUtils.containsIgnoreCase(str, strArr));
 	}
 
 	@Test
@@ -529,6 +529,28 @@ public class TestStrCode {
 	public void testObjDefaultVal() {
 		String str = ObjectUtils.defaultIfNull(null, "defaultVal");
 		System.out.println(str);
+	}
+
+	@Test
+	public void testReverseStr() {
+		String str = "hello world";
+		String str2 = reverseStr(str);
+		System.out.println(str2);
+	}
+
+	/**
+	 * @See AbstractStringBuilder.reverse
+	 */
+	public static String reverseStr(String str) {
+		char[] charArr = str.toCharArray();
+		int maxIndex = charArr.length - 1;
+		for (int j = (maxIndex - 1) >> 1; j >= 0; j--) {
+			char ch01 = charArr[j];
+			char ch02 = charArr[maxIndex - j];
+			charArr[j] = ch02;
+			charArr[maxIndex - j] = ch01;
+		}
+		return new String(charArr);
 	}
 
 	public static String uuidTo32Str(UUID uuid) {
