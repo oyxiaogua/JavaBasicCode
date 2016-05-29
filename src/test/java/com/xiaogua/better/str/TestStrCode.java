@@ -538,6 +538,20 @@ public class TestStrCode {
 		System.out.println(str2);
 	}
 
+	@Test
+	public void testConcatStr() {
+		StringBuilder sb = new StringBuilder();
+		String[] strArr = new String[] { "1", "2", "3", "4" };
+		if (strArr.length > 0) {
+			sb.append(strArr[0]);// 避免每次判断
+			for (int i = 1, len = strArr.length; i < len; i++) {
+				sb.append(",");
+				sb.append(strArr[i]);
+			}
+		}
+		System.out.println(sb.toString());
+	}
+
 	/**
 	 * @See AbstractStringBuilder.reverse
 	 */

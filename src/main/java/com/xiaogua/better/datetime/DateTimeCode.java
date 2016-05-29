@@ -31,6 +31,9 @@ public class DateTimeCode {
 	public final static String DATE_DEFAULT_FORMAT = "EEE MMM dd HH:mm:ss zzz yyyy";
 
 	public final static String YYYY_MM_DD = "yyyy-MM-dd";
+	
+    public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
+
 
 	/**
 	 * 获取GMT时间

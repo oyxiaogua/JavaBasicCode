@@ -2,7 +2,9 @@ package com.xiaogua.better.datetime;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.FieldPosition;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -368,6 +370,38 @@ public class TestDateTimeCode {
 		Date date = new Date();
 		String cronStr = DateTimeCode.convertDateToCronExpression(date);
 		Assert.assertTrue(CronExpression.isValidExpression(cronStr));
+	}
+
+	@Test
+	public void testDateFormatParsePosition() {
+		SimpleDateFormat df = new SimpleDateFormat(DateTimeCode.FULL_DATETIME, Locale.ENGLISH);
+		// 跳过T开始解析
+		ParsePosition pos = new ParsePosition(1);
+		String dateStr = "T2015-1-2 3:4:5";
+		Date date = df.parse(dateStr, pos);
+		Assert.assertEquals(-1, pos.getErrorIndex());
+		// 成功转换后ParsePosition.getIndex()就是匹配的字符串结尾的索引
+		Assert.assertEquals(dateStr.length(), pos.getIndex());
+		System.out.println(DateFormatUtils.format(date, DateTimeCode.FULL_DATETIME));
+
+		dateStr = "T2015-1-2";
+		date = df.parse(dateStr, pos);
+		Assert.assertNull(date);
+		Assert.assertTrue(pos.getErrorIndex() > 0);
+		System.out.println(pos.getIndex() + "," + pos.getErrorIndex() + "," + DateTimeCode.FULL_DATETIME.length());
+	}
+
+	@Test
+	public void testDateFormatFieldPosition() {
+		// 字段位置
+		FieldPosition fieldPosition = new FieldPosition(DateFormat.HOUR_OF_DAY0_FIELD);
+		SimpleDateFormat df = new SimpleDateFormat(DateTimeCode.FULL_DATETIME, Locale.ENGLISH);
+
+		StringBuffer sb = new StringBuffer();
+		String dateStr = df.format(new Date(), sb, fieldPosition).toString();
+		System.out.println(dateStr);
+		System.out.println(fieldPosition.getBeginIndex() + "," + fieldPosition.getEndIndex());
+		System.out.println(dateStr.substring(fieldPosition.getBeginIndex(), fieldPosition.getEndIndex()));
 	}
 
 }
