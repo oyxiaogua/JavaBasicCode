@@ -1,11 +1,14 @@
 package com.xiaogua.better.json;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.MissingNode;
 
 public class TestJacksonJson {
@@ -39,4 +42,22 @@ public class TestJacksonJson {
 		Assert.assertTrue(rtnNode instanceof MissingNode);
 	}
 
+	@Test
+	public void testConvertJsonToList() throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		List<Integer> intList = new ArrayList<Integer>();
+		intList.add(1);
+		intList.add(null);
+		intList.add(2);
+		String jsonStr = mapper.writeValueAsString(intList);
+		System.out.println(jsonStr);
+		List<Integer> rtnList = mapper.readValue(jsonStr,
+				mapper.getTypeFactory().constructCollectionType(List.class, Integer.class));
+		System.out.println(rtnList);
+
+		TypeReference<List<Integer>> typeRef = new TypeReference<List<Integer>>() {
+		};
+		rtnList = mapper.readValue(jsonStr, typeRef);
+		System.out.println(rtnList);
+	}
 }
