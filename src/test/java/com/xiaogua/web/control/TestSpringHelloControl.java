@@ -56,6 +56,20 @@ public class TestSpringHelloControl {
 	}
 
 	@Test
+	public void testAddPersonArr() throws Exception {
+		Parent_Normal_Bean[] beanArr = new Parent_Normal_Bean[4];
+		beanArr[0] = new Parent_Normal_Bean();
+		beanArr[1] = new Parent_Normal_Bean(null, 2, null);
+		for (int i = 1; i < 3; i++) {
+			beanArr[i + 1] = new Parent_Normal_Bean("test_" + i, i, new Date());
+		}
+		mockMvc.perform(MockMvcRequestBuilders.post("/hello/addPersonArr")
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE).content(JacksonJsonCode.convertObjToStr(beanArr)))
+				.andDo(MockMvcResultHandlers.print());
+	}
+
+
+	@Test
 	public void testSubmitJsonStr() throws Exception {
 		List<Integer> list = new ArrayList<Integer>();
 		list.add(null);

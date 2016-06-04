@@ -21,7 +21,7 @@ public class SpringHelloControl {
 
 	@RequestMapping(value = "/addPerson", produces = { "application/json;charset=UTF-8" })
 	@ResponseBody
-	public Parent_Normal_Bean addPersonList(Parent_Normal_Bean person) {
+	public Parent_Normal_Bean addPerson(Parent_Normal_Bean person) {
 		log.info(person);
 		return person;
 	}
@@ -32,6 +32,14 @@ public class SpringHelloControl {
 	public List<Parent_Normal_Bean> addPersonList(@RequestBody List<Parent_Normal_Bean> beanList) {
 		log.info(beanList);
 		return beanList;
+	}
+
+	@RequestMapping(value = "/addPersonArr", method = RequestMethod.POST, produces = {
+			"application/json;charset=UTF-8" })
+	@ResponseBody
+	public Parent_Normal_Bean[] addPersonArr(@RequestBody Parent_Normal_Bean[] beanArr) {
+		log.info(beanArr);
+		return beanArr;
 	}
 
 	@RequestMapping(value = "/submitJsonStr", produces = { "application/json;charset=UTF-8" })
