@@ -2,11 +2,14 @@ package com.xiaogua.better.bean;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.xiaogua.better.datetime.DateTimeCode;
 
 public class Parent_Normal_Bean {
 	private String parentName;
 	private int parentAge;
+	@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
 	private Date parentDate;
 
 	public Parent_Normal_Bean() {
