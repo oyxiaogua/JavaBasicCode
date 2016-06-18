@@ -5,6 +5,8 @@ import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.xiaogua.better.bean.Parent_Normal_Bean;
+
 public class TestHashCode {
 
 	@Test
@@ -50,5 +52,14 @@ public class TestHashCode {
 		int[] intArr = new int[] { 1, 2 };
 		int hashCode = 31 * (31 + 1) + 2;
 		Assert.assertEquals(hashCode, Arrays.hashCode(intArr));
+	}
+
+	@Test
+	public void testHashCode() {
+		Parent_Normal_Bean bean = new Parent_Normal_Bean();
+		Parent_Normal_Bean bean2 = new Parent_Normal_Bean(null, 1, null);
+		int beanHashCode = System.identityHashCode(bean);
+		int bean2HashCode = System.identityHashCode(bean2);
+		System.out.println(beanHashCode + "," + bean2HashCode);
 	}
 }

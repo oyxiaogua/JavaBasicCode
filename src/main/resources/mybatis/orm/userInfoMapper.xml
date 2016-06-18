@@ -175,5 +175,17 @@
 		select * from t_user_2 order by null
 	</select>
 
+	<select id="getUserNameWithArrPara" parameterType="[Ljava.lang.String;"
+		resultType="java.lang.String">
+		select name from t_user_2
+		<if test="array!=null and array.length!=0">
+			where id in
+			<foreach item="item" index="index" collection="array" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+
+	</select>
 
 </mapper>

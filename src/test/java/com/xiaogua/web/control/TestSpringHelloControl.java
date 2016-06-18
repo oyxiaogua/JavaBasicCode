@@ -87,7 +87,7 @@ public class TestSpringHelloControl {
 		for (int i = 1; i < 400; i++) {
 			sb.append(",").append(i);
 		}
-		mockMvc.perform(MockMvcRequestBuilders.post("/hello/submitArr").param("idList[]", sb.toString()))
+		mockMvc.perform(MockMvcRequestBuilders.post("/hello/submitArr").param("idList", sb.toString()))
 				.andDo(MockMvcResultHandlers.print());
 	}
 }

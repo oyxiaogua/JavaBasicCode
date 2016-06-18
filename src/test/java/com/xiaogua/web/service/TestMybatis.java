@@ -254,4 +254,14 @@ public class TestMybatis extends BaseTest {
 		System.out.println(rtnMap);
 	}
 
+	@Test
+	public void testGetUserNameWithArrPara() {
+		Integer[] idArr = null;
+		List<String> rtnList = baseDao.queryList(defaultUserNameSpace, "getUserNameWithArrPara", idArr);
+		System.out.println(rtnList);
+
+		idArr = new Integer[] { 51, 52, 53, 54 };
+		rtnList = baseDao.queryList(defaultUserNameSpace, "getUserNameWithArrPara", idArr);
+		System.out.println(rtnList);
+	}
 }
