@@ -25,7 +25,7 @@ public class TestBigDecimalCode {
 		BigDecimal b = new BigDecimal(str);
 		System.out.println(b.toPlainString());
 
-		double doubleValue=3.1190102E9;
+		double doubleValue = 3.1190102E9;
 		DecimalFormat df = new DecimalFormat("0");
 		System.out.println(df.format(doubleValue));
 	}
@@ -44,6 +44,32 @@ public class TestBigDecimalCode {
 		formatter.setMinimumFractionDigits(3);
 		formatter.setMaximumFractionDigits(5);
 		Assert.assertEquals("09876$54321#01235", formatter.format(decimal));
+	}
+
+	@Test
+	public void testBigDecimalCompare() {
+		BigDecimal a = new BigDecimal("1.23");
+		BigDecimal b = new BigDecimal("1.230");
+		boolean equalRtn = a.equals(b);
+		Assert.assertFalse(equalRtn);
+		int compareRtn = a.compareTo(b);
+		Assert.assertEquals(0, compareRtn);
+	}
+
+	@Test
+	public void testBigDecimalAdd() {
+		BigDecimal a = new BigDecimal("1.23");
+		BigDecimal b = new BigDecimal("1.24");
+		a.add(b);
+		Assert.assertEquals(1.23, a.doubleValue(), 0.0);
+	}
+
+	@Test
+	public void testBigDecimalDivide() {
+		BigDecimal a = new BigDecimal("100");
+		BigDecimal b = new BigDecimal("12");
+		BigDecimal c = a.divide(b,2, BigDecimal.ROUND_HALF_DOWN);
+		System.out.println(c);
 	}
 
 }

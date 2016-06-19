@@ -13,4 +13,19 @@ public class TestBasicCode {
 		String hashCode = Integer.toHexString(bean.hashCode());
 		Assert.assertTrue(toString.endsWith(hashCode));
 	}
+
+	@Test
+	public void testForLoop() {
+		int i = 0;
+		for (checkCdt("A"); checkCdt("B") && i < 2; checkCdt("C")) {
+			checkCdt("D");
+			i++;
+		}
+	}
+
+	private boolean checkCdt(String name) {
+		System.out.print(name);
+		return true;
+	}
+
 }

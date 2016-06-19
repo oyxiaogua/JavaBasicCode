@@ -162,11 +162,19 @@ public class TestNumber {
 
 	@Test
 	public void testLongMaxValue() {
-		System.out.println(Long.MAX_VALUE+","+UnsignedLong.MAX_VALUE);
+		System.out.println(Long.MAX_VALUE + "," + UnsignedLong.MAX_VALUE);
 		String bigNumStr = "12345678901234567890";
-		UnsignedLong unsignedLong=UnsignedLong.valueOf(bigNumStr);
+		UnsignedLong unsignedLong = UnsignedLong.valueOf(bigNumStr);
 		long rtnValue = unsignedLong.longValue();
-		System.out.println(unsignedLong.toString()+","+rtnValue);
+		System.out.println(unsignedLong.toString() + "," + rtnValue);
+	}
+
+	@Test
+	public void testDoubleFloatValue() {
+		boolean rtn = (0.99999999f == 1f);
+		boolean rtn2 = (0.99999999 == 1);
+		Assert.assertTrue(rtn);
+		Assert.assertFalse(rtn2);
 	}
 
 	public final static boolean isNumberWithCommonsLang3(String str) {
