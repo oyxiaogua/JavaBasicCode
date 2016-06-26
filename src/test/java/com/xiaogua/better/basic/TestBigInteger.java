@@ -15,4 +15,12 @@ public class TestBigInteger {
 		System.out.println("余数:" + biArray[1]);
 	}
 
+	@Test
+	public void testBigIntegerConvertHex() {
+		String str = new BigInteger("1234567891234567").toString(16);
+		System.out.println(str);
+		BigInteger big = new BigInteger(str.trim(), 16);
+		System.out.println(big);
+	}
+
 }

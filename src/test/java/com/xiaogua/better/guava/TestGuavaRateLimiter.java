@@ -9,7 +9,12 @@ import com.google.common.util.concurrent.RateLimiter;
 public class TestGuavaRateLimiter {
 
 	@Test
-	public void testRateRateLimiter_1() {
+	public void testRateLimiter_1() {
+		/**
+		* 创建一个稳定输出令牌的RateLimiter，保证了平均每秒不超过permitsPerSecond个请求
+		* 当请求到来的速度超过了permitsPerSecond，保证每秒只处理permitsPerSecond个请求
+		* 当这个RateLimiter使用不足(即请求到来速度小于permitsPerSecond)，会囤积最多permitsPerSecond个请求
+		*/
 		// 桶容量为5且每秒新增5个令牌，即每隔200毫秒新增一个令牌
 		RateLimiter limiter = RateLimiter.create(5);
 		// 如果当前桶中有足够令牌则成功（返回值为0），如果桶中没有令牌则暂停一段时间
@@ -22,7 +27,7 @@ public class TestGuavaRateLimiter {
 	}
 
 	@Test
-	public void testRateRateLimiter_2() {
+	public void testRateLimiter_2() {
 		RateLimiter limiter = RateLimiter.create(5);
 		// 一次性消费5个令牌
 		System.out.println(limiter.acquire(5));
@@ -31,16 +36,17 @@ public class TestGuavaRateLimiter {
 	}
 
 	@Test
-	public void testRateRateLimiter_3() {
+	public void testRateLimiter_3() {
 		RateLimiter limiter = RateLimiter.create(5);
 		// 允许消费未来的令牌
 		System.out.println(limiter.acquire(10));
+		//允许昂贵的任务立即执行,并将随后到来的请求推迟
 		System.out.println(limiter.acquire(1));// 2s
 		System.out.println(limiter.acquire(1));// 0.2s
 	}
 
 	@Test
-	public void testRateRateLimiter_4() throws Exception {
+	public void testRateLimiter_4() throws Exception {
 		RateLimiter limiter = RateLimiter.create(2);
 		System.out.println(limiter.acquire());
 		Thread.sleep(2000L);
@@ -55,7 +61,7 @@ public class TestGuavaRateLimiter {
 	}
 
 	@Test
-	public void testRateRateLimiter_SmoothWarmingUp_1() throws Exception {
+	public void testRateLimiter_SmoothWarmingUp_1() throws Exception {
 		// 平滑预热限流
 		//每秒新增的令牌数:5
 		//从冷启动速率过渡到平均速率的时间间隔 1
@@ -68,6 +74,16 @@ public class TestGuavaRateLimiter {
 		for (int i = 1; i < 5; i++) {
 			System.out.println(limiter.acquire());
 		}
-
 	}
+	
+	@Test
+	public void testRateLimiter_SmoothBursty_1() {
+		// 平滑突发限流
+		RateLimiter limiter = RateLimiter.create(4);
+		System.out.println(limiter.acquire(1));//0
+		System.out.println(limiter.acquire(3));//0.25
+		System.out.println(limiter.acquire(10));//0.75
+		System.out.println(limiter.acquire(1));//2.5
+	}
+	
 }

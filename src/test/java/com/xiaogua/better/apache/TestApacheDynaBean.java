@@ -1,5 +1,6 @@
 package com.xiaogua.better.apache;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -21,5 +22,8 @@ public class TestApacheDynaBean {
 		employee.set("lastName", "Flintstone");
 		employee.set("createDate", new Date());
 		System.out.println(employee.get("firstName") + "---=" + employee.get("createDate"));
+
+		DynaProperty[] propArr = employee.getDynaClass().getDynaProperties();
+		System.out.println(Arrays.toString(propArr));
 	}
 }

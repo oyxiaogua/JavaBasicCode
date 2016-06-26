@@ -8,10 +8,13 @@ import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.ibatis.session.ExecutorType;
+import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.dao.QueryTimeoutException;
 
 import com.xiaogua.better.bean.UserNameInfo;
@@ -26,10 +29,12 @@ public class TestMybatis extends BaseTest {
 	private final String defaultUserNameSpace = "userInfoDao";
 	private final String mysqlFunNameSpace = "mysqlFunDao";
 	private final String utf8Encoding = "utf-8";
+	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Before
 	public void init() {
 		baseDao = (IBaseDao) context.getBean("baseDao");
+		sqlSessionTemplate = (SqlSessionTemplate) context.getBean("sqlSessionTemplate");
 	}
 
 	@Test
@@ -263,5 +268,34 @@ public class TestMybatis extends BaseTest {
 		idArr = new Integer[] { 51, 52, 53, 54 };
 		rtnList = baseDao.queryList(defaultUserNameSpace, "getUserNameWithArrPara", idArr);
 		System.out.println(rtnList);
+	}
+
+	@Test
+	public void testMybatisBatchInsert() throws Exception {
+		List<UserNameInfo> userList = new ArrayList<UserNameInfo>();
+		UserNameInfo user = null;
+		for (int i = 1; i < 30; i++) {
+			user = new UserNameInfo("test_batch_" + i, "address_1");
+			userList.add(user);
+		}
+
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = sqlSessionTemplate.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+			int size = 5;
+			for (int i = 0, len = userList.size(); i < len; i++) {
+				sqlSession.insert(defaultUserNameSpace + "." + "insertUserInfo", userList.get(i));
+				if (i != 0 && i % size == 0) {
+					sqlSession.commit();
+					sqlSession.clearCache();
+				}
+			}
+			sqlSession.commit();
+			sqlSession.clearCache();
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
+		}
 	}
 }

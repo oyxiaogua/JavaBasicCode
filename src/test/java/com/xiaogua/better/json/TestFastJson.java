@@ -12,9 +12,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.xiaogua.better.basic.JacksonJsonCode;
+import com.xiaogua.better.bean.FastJson_Msg_Bean;
 import com.xiaogua.better.bean.Normal_Hello_Bean;
 import com.xiaogua.better.bean.Super_Template_Class;
 import com.xiaogua.better.bean.With_InnerClass_Prop_Class;
+import com.xiaogua.better.bean.FastJson_Msg_Bean.Enum_StatusCodeEnum;
 
 public class TestFastJson {
 	private static Logger logger = Logger.getLogger(TestFastJson.class);
@@ -93,6 +95,17 @@ public class TestFastJson {
 		// 输出空值
 		jsonStr = JSONObject.toJSONString(map, SerializerFeature.WriteMapNullValue);
 		logger.info(jsonStr);
+	}
+	
+	@Test
+	public void testFastJsonEnum(){
+		FastJson_Msg_Bean bean=new FastJson_Msg_Bean(1,Enum_StatusCodeEnum.OK);
+		String jsonStr = JSONObject.toJSONString(bean);
+		logger.info(jsonStr);
+		
+		FastJson_Msg_Bean bean2=JSONObject.parseObject(jsonStr, FastJson_Msg_Bean.class);
+		logger.info(bean2);
+
 	}
 
 }
