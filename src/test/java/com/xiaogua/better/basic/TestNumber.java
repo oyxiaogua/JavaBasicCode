@@ -55,6 +55,8 @@ public class TestNumber {
 		System.out.println(isNumberWithCommonsLang3("1e6"));
 		System.out.println(isNumberWithCommonsLang3("0011"));
 		System.out.println(isNumberWithCommonsLang3("+11"));
+		Assert.assertFalse(org.apache.commons.lang3.StringUtils.isNumeric("3.2"));
+		Assert.assertTrue(org.apache.commons.lang3.math.NumberUtils.isNumber("3.2"));
 	}
 
 	@Test
