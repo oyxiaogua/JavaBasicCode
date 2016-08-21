@@ -187,5 +187,15 @@
 		</if>
 
 	</select>
+	
+	<select id="getUserNameWithIntegerPara" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select name from t_user_3
+		<where>  
+		  <if test="_parameter != null">  
+		     id=#{id}
+		  </if>
+		</where>
+	</select>
 
 </mapper>

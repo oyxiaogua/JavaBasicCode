@@ -41,5 +41,11 @@
 		        inet_ntoa(inet_aton(#{ip})) as ipStr
 		from dual
 	</select>
+	
+	<select id="testMySqlGetRandomStr" parameterType="java.lang.Integer" resultType="java.lang.String">
+		select 
+		  substring(md5(rand()),floor(rand()*(32-ifnull(#{id},6)))+1,ifnull(#{id},6)) as rand_str 
+        from dual
+	</select>
 
 </mapper>

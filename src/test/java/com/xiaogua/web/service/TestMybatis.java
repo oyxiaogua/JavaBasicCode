@@ -298,4 +298,21 @@ public class TestMybatis extends BaseTest {
 			}
 		}
 	}
+	
+	@Test
+	public void testGetUserNameWithIntegerPara() {
+		List<String> rtnList = baseDao.queryList(defaultUserNameSpace, "getUserNameWithIntegerPara", null);
+		System.out.println(rtnList);
+		
+		rtnList = baseDao.queryList(defaultUserNameSpace, "getUserNameWithIntegerPara", 1);
+		System.out.println(rtnList);
+	}
+	
+	@Test
+	public void testMySqlGetRandomStr() {
+		String rtn = baseDao.querySingle(mysqlFunNameSpace, "testMySqlGetRandomStr", null);
+		System.out.println(rtn);
+		rtn = baseDao.querySingle(mysqlFunNameSpace, "testMySqlGetRandomStr", 10);
+		System.out.println(rtn);
+	}
 }
