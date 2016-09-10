@@ -194,4 +194,12 @@ public class TestNumber {
 		int mid = low + ((high - low) / 2);
 		return mid;
 	}
+	
+	/**
+	 * 判断double是否是整数
+	 */
+	public static boolean isIntegerForDouble(double obj) {
+		double eps = 1e-10;  // 精度范围
+		return obj-Math.floor(obj) < eps;
+	}
 }

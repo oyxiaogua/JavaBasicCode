@@ -1,5 +1,7 @@
 package com.xiaogua.better.str;
 
+import java.net.URLDecoder;
+
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 
@@ -23,5 +25,13 @@ public class TestBase64 {
 		System.out.println(new String(encodeBytes, UTF8));
 		byte[] decodeBytes = org.bouncycastle.util.encoders.Base64.decode(encodeBytes);
 		System.out.println(new String(decodeBytes, UTF8));
+	}
+	
+	@Test
+	public void testUrlDecoder() throws Exception{
+		String str="测试%3";
+		str = str.replaceAll("%(?![0-9a-fA-F]{2})", "%25");  
+		String decodeStr = URLDecoder.decode(str, "utf-8");
+		System.out.println( decodeStr);
 	}
 }
