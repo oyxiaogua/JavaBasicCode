@@ -4,6 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
+import java.util.Arrays;
 
 public class StrCode {
 	/**
@@ -136,5 +137,9 @@ public class StrCode {
 		return text.replaceAll("[\\s\\u00A0]+$", "");
 	}
 	
+	public static String convertObjToStr(Object obj){
+		String str = (obj == null ? "" : (obj.getClass().isArray() ? Arrays.toString((Object[])obj) : obj.toString()));
+		return str;
+	}
 	
 }

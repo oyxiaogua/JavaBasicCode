@@ -551,6 +551,17 @@ public class TestStrCode {
 		}
 		System.out.println(sb.toString());
 	}
+	
+	@Test
+	public void testConvertObjToStr(){
+		Object intObj=1;
+		String str=StrCode.convertObjToStr(intObj);
+		System.out.println(str);
+		
+		Object arrObj=new Integer[]{1,2,null,5};
+		str=StrCode.convertObjToStr(arrObj);
+		System.out.println(str);
+	}
 
 	/**
 	 * @See AbstractStringBuilder.reverse
