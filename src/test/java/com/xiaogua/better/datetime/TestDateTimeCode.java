@@ -403,5 +403,12 @@ public class TestDateTimeCode {
 		System.out.println(fieldPosition.getBeginIndex() + "," + fieldPosition.getEndIndex());
 		System.out.println(dateStr.substring(fieldPosition.getBeginIndex(), fieldPosition.getEndIndex()));
 	}
+	
+	@Test
+	public void testCalendarSetFirstDayOfWeek(){
+		Calendar c = Calendar.getInstance();
+		c.setFirstDayOfWeek(Calendar.MONDAY);
+		System.out.println(DateFormatUtils.format(c.getTime(), DateTimeCode.FULL_DATETIME));
+	}
 
 }
