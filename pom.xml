@@ -45,10 +45,15 @@
 		<joda-time.version>2.9.3</joda-time.version>
 		<mvel2.version>2.2.8.Final</mvel2.version>
 		<ognl.version>3.1.6</ognl.version>
+		<system-rules.version>1.16.1</system-rules.version>
 	</properties>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>com.github.stefanbirkner</groupId>
+			<artifactId>system-rules</artifactId>
+			<version>${system-rules.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>com.caucho</groupId>
 			<artifactId>hessian</artifactId>
