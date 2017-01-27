@@ -71,5 +71,21 @@ public class TestBigDecimalCode {
 		BigDecimal c = a.divide(b,2, BigDecimal.ROUND_HALF_DOWN);
 		System.out.println(c);
 	}
+	
+	@Test(expected=ArithmeticException.class)
+	public void testBigDecimalDivideUndefined() {
+		BigDecimal a = BigDecimal.ZERO;
+		BigDecimal b = BigDecimal.ZERO;
+		BigDecimal c=a.divide(b);
+		System.out.println(c);
+	}
+
+	@Test(expected=ArithmeticException.class)
+	public void testBigDecimalDivideNonTerminatingDecimal() {
+		BigDecimal a = new BigDecimal("100");
+		BigDecimal b = new BigDecimal("12");
+		BigDecimal c=a.divide(b);
+		System.out.println(c);
+	}
 
 }
