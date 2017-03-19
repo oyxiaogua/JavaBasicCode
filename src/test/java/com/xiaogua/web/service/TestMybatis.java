@@ -25,6 +25,7 @@ import com.xiaogua.better.bean.UserNameInfo;
 import com.xiaogua.better.datetime.DateTimeCode;
 import com.xiaogua.web.BaseTest;
 import com.xiaogua.web.dao.IBaseDao;
+import com.xiaogua.web.util.MybatisSqlHelper;
 
 public class TestMybatis extends BaseTest {
 	private static final Logger log = Logger.getLogger(TestMybatis.class);
@@ -339,6 +340,24 @@ public class TestMybatis extends BaseTest {
 		while (iterator.hasNext()) {
 			mappedStatement = iterator.next();
 			System.out.println(mappedStatement.getId()+"--->type="+mappedStatement.getSqlCommandType().name());
+		}
+	}
+	
+	@Test
+	public void testGetMybatisNameSpaceSql(){
+		SqlSession sqlSession = null;
+		try {
+			sqlSession = sqlSessionTemplate.getSqlSessionFactory().openSession(ExecutorType.BATCH);
+			List<Integer> idList = new ArrayList<Integer>();
+			idList.add(65);
+			idList.add(-1);
+			String sqlStr=MybatisSqlHelper.getNameSpaceSql(sqlSession, "userInfoDao.getUserNameList",idList);
+			sqlStr=sqlStr.replaceAll("\\s+", " ");
+			System.out.println(sqlStr);
+		} finally {
+			if (sqlSession != null) {
+				sqlSession.close();
+			}
 		}
 	}
 }
