@@ -1,13 +1,17 @@
 package com.xiaogua.web.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.ResultMap;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
@@ -314,5 +318,27 @@ public class TestMybatis extends BaseTest {
 		System.out.println(rtn);
 		rtn = baseDao.querySingle(mysqlFunNameSpace, "testMySqlGetRandomStr", 10);
 		System.out.println(rtn);
+	}
+	
+	@Test
+	public void testGetMybatisAllResultMapId(){
+		Collection<ResultMap> resultMaps=sqlSessionTemplate.getSqlSessionFactory().getConfiguration().getResultMaps();
+		Iterator<ResultMap> iterator = resultMaps.iterator();
+		ResultMap resultMap;
+		while (iterator.hasNext()) {
+			resultMap = iterator.next();
+			System.out.println("------------------>"+resultMap.getId());
+		}
+	}
+	
+	@Test
+	public void testGetMybatisAllMappedStatement(){
+		Collection<MappedStatement> collections=sqlSessionTemplate.getSqlSessionFactory().getConfiguration().getMappedStatements();
+		Iterator<MappedStatement> iterator = collections.iterator();
+		MappedStatement mappedStatement;
+		while (iterator.hasNext()) {
+			mappedStatement = iterator.next();
+			System.out.println(mappedStatement.getId()+"--->type="+mappedStatement.getSqlCommandType().name());
+		}
 	}
 }
