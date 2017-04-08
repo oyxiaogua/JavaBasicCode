@@ -5,6 +5,7 @@
 
 	<import resource="spring-property.xml" />
 	<import resource="spring-factory.xml" />
+	<import resource="spring-cache.xml" />
 	<import resource="spring-dao.xml" />
 	<import resource="applicationcontext-web.xml" />
 </beans>

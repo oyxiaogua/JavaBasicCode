@@ -21,6 +21,7 @@ import org.junit.Test;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.dao.QueryTimeoutException;
 
+import com.baidu.fsg.uid.UidGenerator;
 import com.xiaogua.better.bean.UserNameInfo;
 import com.xiaogua.better.datetime.DateTimeCode;
 import com.xiaogua.web.BaseTest;
@@ -35,11 +36,13 @@ public class TestMybatis extends BaseTest {
 	private final String mysqlFunNameSpace = "mysqlFunDao";
 	private final String utf8Encoding = "utf-8";
 	private SqlSessionTemplate sqlSessionTemplate;
-
+	private UidGenerator uidGenerator;
+	
 	@Before
 	public void init() {
 		baseDao = (IBaseDao) context.getBean("baseDao");
 		sqlSessionTemplate = (SqlSessionTemplate) context.getBean("sqlSessionTemplate");
+		uidGenerator= (UidGenerator) context.getBean("cachedUidGenerator");
 	}
 
 	@Test
@@ -359,5 +362,15 @@ public class TestMybatis extends BaseTest {
 				sqlSession.close();
 			}
 		}
+	}
+	
+	@Test
+	public void testSerialGenerate() {
+		//https://github.com/baidu/uid-generator
+	    long uid = uidGenerator.getUID();
+	    // Parse UID into [Timestamp, WorkerId, Sequence]
+	    // {"UID":"180363646902239241","parsed":{    "timestamp":"2017-01-19 12:15:46",    "workerId":"4",    "sequence":"9"        }}
+	    System.out.println(uidGenerator.parseUID(uid));
+
 	}
 }
