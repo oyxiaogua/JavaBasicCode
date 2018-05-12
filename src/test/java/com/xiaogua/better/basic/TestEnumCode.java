@@ -17,8 +17,11 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.ClassUtils;
 import org.junit.Test;
 
+import com.xiaogua.better.bean.BasicOperation;
 import com.xiaogua.better.bean.Enum_Change_Bean;
+import com.xiaogua.better.bean.Enum_Order;
 import com.xiaogua.better.bean.Enum_Type_Class;
+import com.xiaogua.better.bean.InterfaceOperation;
 import com.xiaogua.better.bean.Interface_Enum_Bean;
 import com.xiaogua.better.bean.MyFruitEnumClass;
 import com.xiaogua.better.bean.Public_Enum_Gender;
@@ -39,6 +42,12 @@ public class TestEnumCode {
 
 		enumOne = Enum.valueOf(Enum_Type_Class.class, "ONE");
 		System.out.println(enumOne);
+	}
+	
+	@Test
+	public void testEnumDiyField(){
+		Enum_Order enumOrder=Enum_Order.TWO;
+		System.out.println(enumOrder.getNumberOrder());
 	}
 
 	@Test
@@ -91,6 +100,12 @@ public class TestEnumCode {
 
 		enumBean = Interface_Enum_Bean.Coffee.valueOf("DECAF_COFFEE");
 		System.out.println(enumBean);
+	}
+	
+	@Test
+	public void testInterfaceEnum2() {
+		InterfaceOperation enumAdd=BasicOperation.PLUS;
+		System.out.println(enumAdd.apply(1, 22));
 	}
 
 	@Test
