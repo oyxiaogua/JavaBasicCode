@@ -26,6 +26,16 @@
 		values
 		(#{name},#{address})
 	</insert>
+	
+	<insert id="insertUserInfoWithMysql" parameterType="com.xiaogua.better.bean.UserNameInfo">
+		insert into t_user_2
+		(name,address)
+		values
+		(#{name},#{address})
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">  
+            select last_insert_id()
+       </selectKey>  
+	</insert>
 
 	<select id="selectValueAfterSleep" resultType="java.util.Map">
 		select sleep(5) as
@@ -38,6 +48,21 @@
 		select * from t_user_2 where instr(name,#{name})>0
 	</select>
 
+	<select id="selectUserInfoById" parameterType="java.lang.Integer"
+		resultType="com.xiaogua.better.bean.UserNameInfo">
+		select * from t_user_2 where id=#{id}#
+	</select>
+	
+	<select id="selectUserInfoWithMutilParam" 
+		resultType="com.xiaogua.better.bean.UserNameInfo">
+		select * from t_user_2 where id=#{param1} and name=#{param2}
+	</select>
+	
+	<select id="selectUserInfoById2" parameterType="java.lang.Integer"
+		resultType="java.util.Map">
+		select id,name,address,ifnull(sex,0) as sex from t_user_2 where id=#{id}#
+	</select>
+	
 	<update id="batchUpdateUserInfo" parameterType="java.util.List">
 		<foreach collection="list" item="item" index="index" open=""
 			close="" separator=";">
@@ -55,13 +80,22 @@
 
 	<update id="updateUserInfo" parameterType="java.util.Map">
 		update
-		t_user_3
+		t_user_2
 		<set>
 			name = #{name},
 			address =#{address}
 		</set>
 		where
 		id = #{id}
+	</update>
+	
+	<update id="updateUserInfoByMap" parameterType="java.util.Map">
+		update t_user_2
+		set 
+		<foreach  collection="_parameter" item="value" index="key" separator=",">
+			${key}=#{value}
+		</foreach>
+		where id=#{id}
 	</update>
 
 	<select id="selectUserInfoTotalNum" parameterType="java.util.Map"
@@ -174,6 +208,13 @@
 		resultType="java.lang.String">
 		select name from t_user_2 where name like
 		concat('%',#{name},'%')
+	</select>
+	
+	<select id="queryUserNameWithBind" parameterType="java.util.Map"
+		resultType="java.lang.String">
+		select name from t_user_2 where 
+		<bind name="nameLike" value="'%'+name+'%'"></bind> 
+		name like #{nameLike}
 	</select>
 
 	<select id="selectUserInfoNoOrder" parameterType="java.util.Map"

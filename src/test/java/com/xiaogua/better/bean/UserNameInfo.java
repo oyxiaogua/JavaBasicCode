@@ -35,6 +35,11 @@ public class UserNameInfo {
 		this.address = address;
 	}
 
+	
+	public UserNameInfo() {
+		super();
+	}
+
 	public String toString() {
 		return "UserNameInfo [id=" + id + ", name=" + name + ", address=" + address + "]";
 	}

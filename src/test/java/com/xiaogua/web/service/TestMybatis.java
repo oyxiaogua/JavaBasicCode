@@ -109,6 +109,13 @@ public class TestMybatis extends BaseTest {
 		map.put("address", "测试更新地址address_3");
 		int rtnInt = baseDao.update(defaultUserNameSpace, "updateUserInfo", map);
 		System.out.println(rtnInt);
+		
+		map = new HashMap<String, Object>();
+		map.put("id", 2);
+		map.put("name", "测试更新update_23");
+		map.put("address", "测试更新地址address_23");
+		rtnInt = baseDao.update(defaultUserNameSpace, "updateUserInfoByMap", map);
+		System.out.println(rtnInt);
 	}
 
 	@Test
@@ -188,8 +195,20 @@ public class TestMybatis extends BaseTest {
 		UserNameInfo info = new UserNameInfo("测试姓名_3", "测试地址_3");
 		baseDao.insert(defaultUserNameSpace, "insertUserInfo", info);
 		System.out.println(info);
+		baseDao.insert(defaultUserNameSpace, "insertUserInfoWithMysql", info);
+		System.out.println(info);
 	}
 
+	@Test
+	public void testSelectUserInfoById() {
+		UserNameInfo info=baseDao.querySingle(defaultUserNameSpace, "selectUserInfoById", 1);
+		System.out.println(info);
+		
+		Map<String, Object> map=baseDao.querySingle(defaultUserNameSpace, "selectUserInfoById2", 1);
+		System.out.println(map);
+	}
+	
+	
 	@Test
 	public void testGetUserNameList() {
 		List<Integer> idList = null;
@@ -208,6 +227,11 @@ public class TestMybatis extends BaseTest {
 		// 特殊字符转义
 		String name = "\\_name\\%";
 		List<String> rtnList = baseDao.queryList(defaultUserNameSpace, "queryUserNameWithLike", name);
+		System.out.println(rtnList);
+		
+		Map<String, String> queryMap=new HashMap<String, String>();
+		queryMap.put("name", name);
+		rtnList = baseDao.queryList(defaultUserNameSpace, "queryUserNameWithBind", queryMap);
 		System.out.println(rtnList);
 	}
 

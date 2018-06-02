@@ -4,11 +4,12 @@
 <configuration>
 	<settings>
 		<setting name="logImpl" value="LOG4J" />
+		<!-- 解决MyBatis 当数据库为记录为空,不显示此列 -->
+		<setting name="callSettersOnNulls" value="true" />
 	</settings>
 
 	<mappers>
 		<mapper resource="mybatis/orm/userInfoMapper.xml" />
 		<mapper resource="mybatis/orm/mysqlFunMapper.xml" />
 	</mappers>
-
 </configuration>
