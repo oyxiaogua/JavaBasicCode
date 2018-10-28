@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
 public class TestNormalizer {
 

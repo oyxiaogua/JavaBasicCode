@@ -44,6 +44,7 @@ public class TestArrayCode {
 	public void testDimensionalityReduction() {
 		String[][] result = new String[][] { new String[] { "key_1", null }, new String[] {} };
 		String[] rtnArr = ArrayCode.dimensionalityReduction(result);
+		System.out.println(Arrays.toString(rtnArr));
 		Assert.assertEquals(2, rtnArr.length);
 	}
 

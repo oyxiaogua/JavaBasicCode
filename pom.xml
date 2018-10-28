@@ -13,7 +13,7 @@
 		<assertj-core.version>3.2.0</assertj-core.version>
 		<log4j.version>1.2.17</log4j.version>
 		<slf4j-api.version>1.7.13</slf4j-api.version>
-		<jackson.version>2.7.3</jackson.version>
+		<jackson.version>2.9.7</jackson.version>
 		<bouncycastle.version>1.46</bouncycastle.version>
 		<httpclient.version>4.5.2</httpclient.version>
 		<guava.version>19.0</guava.version>

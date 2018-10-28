@@ -529,6 +529,8 @@ public class TestStrCode {
 	public void testObjDefaultVal() {
 		String str = ObjectUtils.defaultIfNull(null, "defaultVal");
 		System.out.println(str);
+		str=java.util.Objects.toString(null, "default") ;
+		System.out.println(str);
 	}
 
 	@Test
